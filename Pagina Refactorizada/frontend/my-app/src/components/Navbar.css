@@ -1,0 +1,15 @@
+.main-menu {
+  display: flex;
+  gap: 1rem;
+  background: #E8833F;
+  color: #fff;
+  padding: 0.5rem 2rem;
+  font-weight: bold;
+}
+.main-menu a {
+  color: #fff;
+  text-decoration: none;
+}
+.main-menu a:hover {
+  color: #000;
+}
