@@ -1,0 +1,369 @@
+/* ================= Animaciones ================= */
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes scaleUp {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  /* ================= Contenedor Principal ================= */
+  .producto-contenedor {
+    animation: fadeIn 1s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    background-color: #f9fafb;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  /* ================= Sección de Detalles ================= */
+  .detalle-contenedor {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    background-color: #ffffff;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .detalle-contenedor:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Botón de Reseñas */
+  .boton-reseña {
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #ffc107;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .boton-reseña:hover {
+    background-color: #e0a800;
+    transform: translateY(-2px);
+  }
+  
+  /* ================= Galería de Imágenes ================= */
+  .galeria-imagenes {
+    flex: 1.5;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeIn 1s ease;
+  }
+  
+  /* Contenedor de miniaturas */
+  .miniaturas {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scrollbar-width: thin;
+    scrollbar-color: #ffa726 transparent;
+  }
+  
+  .miniaturas::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  .miniaturas::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .miniaturas::-webkit-scrollbar-thumb {
+    background-color: #ffa726;
+    border-radius: 8px;
+  }
+  
+  /* Miniaturas */
+  .imagen-miniatura {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeIn 0.6s ease;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .imagen-miniatura:hover {
+    transform: scale(1.2);
+    border-color: #ffa726;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+  }
+  
+  /* Efecto visual al seleccionar una miniatura */
+  .imagen-miniatura.active {
+    transform: scale(1.3);
+    border-color: #fb8c00;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Contenedor de la imagen principal */
+  .imagen-principal {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    background-color: #f0f0f0;
+    animation: zoomIn 1s ease;
+  }
+  
+  /* Imagen principal */
+  .imagen-principal .imagen-grande {
+    width: 100%;
+    max-height: 600px;
+    object-fit: contain;
+    border-radius: 15px;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  
+  .imagen-principal .imagen-grande:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Efectos adicionales para videos principales */
+  .imagen-principal video {
+    width: 100%;
+    max-height: 600px;
+    object-fit: contain;
+    border-radius: 15px;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+  
+  .imagen-principal video:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Efectos de capa sobre miniaturas */
+  .imagen-miniatura::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: 8px;
+    z-index: 1;
+  }
+  
+  .imagen-miniatura:hover::before {
+    opacity: 1;
+  }
+  
+  /* Indicador de selección */
+  .imagen-miniatura::after {
+    content: "✓";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: #fff;
+    background: #ffa726;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 20px;
+    border-radius: 50%;
+    display: none;
+  }
+  
+  .imagen-miniatura.active::after {
+    display: block;
+  }
+  
+  /* ================= Videos ================= */
+  .video-grande {
+    width: 100%;
+    max-height: 600px;
+    object-fit: contain;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .video-grande:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .video-miniatura {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .video-miniatura:hover {
+    transform: scale(1.2);
+    border-color: #007bff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* ================= Información del Producto ================= */
+  .informacion-producto {
+    flex: 1;
+    padding: 25px;
+    background-color: #1c1c1c; /* Fondo negro */
+    border: 1px solid #333333; /* Bordes oscuros */
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    color: #f5f5f5; /* Texto blanco suave */
+  }
+  
+  .nombre-producto {
+    font-size: 30px;
+    font-weight: bold;
+    color: #ffa726; /* Naranja */
+    margin-bottom: 15px;
+  }
+  
+  .precio-contenedor {
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .precio-descuento {
+    font-size: 26px;
+    font-weight: bold;
+    color: #ffa726; /* Naranja */
+  }
+  
+  .precio-original {
+    font-size: 20px;
+    color: #dc3545; /* Rojo */
+    text-decoration: line-through;
+  }
+  
+  .stock-producto {
+    font-size: 18px;
+    color: #f5f5f5; /* Blanco suave */
+    margin-bottom: 20px;
+  }
+  
+  /* ================= Descripción del Producto ================= */
+  .descripcion-producto ul {
+    list-style: none;
+    padding-left: 0;
+  }
+  
+  .descripcion-producto li {
+    margin-bottom: 10px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #f5f5f5; /* Blanco suave */
+  }
+  
+  .descripcion-producto strong {
+    color: #ffa726; /* Naranja */
+  }
+  
+  /* ================= Botones de Acción ================= */
+  .botones-accion {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+  }
+  
+  .boton-compra,
+  .boton-carrito {
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #1c1c1c; /* Texto negro */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .boton-compra {
+    background-color: #ffa726; /* Naranja */
+  }
+  
+  .boton-compra:hover {
+    background-color: #fb8c00; /* Naranja más oscuro */
+    transform: translateY(-2px);
+  }
+  
+  .boton-carrito {
+    background-color: #ffa726; /* Naranja */
+  }
+  
+  .boton-carrito:hover {
+    background-color: #fb8c00; /* Naranja más oscuro */
+    transform: translateY(-2px);
+  }
+  
