@@ -22,6 +22,7 @@ export default {
         const response = await axios.get("http://localhost:5000/tienda/banners");
         this.banners = response.data.data;
       } catch (error) {
+        
         console.error("Error al obtener los banners:", error);
       }
     },

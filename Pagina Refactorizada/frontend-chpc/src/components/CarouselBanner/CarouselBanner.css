@@ -8,7 +8,7 @@
   }
   
   .carousel:hover {
-    transform: scale(1.05); /* Efecto de agrandamiento al pasar el mouse */
+    transform: scale(1.1); /* Efecto de agrandamiento al pasar el mouse */
     transition: transform 0.5s ease-in-out;
   }
   
