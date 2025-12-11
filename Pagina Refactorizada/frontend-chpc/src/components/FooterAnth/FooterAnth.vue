@@ -26,6 +26,15 @@
           </ul>
         </div>
       </div>
+       <iframe
+      src="https://maps.app.goo.gl/txF7kUES96ViRHdL6"
+      width="600"
+      height="450"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
       <!-- Nueva sección para Misión y Visión -->
       <div class="mission-vision-section">
     <div class="mission-section">
@@ -55,7 +64,7 @@
   </div>
   
       <div class="footer-bottom">
-        <p>&copy; 2024 CHCP Tecnología. Todos los derechos reservados.</p>
+        <p>&copy; 2025 CHCP Tecnología. Todos los derechos reservados.</p>
       </div>
     </footer>
   </template>

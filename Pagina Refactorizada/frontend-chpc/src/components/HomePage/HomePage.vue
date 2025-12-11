@@ -1,5 +1,3 @@
-
-
 <template>
   <div>
     <!-- Encabezado -->
@@ -76,6 +74,9 @@
 
     <!-- Pie de página -->
     <FooterAnth />
+
+    <!-- Mapa de ubicación -->
+   
   </div>
 </template>
 
