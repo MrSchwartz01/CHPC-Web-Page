@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "IckT6/7d4Ro=",
+  "dgSpecHash": "4ZtiCpxd4G4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Contabilidad\\Pagina Refactorizada\\backend\\backend.csproj",
+  "projectFilePath": "C:\\Users\\Contabilidad\\Documents\\GitHub\\CHPC-Web-Page\\Pagina Refactorizada\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Contabilidad\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0\\microsoft.aspnetcore.openapi.10.0.0.nupkg.sha512",
     "C:\\Users\\Contabilidad\\.nuget\\packages\\microsoft.entityframeworkcore\\10.0.0\\microsoft.entityframeworkcore.10.0.0.nupkg.sha512",

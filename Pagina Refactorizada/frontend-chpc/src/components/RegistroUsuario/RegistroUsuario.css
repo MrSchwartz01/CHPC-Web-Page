@@ -1,0 +1,118 @@
+.register-container {
+    max-width: 480px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff; /* Blanco */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .register-container h2 {
+    text-align: center;
+    color: #ffa726; /* Naranja */
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .register-container p {
+    text-align: center;
+    font-size: 14px;
+    color: #666666; /* Gris */
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+  }
+  
+  .input-group label {
+    font-size: 14px;
+    color: #555555; /* Gris oscuro */
+    margin-bottom: 5px;
+    display: block;
+    font-weight: 500;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cccccc;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+  }
+  
+  .input-group input:focus {
+    border-color: #ffa726; /* Naranja */
+    outline: none;
+  }
+  
+  .password-container {
+    position: relative;
+  }
+  
+  .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #ffa726; /* Naranja */
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  .toggle-password:hover {
+    color: #fb8c00; /* Naranja más oscuro */
+  }
+  
+  .register-button {
+    width: 100%;
+    padding: 14px;
+    background-color: #1c1c1c; /* Negro */
+    color: #ffffff; /* Blanco */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .register-button:hover {
+    background-color: #ffa726; /* Naranja */
+    color: #1c1c1c; /* Negro */
+  }
+  
+  .error {
+    color: #e53935; /* Rojo para errores */
+    font-size: 14px;
+    text-align: left;
+    margin-top: 5px;
+  }
+  
+  .success {
+    color: #28a745; /* Verde para éxito */
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .account-info {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+    color: #666666; /* Gris */
+  }
+  
+  .account-info a {
+    color: #ffa726; /* Naranja */
+    text-decoration: none;
+  }
+  
+  .account-info a:hover {
+    color: #fb8c00; /* Naranja más oscuro */
+    text-decoration: underline;
+  }
