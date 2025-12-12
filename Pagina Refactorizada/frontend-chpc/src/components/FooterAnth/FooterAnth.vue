@@ -26,15 +26,17 @@
           </ul>
         </div>
       </div>
-       <iframe
-      src="https://maps.app.goo.gl/txF7kUES96ViRHdL6"
-      width="600"
-      height="450"
-      style="border:0;"
-      allowfullscreen=""
-      loading="lazy"
-      referrerpolicy="no-referrer-when-downgrade"
-    ></iframe>
+      <div class="map-section">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d838.6405537434595!2d-80.72806521686454!3d-0.9505578544621024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902be1e51964e08d%3A0x2d0fd996be1bacb!2sCHPC%20Tecnolog%C3%ADa%20(ClickHere.Pc)!5e0!3m2!1ses!2sec!4v1765573413729!5m2!1ses!2sec"
+          width="100%"
+          height="450"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
       <!-- Nueva sección para Misión y Visión -->
       <div class="mission-vision-section">
     <div class="mission-section">

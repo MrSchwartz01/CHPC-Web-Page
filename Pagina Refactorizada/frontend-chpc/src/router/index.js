@@ -9,6 +9,9 @@ import CarouselBanner from '../components/CarouselBanner/CarouselBanner.vue';
 import RedesSociales from '../components/RedesSociales/RedesSociales.vue';
 import ServicioTecnico from '../components/ServicioTecnico/ServicioTecnico.vue';
 import ProductosPorMarca from '../components/ProductosPorMarca/ProductosPorMarca.vue';
+import CategoriasProductos from '../components/CategoriasProductos/CategoriasProductos.vue';
+import ProductosPorCategoria from '../components/ProductosPorCategoria/ProductosPorCategoria.vue';
+import CarritoCompras from '../components/CarritoCompras/CarritoCompras.vue';
 
 
 const routes = [
@@ -72,6 +75,21 @@ const routes = [
     path: "/productos/marca/:id",
     name: "ProductosPorMarca",
     component: ProductosPorMarca,
+  },
+  {
+    path: "/categorias",
+    name: "CategoriasProductos",
+    component: CategoriasProductos,
+  },
+  {
+    path: "/productos/categoria/:categoria",
+    name: "ProductosPorCategoria",
+    component: ProductosPorCategoria,
+  },
+  {
+    path: "/carrito",
+    name: "CarritoCompras",
+    component: CarritoCompras,
   }
 
 

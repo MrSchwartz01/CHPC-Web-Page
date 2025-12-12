@@ -8,7 +8,7 @@
           :class="{ active: activeBanner === index }"
         >
           <img
-            :src="getFullImageUrl(banner.imagen_url)"
+            :src="banner.imagen_url"
             :alt="banner.titulo"
             class="banner-image"
             @load="handleImageLoad"
@@ -67,9 +67,6 @@ export default {
     },
     stopCarousel() {
       if (this.intervalId) clearInterval(this.intervalId);
-    },
-    getFullImageUrl(relativeUrl) {
-      return `http://localhost:5000${relativeUrl}`;
     },
     prevBanner() {
       this.activeBanner =

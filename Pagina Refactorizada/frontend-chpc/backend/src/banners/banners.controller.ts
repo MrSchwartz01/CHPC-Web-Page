@@ -1,12 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
-import { ProductsService } from './products.service';
+import { BannersService } from './banners.service';
 
-@Controller('tienda/productos')
-export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+@Controller('tienda/banners')
+export class BannersController {
+  constructor(private readonly bannersService: BannersService) {}
 
   @Get()
   async findAll() {
-    return await this.productsService.findAll();
+    const data = await this.bannersService.findAll();
+    return { data };
   }
 }

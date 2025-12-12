@@ -24,9 +24,11 @@ export default {
     this.isAuthenticated = !!localStorage.getItem("access_token");
 
     try {
-      // Cargar Banners
-      const bannersResponse = await axios.get("http://localhost:5000/tienda/banners");
-      this.banners = bannersResponse.data.data;
+      // Cargar Banners desde la carpeta pública
+      this.banners = [
+        { id: 1, titulo: "Banner 1", imagen_url: "/Banners/banner1.webp" },
+        { id: 2, titulo: "Banner 2", imagen_url: "/Banners/banner2.avif" },
+      ];
 
       // Cargar Productos
       const productosResponse = await axios.get("http://localhost:5000/tienda/productos");

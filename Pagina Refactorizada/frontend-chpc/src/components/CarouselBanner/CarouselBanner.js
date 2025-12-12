@@ -19,7 +19,7 @@ export default {
   methods: {
     async fetchBanners() {
       try {
-        const response = await axios.get("http://localhost:5000/tienda/banners");
+        const response = await axios.get("/Banners");
         this.banners = response.data.data;
       } catch (error) {
         
@@ -37,7 +37,7 @@ export default {
       if (this.intervalId) clearInterval(this.intervalId);
     },
     getFullImageUrl(relativeUrl) {
-      return `http://localhost:5000${relativeUrl}`;
+      return `192.168.2.164:5000${relativeUrl}`;
     },
     prevBanner() {
       this.activeBanner =

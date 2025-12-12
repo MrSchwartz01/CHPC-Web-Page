@@ -1,24 +1,37 @@
 .register-container {
-    max-width: 480px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #ffffff; /* Blanco */
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: 'Roboto', sans-serif;
+    max-width: 520px;
+    margin: 60px auto;
+    padding: 40px 35px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
   }
   
   .register-container h2 {
     text-align: center;
-    color: #ffa726; /* Naranja */
-    font-size: 24px;
+    color: #2c3e50;
+    font-size: 28px;
+    font-weight: 600;
     margin-bottom: 10px;
+    letter-spacing: -0.5px;
   }
   
   .register-container p {
     text-align: center;
     font-size: 14px;
-    color: #666666; /* Gris */
+    color: #7f8c8d;
+    margin-bottom: 24px;
+  }
+  
+  .register-container p a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  
+  .register-container p a:hover {
+    text-decoration: underline;
   }
   
   .input-group {
@@ -26,25 +39,30 @@
   }
   
   .input-group label {
-    font-size: 14px;
-    color: #555555; /* Gris oscuro */
-    margin-bottom: 5px;
+    font-size: 13px;
+    color: #34495e;
+    margin-bottom: 8px;
     display: block;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
   }
   
   .input-group input {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #cccccc;
+    padding: 14px 16px;
+    border: 1.5px solid #e0e0e0;
     border-radius: 6px;
-    font-size: 16px;
-    transition: border-color 0.3s;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background-color: #fafafa;
   }
   
   .input-group input:focus {
-    border-color: #ffa726; /* Naranja */
+    border-color: #3498db;
     outline: none;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
   }
   
   .password-container {
@@ -54,65 +72,85 @@
   .toggle-password {
     position: absolute;
     top: 50%;
-    right: 10px;
+    right: 16px;
     transform: translateY(-50%);
-    font-size: 18px;
-    color: #ffa726; /* Naranja */
+    font-size: 20px;
+    color: #7f8c8d;
     cursor: pointer;
     transition: color 0.3s;
+    user-select: none;
   }
   
   .toggle-password:hover {
-    color: #fb8c00; /* Naranja más oscuro */
+    color: #3498db;
   }
   
   .register-button {
     width: 100%;
-    padding: 14px;
-    background-color: #1c1c1c; /* Negro */
-    color: #ffffff; /* Blanco */
+    padding: 16px;
+    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    color: #ffffff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
-    font-weight: bold;
-    margin-top: 20px;
-    transition: background-color 0.3s, color 0.3s;
+    font-weight: 600;
+    margin-top: 24px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
   }
   
   .register-button:hover {
-    background-color: #ffa726; /* Naranja */
-    color: #1c1c1c; /* Negro */
+    background: linear-gradient(135deg, #229954 0%, #1e8449 100%);
+    box-shadow: 0 6px 16px rgba(39, 174, 96, 0.4);
+    transform: translateY(-2px);
+  }
+  
+  .register-button:active {
+    transform: translateY(0);
   }
   
   .error {
-    color: #e53935; /* Rojo para errores */
-    font-size: 14px;
+    color: #e74c3c;
+    font-size: 13px;
     text-align: left;
-    margin-top: 5px;
+    margin-top: 6px;
+    font-weight: 500;
+    background-color: #fadbd8;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border-left: 3px solid #e74c3c;
   }
   
   .success {
-    color: #28a745; /* Verde para éxito */
+    color: #27ae60;
     text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 10px;
+    font-weight: 600;
+    font-size: 15px;
+    margin-top: 16px;
+    background-color: #d5f4e6;
+    padding: 12px;
+    border-radius: 4px;
+    border-left: 3px solid #27ae60;
   }
   
   .account-info {
-    margin-top: 15px;
+    margin-top: 24px;
     text-align: center;
     font-size: 14px;
-    color: #666666; /* Gris */
+    color: #7f8c8d;
   }
   
   .account-info a {
-    color: #ffa726; /* Naranja */
+    color: #3498db;
     text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
   }
   
   .account-info a:hover {
-    color: #fb8c00; /* Naranja más oscuro */
+    color: #2980b9;
     text-decoration: underline;
   }
