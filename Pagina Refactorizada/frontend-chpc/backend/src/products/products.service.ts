@@ -1,16 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Product } from './product.entity';
+import { PrismaService } from '../prisma/prisma.service';
+import { Product } from '@prisma/client';
 
 @Injectable()
 export class ProductsService {
-  constructor(
-    @InjectRepository(Product)
-    private productsRepository: Repository<Product>,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
-  findAll(): Promise<Product[]> {
-    return this.productsRepository.find();
+  async findAll(): Promise<Product[]> {
+    return await this.prisma.product.findMany();
   }
 }

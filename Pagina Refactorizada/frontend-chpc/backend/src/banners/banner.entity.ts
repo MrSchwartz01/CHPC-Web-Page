@@ -1,13 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+// Archivo legado del antiguo ORM conservado solo como marcador.
+// Después de la migración a Prisma, esta entidad ya no se usa.
 
-@Entity()
-export class Banner {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column()
-  titulo: string;
-
-  @Column()
-  imagen_url: string;
-}
+export class BannerEntityLegacy {}

@@ -1,29 +1,89 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🔐 Backend CHPC - Sistema de Autenticación y Seguridad
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Backend de la tienda online CHPC desarrollado con NestJS, implementando un sistema robusto de autenticación con JWT.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## ✨ Características de Seguridad Implementadas
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### ✅ Autenticación JWT con Refresh Tokens
+- **Access Token**: Válido por 15 minutos
+- **Refresh Token**: Válido por 7 días
+- Tokens hasheados en base de datos con bcrypt
+- Renovación automática de tokens
+
+### ✅ Protección contra Ataques de Fuerza Bruta
+- Bloqueo de cuenta tras 5 intentos fallidos
+- Bloqueo temporal de 15 minutos
+- Contador de intentos por usuario
+- Reseteo automático tras login exitoso
+
+### ✅ Seguridad de Contraseñas
+- Hasheo con bcrypt (10 rounds)
+- Validación de complejidad:
+  - Mínimo 6 caracteres
+  - Al menos una letra, un número y un carácter especial
+
+### ✅ Validación de Datos
+- Validación automática con `class-validator`
+- Sanitización de inputs
+- Prevención de inyección SQL (Prisma)
+
+### ✅ Control de Acceso por Roles
+- Sistema de roles: `cliente`, `admin`, `vendedor`
+- Guards personalizados
+- Decoradores para control de permisos
+
+---
+
+## 📡 Endpoints de Autenticación
+
+### 🔹 Registro
+```http
+POST /api/auth/registro
+Content-Type: application/json
+
+{
+  "nombre_usuario": "usuario123",
+  "email": "usuario@example.com",
+  "contraseña": "Pass123!@",
+  "telefono": "0999123456",
+  "direccion": "Manta, Ecuador"
+}
+```
+
+### 🔹 Login
+```http
+POST /api/auth/login
+
+{
+  "nombre_usuario": "usuario123",
+  "contraseña": "Pass123!@"
+}
+```
+
+### 🔹 Refrescar Token
+```http
+POST /api/auth/refresh
+
+{
+  "refresh_token": "eyJhbGc..."
+}
+```
+
+### 🔹 Verificar Token
+```http
+GET /api/auth/verificar
+Authorization: Bearer <access_token>
+```
+
+### 🔹 Cerrar Sesión
+```http
+POST /api/auth/logout
+Authorization: Bearer <access_token>
+```
+
+---
 
 ## Project setup
 

@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  COMPLETED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+  TRANSFER
+}
+
+model User {
+  id                Int       @id @default(autoincrement())
+  nombre            String
+  apellido          String
+  username          String    @unique
+  email             String    @unique
+  password          String
+  telefono          String?
+  direccion         String?
+  rol               String    @default("cliente")
+  refresh_token     String?
+  intentos_fallidos Int       @default(0)
+  bloqueado_hasta   DateTime?
+  ultimo_acceso     DateTime?
+  fecha_creacion    DateTime  @default(now())
+  fecha_actualizacion DateTime  @updatedAt
+
+  orders            Order[]
+
+  @@map("usuarios")
+}
+
+model Product {
+  id             Int     @id @default(autoincrement())
+  nombre_producto String
+  descripcion     String
+  precio          Float
+  stock           Int
+  imagen_url      String
+
+  @@map("productos")
+}
+
+model Banner {
+  id         Int    @id @default(autoincrement())
+  titulo     String
+  imagen_url String
+
+  @@map("banners")
+}
+
+model Order {
+  id               Int          @id @default(autoincrement())
+  codigo           String       @unique
+  userId           Int
+  user             User         @relation(fields: [userId], references: [id])
+
+  totalItems       Int
+  subtotal         Float
+  descuento        Float        @default(0)
+  total            Float
+
+  status           OrderStatus  @default(PENDING)
+  paymentMethod    PaymentMethod
+  paymentRef       String?
+
+  nombre_cliente   String
+  email_cliente    String
+  telefono         String?
+  direccion_envio  String
+
+  observaciones    String?
+
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  items            OrderItem[]
+
+  @@map("ordenes")
+}
+
+model OrderItem {
+  id         Int    @id @default(autoincrement())
+  orderId    Int
+  order      Order  @relation(fields: [orderId], references: [id])
+
+  productId  Int
+  nombre     String
+  precio     Float
+  cantidad   Int
+  total      Float
+
+  @@map("orden_items")
+}
