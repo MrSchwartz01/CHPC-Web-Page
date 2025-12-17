@@ -60,6 +60,9 @@ export default {
           );
           this.producto.marca = marcaResponse.data;
         }
+
+        // Registrar en historial de productos vistos (Vuex + localStorage)
+        this.$store.dispatch('registrarProductoVisto', this.producto);
       } catch (error) {
         this.errorMessage =
           error.response?.data?.message || "Hubo un problema al cargar el producto.";

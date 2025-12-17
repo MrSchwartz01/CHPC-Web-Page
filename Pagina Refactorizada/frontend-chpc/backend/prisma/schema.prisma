@@ -53,6 +53,8 @@ model Product {
   precio          Float
   stock           Int
   imagen_url      String
+  marca           String?
+  color           String?
 
   @@map("productos")
 }
