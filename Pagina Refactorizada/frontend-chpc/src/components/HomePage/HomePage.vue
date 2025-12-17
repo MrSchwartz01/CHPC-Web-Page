@@ -19,7 +19,7 @@
       <h1>Bienvenidos a Nuestra Tienda </h1>
       <p>Explora nuestros productos y encuentra lo que necesitas.</p>
 
-     <!-- Lista de Productos -->
+    <!-- Lista de Productos -->
 <div class="product-grid">
   <div
     v-for="producto in productosMostrados"
@@ -70,6 +70,9 @@
       <div v-if="productosMostrados.length === 0 && searchQuery.trim() !== ''">
         <p>No se encontraron productos que coincidan con "{{ searchQuery }}".</p>
       </div>
+
+      <!-- Historial de productos vistos recientemente -->
+      <HistorialProductosVistos />
     </div>
 
     <!-- Pie de página -->

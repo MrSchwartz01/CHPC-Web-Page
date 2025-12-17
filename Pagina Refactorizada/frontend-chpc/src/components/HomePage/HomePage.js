@@ -2,6 +2,7 @@ import axios from "axios";
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
 import FooterAnth from "../FooterAnth/FooterAnth.vue";
 import CarouselBanner from "../CarouselBanner/CarouselBanner.vue";
+import HistorialProductosVistos from "../HistorialProductosVistos/HistorialProductosVistos.vue";
 
 export default {
   name: "HomePage",
@@ -9,6 +10,7 @@ export default {
     HeaderAnth,
     CarouselBanner,
     FooterAnth,
+    HistorialProductosVistos,
   },
   data() {
     return {
