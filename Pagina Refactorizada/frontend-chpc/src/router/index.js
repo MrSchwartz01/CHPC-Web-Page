@@ -12,6 +12,7 @@ import ProductosPorMarca from '../components/ProductosPorMarca/ProductosPorMarca
 import CategoriasProductos from '../components/CategoriasProductos/CategoriasProductos.vue';
 import ProductosPorCategoria from '../components/ProductosPorCategoria/ProductosPorCategoria.vue';
 import CarritoCompras from '../components/CarritoCompras/CarritoCompras.vue';
+import Promociones from '../components/Promociones/Promociones.vue';
 
 
 const routes = [
@@ -90,6 +91,11 @@ const routes = [
     path: "/carrito",
     name: "CarritoCompras",
     component: CarritoCompras,
+  },
+  {
+    path: "/promociones",
+    name: "Promociones",
+    component: Promociones,
   }
 
 

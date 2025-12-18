@@ -43,6 +43,9 @@ model User {
 
   orders            Order[]
 
+  wishlistItems     WishlistItem[]
+  serviceOrders     ServiceOrder[]
+
   @@map("usuarios")
 }
 
@@ -55,6 +58,9 @@ model Product {
   imagen_url      String
   marca           String?
   color           String?
+
+  wishlistItems   WishlistItem[]
+  serviceOrders   ServiceOrder[]
 
   @@map("productos")
 }
@@ -109,4 +115,41 @@ model OrderItem {
   total      Float
 
   @@map("orden_items")
+}
+
+model WishlistItem {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  productId Int
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, productId], name: "user_product_unique")
+  @@map("wishlist_items")
+}
+
+enum ServiceOrderStatus {
+  PENDIENTE
+  EN_PROCESO
+  COMPLETADO
+  CANCELADO
+}
+
+model ServiceOrder {
+  id                  Int                @id @default(autoincrement())
+  userId              Int
+  productId           Int?
+  descripcion_problema String
+  estado_equipo       String?
+  numero_serie        String?
+  estado              ServiceOrderStatus @default(PENDIENTE)
+  fecha_creacion      DateTime           @default(now())
+  fecha_actualizacion DateTime           @updatedAt
+
+  user                User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product             Product?           @relation(fields: [productId], references: [id])
+
+  @@map("ordenes_servicio")
 }

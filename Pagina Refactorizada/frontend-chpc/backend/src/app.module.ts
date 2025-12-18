@@ -8,6 +8,8 @@ import { UsersModule } from './users/users.module';
 import { BannersModule } from './banners/banners.module';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
+import { WishlistModule } from './wishlist/wishlist.module';
+import { ServiceOrdersModule } from './service-orders/service-orders.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { OrdersModule } from './orders/orders.module';
     BannersModule,
     ProductsModule,
     OrdersModule,
+    WishlistModule,
+    ServiceOrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

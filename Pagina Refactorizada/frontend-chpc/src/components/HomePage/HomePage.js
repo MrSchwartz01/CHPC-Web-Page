@@ -20,6 +20,7 @@ export default {
       searchQuery: "",
       isAuthenticated: false,
       limiteProductos: 10,
+      selectedPriceRange: "", // '', 'low', 'mid', 'high'
     };
   },
   async created() {
@@ -53,8 +54,49 @@ export default {
     }
   },
   methods: {
+    aplicarFiltros() {
+      const query = this.searchQuery.trim().toLowerCase();
+
+      let lista = [...this.productos];
+
+      // Filtrado por rango de precio
+      if (this.selectedPriceRange) {
+        lista = lista.filter((producto) => {
+          const precio = Number(producto.precio ?? 0);
+          if (this.selectedPriceRange === "low") {
+            return precio < 100;
+          }
+          if (this.selectedPriceRange === "mid") {
+            return precio >= 101 && precio <= 399;
+          }
+          if (this.selectedPriceRange === "high") {
+            return precio >= 400;
+          }
+          return true;
+        });
+      }
+
+      // Filtrado por texto
+      if (query !== "") {
+        lista = lista.filter(
+          (producto) =>
+            producto.nombre_producto
+              .toLowerCase()
+              .includes(query) ||
+            producto.descripcion.toLowerCase().includes(query)
+        );
+      }
+
+      if (query !== "" || this.selectedPriceRange) {
+        // Cuando hay filtros activos, mostramos toda la lista filtrada
+        this.productosMostrados = lista;
+      } else {
+        // Sin filtros, aplicamos paginación básica
+        this.productosMostrados = lista.slice(0, this.limiteProductos);
+      }
+    },
     cargarMasProductos() {
-      if (this.searchQuery.trim() !== "") return;
+      if (this.searchQuery.trim() !== "" || this.selectedPriceRange) return;
 
       const siguienteBloque = this.productos.slice(
         this.productosMostrados.length,
@@ -68,19 +110,11 @@ export default {
     },
     buscarProductos(query) {
       this.searchQuery = query.trim();
-      if (this.searchQuery !== "") {
-        this.productosMostrados = this.productos.filter(
-          (producto) =>
-            producto.nombre_producto
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase()) ||
-            producto.descripcion
-              .toLowerCase()
-              .includes(this.searchQuery.toLowerCase())
-        );
-      } else {
-        this.productosMostrados = this.productos.slice(0, this.limiteProductos);
-      }
+      this.aplicarFiltros();
+    },
+    cambiarRangoPrecio(rango) {
+      this.selectedPriceRange = rango;
+      this.aplicarFiltros();
     },
     cerrarSesion() {
       localStorage.removeItem("access_token");

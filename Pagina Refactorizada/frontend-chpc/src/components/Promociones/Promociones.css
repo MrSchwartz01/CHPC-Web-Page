@@ -1,0 +1,15 @@
+.promociones-container {
+  max-width: 960px;
+  margin: 40px auto;
+  padding: 24px;
+  text-align: center;
+}
+
+.promociones-container h1 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+
+.promociones-container p {
+  margin-bottom: 8px;
+}

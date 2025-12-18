@@ -19,6 +19,35 @@
       <h1>Bienvenidos a Nuestra Tienda </h1>
       <p>Explora nuestros productos y encuentra lo que necesitas.</p>
 
+      <!-- Filtros de precio -->
+      <div class="price-filters">
+        <span>Filtrar por precio:</span>
+        <button
+          :class="{ active: selectedPriceRange === '' }"
+          @click="cambiarRangoPrecio('')"
+        >
+          Todos
+        </button>
+        <button
+          :class="{ active: selectedPriceRange === 'low' }"
+          @click="cambiarRangoPrecio('low')"
+        >
+          Menor a $100
+        </button>
+        <button
+          :class="{ active: selectedPriceRange === 'mid' }"
+          @click="cambiarRangoPrecio('mid')"
+        >
+          $101 a $399
+        </button>
+        <button
+          :class="{ active: selectedPriceRange === 'high' }"
+          @click="cambiarRangoPrecio('high')"
+        >
+          Desde $400
+        </button>
+      </div>
+
     <!-- Lista de Productos -->
 <div class="product-grid">
   <div

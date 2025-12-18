@@ -14,13 +14,35 @@
             <input
               type="text"
               v-model="localSearchQuery"
-              placeholder="Tenemos lo que usted está buscando"
-              @input="buscarProductos"
+              placeholder="¿Qué estás buscando hoy?"
+              @input="onInput"
+              @focus="programarCargaSugerencias"
+              @blur="cerrarSugerencias"
               aria-label="Buscar productos"
             />
             <button @click="buscarProductos" aria-label="Buscar">
               <span class="search-icon">🔍</span>
             </button>
+
+            <!-- Dropdown de sugerencias -->
+            <div
+              v-if="mostrandoSugerencias && sugerencias.length"
+              class="sugerencias-container"
+            >
+              <div
+                v-for="producto in sugerencias"
+                :key="producto.id"
+                class="sugerencia-item"
+                @mousedown.prevent="seleccionarSugerencia(producto)"
+              >
+                <span class="sugerencia-nombre">
+                  {{ producto.nombre_producto || producto.nombre }}
+                </span>
+                <span v-if="producto.precio != null" class="sugerencia-precio">
+                  ${{ Number(producto.precio).toFixed(2) }}
+                </span>
+              </div>
+            </div>
           </div>
   
           <!-- Acciones de usuario -->
@@ -65,6 +87,7 @@
                 </ul>
               </transition>
             </li>
+            <li><a href="/promociones">Promociones</a></li>
             <li><a href="/servicio-tecnico">Servicio Técnico</a></li>
             <li><a href="/redes-sociales">Redes Sociales</a></li>
             <li><a href="/marcas">Marcas</a></li>

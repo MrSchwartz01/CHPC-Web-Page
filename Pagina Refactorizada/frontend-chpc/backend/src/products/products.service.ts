@@ -8,17 +8,35 @@ export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
   async findAll(filters: FilterProductsDto): Promise<Product[]> {
-    const { minPrice, maxPrice, marca, color, search } = filters;
+    const { minPrice, maxPrice, marca, color, search, priceRange } = filters;
 
     const where: Prisma.ProductWhereInput = {};
 
-    if (minPrice !== undefined || maxPrice !== undefined) {
+    // Determinar rango de precio según priceRange o min/max explícitos
+    let effectiveMin = minPrice;
+    let effectiveMax = maxPrice;
+
+    if (priceRange === 'low') {
+      // Menor a 100
+      effectiveMin = undefined;
+      effectiveMax = 100;
+    } else if (priceRange === 'mid') {
+      // De 101 a 399
+      effectiveMin = 101;
+      effectiveMax = 399;
+    } else if (priceRange === 'high') {
+      // Desde 400 en adelante
+      effectiveMin = 400;
+      effectiveMax = undefined;
+    }
+
+    if (effectiveMin !== undefined || effectiveMax !== undefined) {
       where.precio = {};
-      if (minPrice !== undefined) {
-        where.precio.gte = minPrice;
+      if (effectiveMin !== undefined) {
+        where.precio.gte = effectiveMin;
       }
-      if (maxPrice !== undefined) {
-        where.precio.lte = maxPrice;
+      if (effectiveMax !== undefined) {
+        where.precio.lte = effectiveMax;
       }
     }
 
