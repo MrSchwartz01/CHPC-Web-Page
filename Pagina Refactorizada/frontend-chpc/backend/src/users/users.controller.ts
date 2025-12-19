@@ -15,6 +15,15 @@ import { ChangePasswordDto } from './dto/change-password.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Role } from '../auth/roles.enum';
+import { Request as ExpressRequest } from 'express';
+
+interface AuthRequest extends ExpressRequest {
+  user: {
+    userId: number;
+    username: string;
+    rol: string;
+  };
+}
 
 @Controller('usuarios')
 export class UsersController {
@@ -25,9 +34,8 @@ export class UsersController {
    */
   @UseGuards(JwtAuthGuard)
   @Get('perfil')
-  async getProfile(@Request() req) {
+  async getProfile(@Request() req: AuthRequest) {
     const user = await this.usersService.findById(req.user.userId);
-    
     if (!user) {
       return { mensaje: 'Usuario no encontrado' };
     }
@@ -56,9 +64,15 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Patch('perfil')
   @HttpCode(HttpStatus.OK)
-  async updateProfile(@Request() req, @Body() updateProfileDto: UpdateProfileDto) {
-    const user = await this.usersService.updateProfile(req.user.userId, updateProfileDto);
-    
+  async updateProfile(
+    @Request() req: AuthRequest,
+    @Body() updateProfileDto: UpdateProfileDto,
+  ) {
+    const user = await this.usersService.updateProfile(
+      req.user.userId,
+      updateProfileDto,
+    ); // <- Agregado el paréntesis de cierre
+
     // Crear objeto sin campos sensibles
     const perfil = {
       id: user.id,
@@ -71,13 +85,8 @@ export class UsersController {
       rol: user.rol,
       fecha_creacion: user.fecha_creacion,
       fecha_actualizacion: user.fecha_actualizacion,
-      ultimo_acceso: user.ultimo_acceso,
     };
-
-    return {
-      mensaje: 'Perfil actualizado exitosamente',
-      usuario: perfil,
-    };
+    return perfil; // <- Probablemente también necesites retornar el objeto
   }
 
   /**
@@ -86,9 +95,14 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Patch('cambiar-password')
   @HttpCode(HttpStatus.OK)
-  async changePassword(@Request() req, @Body() changePasswordDto: ChangePasswordDto) {
-    await this.usersService.changePassword(req.user.userId, changePasswordDto.nuevaPassword);
-    
+  async changePassword(
+    @Request() req: AuthRequest,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ) {
+    await this.usersService.changePassword(
+      req.user.userId,
+      changePasswordDto.nuevaPassword,
+    );
     return {
       mensaje: 'Contraseña actualizada exitosamente',
     };
