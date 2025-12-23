@@ -15,6 +15,7 @@ import { UpdateServiceOrderStatusDto } from './dto/update-service-order-status.d
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/roles.enum';
 import { Request as ExpressRequest } from 'express';
 import { Prisma, ServiceOrder } from '@prisma/client';
 
@@ -57,7 +58,7 @@ export class ServiceOrdersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles(Role.ADMIN)
   @Patch(':id/estado')
   async updateStatus(
     @Param('id', ParseIntPipe) id: number,

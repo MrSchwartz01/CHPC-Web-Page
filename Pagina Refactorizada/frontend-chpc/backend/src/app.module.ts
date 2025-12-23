@@ -10,6 +10,7 @@ import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { ServiceOrdersModule } from './service-orders/service-orders.module';
+import { AnalyticsModule } from './analytics/analytics.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ServiceOrdersModule } from './service-orders/service-orders.module';
     OrdersModule,
     WishlistModule,
     ServiceOrdersModule,
+    AnalyticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

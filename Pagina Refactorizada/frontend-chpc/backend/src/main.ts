@@ -38,7 +38,6 @@ async function bootstrap() {
 
   const port = process.env.PORT || 5000;
   await app.listen(port);
-  
   console.log(`\n🚀 Servidor ejecutándose en http://localhost:${port}`);
   console.log(`📚 API disponible en http://localhost:${port}/api`);
   console.log(`🔐 Endpoints de autenticación:`);

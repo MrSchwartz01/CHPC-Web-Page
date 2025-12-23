@@ -15,6 +15,7 @@ import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { Role } from '../auth/roles.enum';
 import { Request as ExpressRequest } from 'express';
 
 interface AuthRequest extends ExpressRequest {
@@ -51,7 +52,7 @@ export class OrdersController {
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles('admin')
+  @Roles(Role.ADMIN)
   @Patch(':id/status')
   async updateStatus(
     @Param('id', ParseIntPipe) id: number,

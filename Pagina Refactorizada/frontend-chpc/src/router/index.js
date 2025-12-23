@@ -5,6 +5,7 @@ import Home from '../components/HomePage/HomePage.vue';
 import ProductoDetalle from '../components/ProductoDetalle/ProductoDetalle.vue';
 import ListaMarcas from '../components/ListaMarcas/ListaMarcas.vue';
 import CarouselBanner from '../components/CarouselBanner/CarouselBanner.vue';
+import Dashboard from '../components/Dashboard/Dashboard.vue';
 
 import RedesSociales from '../components/RedesSociales/RedesSociales.vue';
 import ServicioTecnico from '../components/ServicioTecnico/ServicioTecnico.vue';
@@ -96,6 +97,23 @@ const routes = [
     path: "/promociones",
     name: "Promociones",
     component: Promociones,
+  },
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    component: Dashboard,
+    beforeEnter: (to, from, next) => {
+      const isAuthenticated = !!localStorage.getItem('access_token');
+      const userRol = localStorage.getItem('user_rol');
+      
+      if (!isAuthenticated) {
+        next('/login');
+      } else if (userRol !== 'administrador') {
+        next('/home');
+      } else {
+        next();
+      }
+    }
   }
 
 
