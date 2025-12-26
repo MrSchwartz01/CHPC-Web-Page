@@ -5,7 +5,8 @@
           v-for="(banner, index) in banners"
           :key="banner.id"
           class="carousel-item"
-          :class="{ active: activeBanner === index }"
+          :class="{ active: activeBanner === index, clickable: banner.producto_id }"
+          @click="handleBannerClick(banner)"
         >
           <img
             :src="banner.imagen_url"
@@ -13,6 +14,11 @@
             class="banner-image"
             @load="handleImageLoad"
           />
+          <!-- Indicador visual de que es clickeable -->
+          <div v-if="banner.producto_id" class="click-indicator">
+            <span class="click-icon">🛒</span>
+            <span class="click-text">Click para ver producto</span>
+          </div>
         </div>
   
         <!-- Controles del carrusel -->
@@ -80,6 +86,20 @@ export default {
     },
     handleImageLoad(event) {
       event.target.classList.add("loaded");
+    },
+    /**
+     * Maneja el click en un banner y redirige al producto si existe
+     */
+    handleBannerClick(banner) {
+      if (banner.producto_id) {
+        // Detener el carrusel temporalmente para mejor UX
+        this.stopCarousel();
+        // Redirigir a la página del producto
+        this.$router.push({
+          name: 'ProductoDetalle',
+          params: { id: banner.producto_id },
+        });
+      }
     },
   },
 };

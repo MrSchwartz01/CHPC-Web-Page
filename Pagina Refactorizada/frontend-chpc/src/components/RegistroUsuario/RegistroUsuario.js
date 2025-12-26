@@ -1,6 +1,5 @@
 import axios from 'axios';
-import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
-
+import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";import { API_BASE_URL } from '@/config/api';
 
 export default {
   name: 'RegistroUsuario',
@@ -9,6 +8,8 @@ export default {
   },
   data() {
     return {
+      nombre: '',
+      apellido: '',
       nombre_usuario: '',
       email: '',
       telefono: '',
@@ -27,33 +28,58 @@ export default {
         return;
       }
       try {
-        const response = await axios.post('http://localhost:5000/tienda/auth/registro', {
-          nombre_usuario: this.nombre_usuario,
+        const response = await axios.post(`${API_BASE_URL}/auth/registro`, {
+          nombre: this.nombre,
+          apellido: this.apellido,
+          username: this.nombre_usuario,
           email: this.email,
-          telefono: this.telefono,
-          direccion: this.direccion,
-          contraseña: this.contraseña,
+          telefono: this.telefono || undefined,
+          direccion: this.direccion || undefined,
+          password: this.contraseña,
         });
         this.success = response.data.mensaje;
+        this.error = '';
         this.clearForm();
+        // Redirigir al login después de 2 segundos
+        setTimeout(() => {
+          this.$router.push('/login');
+        }, 2000);
       } catch (err) {
-        this.error = err.response?.data?.mensaje || 'Error en el registro. Intenta de nuevo.';
+        this.error = err.response?.data?.message || 'Error en el registro. Intenta de nuevo.';
+        this.success = '';
       }
     },
     validateFields() {
       this.errors = {};
+      
+      if (!this.nombre || this.nombre.length < 2 || this.nombre.length > 50) {
+        this.errors.nombre = 'El nombre debe tener entre 2 y 50 caracteres.';
+      }
+      
+      if (!this.apellido || this.apellido.length < 2 || this.apellido.length > 50) {
+        this.errors.apellido = 'El apellido debe tener entre 2 y 50 caracteres.';
+      }
+      
       if (this.nombre_usuario.length < 3 || this.nombre_usuario.length > 80) {
         this.errors.nombre_usuario = 'El nombre de usuario debe tener entre 3 y 80 caracteres.';
       }
+      
+      if (!/^[a-zA-Z0-9_.-]+$/.test(this.nombre_usuario)) {
+        this.errors.nombre_usuario = 'El nombre de usuario solo puede contener letras, números, guiones, puntos y guiones bajos.';
+      }
+      
       if (!this.email.includes('@')) {
         this.errors.email = 'El correo electrónico debe tener un formato válido.';
       }
-      if (this.telefono && this.telefono.length > 20) {
-        this.errors.telefono = 'El teléfono debe tener como máximo 20 caracteres.';
+      
+      if (this.telefono && (this.telefono.length < 10 || this.telefono.length > 20)) {
+        this.errors.telefono = 'El teléfono debe tener entre 10 y 20 caracteres.';
       }
-      if (this.direccion && this.direccion.length > 255) {
-        this.errors.direccion = 'La dirección debe tener como máximo 255 caracteres.';
+      
+      if (this.direccion && (this.direccion.length < 10 || this.direccion.length > 200)) {
+        this.errors.direccion = 'La dirección debe tener entre 10 y 200 caracteres.';
       }
+      
       if (!this.contraseña.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/)) {
         this.errors.contraseña = 'La contraseña debe tener al menos 6 caracteres, incluir una letra, un número y un carácter especial.';
       }
@@ -65,6 +91,8 @@ export default {
       this.passwordVisible = !this.passwordVisible;
     },
     clearForm() {
+      this.nombre = '';
+      this.apellido = '';
       this.nombre_usuario = '';
       this.email = '';
       this.telefono = '';

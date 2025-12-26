@@ -5,7 +5,8 @@ import Home from '../components/HomePage/HomePage.vue';
 import ProductoDetalle from '../components/ProductoDetalle/ProductoDetalle.vue';
 import ListaMarcas from '../components/ListaMarcas/ListaMarcas.vue';
 import CarouselBanner from '../components/CarouselBanner/CarouselBanner.vue';
-import Dashboard from '../components/Dashboard/Dashboard.vue';
+import Dashboard from '../components/Dashboard/DashboardMain.vue';
+import AdminPanel from '../components/AdminPanel/AdminPanel.vue';
 
 import RedesSociales from '../components/RedesSociales/RedesSociales.vue';
 import ServicioTecnico from '../components/ServicioTecnico/ServicioTecnico.vue';
@@ -14,6 +15,7 @@ import CategoriasProductos from '../components/CategoriasProductos/CategoriasPro
 import ProductosPorCategoria from '../components/ProductosPorCategoria/ProductosPorCategoria.vue';
 import CarritoCompras from '../components/CarritoCompras/CarritoCompras.vue';
 import Promociones from '../components/Promociones/Promociones.vue';
+import CreateProduct from '../components/Admin/CreateProduct.vue';
 
 
 const routes = [
@@ -99,6 +101,20 @@ const routes = [
     component: Promociones,
   },
   {
+    path: '/admin/crear-producto',
+    name: 'CreateProduct',
+    component: CreateProduct,
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem('access_token');
+      const role = localStorage.getItem('user_rol');
+      if (token && (role === 'administrador' || role === 'vendedor')) {
+        next();
+      } else {
+        next('/login');
+      }
+    }
+  },
+  {
     path: "/dashboard",
     name: "Dashboard",
     component: Dashboard,
@@ -112,6 +128,20 @@ const routes = [
         next('/home');
       } else {
         next();
+      }
+    }
+  },
+  {
+    path: '/admin/panel',
+    name: 'AdminPanel',
+    component: AdminPanel,
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem('access_token');
+      const role = localStorage.getItem('user_rol');
+      if (token && (role === 'administrador' || role === 'vendedor')) {
+        next();
+      } else {
+        next('/login');
       }
     }
   }

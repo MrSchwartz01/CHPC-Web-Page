@@ -23,6 +23,8 @@ export default {
         mostrandoSugerencias: false,
         cargandoSugerencias: false,
         _sugerenciasTimeout: null,
+        isAdmin: false,
+        isVendedor: false,
       };
     },
     mounted() {
@@ -32,6 +34,8 @@ export default {
       }, 100);
       // Cargar cantidad del carrito
       this.actualizarCantidadCarrito();
+      // Verificar rol del usuario
+      this.checkUserRole();
     },
     //metodos llamados para navegacion y busqueda
   methods: {
@@ -110,6 +114,14 @@ export default {
       },
       goToCarrito() {
         this.$router.push("/carrito");
+      },
+      goToAdminPanel() {
+        this.$router.push("/admin/panel");
+      },
+      checkUserRole() {
+        const role = localStorage.getItem('user_rol');
+        this.isAdmin = role === 'administrador';
+        this.isVendedor = role === 'vendedor';
       },
       actualizarCantidadCarrito() {
         const carrito = localStorage.getItem("carrito");

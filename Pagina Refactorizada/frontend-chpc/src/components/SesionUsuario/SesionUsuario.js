@@ -1,5 +1,6 @@
 import axios from 'axios';
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
+import { API_BASE_URL } from '@/config/api';
 
 
 export default {
@@ -24,11 +25,12 @@ export default {
         return; // Detener si hay errores de validación
       }
       try {
-        const response = await axios.post('http://localhost:5000/tienda/auth/login', {
-          nombre_usuario: this.nombre_usuario,
-          contraseña: this.contraseña,
+        const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+          username: this.nombre_usuario,
+          password: this.contraseña,
         });
         localStorage.setItem('access_token', response.data.access_token); // Guarda el token en localStorage
+        localStorage.setItem('user_rol', response.data.usuario.rol); // Guarda el rol del usuario
         this.$router.replace('/home'); // Usa replace en lugar de push
       } catch (err) {
         this.error = err.response?.data?.mensaje || "Credenciales inválidas. Intenta de nuevo.";
@@ -48,9 +50,8 @@ export default {
       // Validación de la contraseña
       if (!this.contraseña.trim()) {
         this.errors.contraseña = "La contraseña es obligatoria.";
-      } else if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(this.contraseña)) {
-        this.errors.contraseña =
-          "La contraseña debe tener al menos 6 caracteres, incluir una letra, un número y un carácter especial.";
+      } else if (this.contraseña.trim().length < 6) {
+        this.errors.contraseña = "La contraseña debe tener al menos 6 caracteres.";
       }
     },
     clearError(field) {

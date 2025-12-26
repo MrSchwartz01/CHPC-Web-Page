@@ -17,6 +17,7 @@ export default {
       banners: [],
       productos: [],
       productosMostrados: [],
+      promociones: [],
       searchQuery: "",
       isAuthenticated: false,
       limiteProductos: 10,
@@ -42,6 +43,14 @@ export default {
             ? `http://localhost:5000${producto.media[0].url}`
             : "ruta-imagen-default.png",
       }));
+      
+      // Cargar Promociones Activas
+      const promocionesResponse = await axios.get("http://localhost:5000/api/promociones/activas");
+      this.promociones = promocionesResponse.data;
+      
+      // Combinar promociones con productos
+      this.aplicarPromocionesAProductos();
+      
       this.cargarMasProductos();
     } catch (error) {
       console.error("Error al cargar los datos:", error);
@@ -54,6 +63,30 @@ export default {
     }
   },
   methods: {
+    aplicarPromocionesAProductos() {
+      // Agregar información de promoción a cada producto
+      this.productos = this.productos.map(producto => {
+        const promocion = this.promociones.find(p => p.producto_id === producto.id);
+        if (promocion) {
+          const precioOriginal = producto.precio;
+          const precioConDescuento = precioOriginal - (precioOriginal * promocion.porcentaje_descuento / 100);
+          return {
+            ...producto,
+            tienePromocion: true,
+            promocion: {
+              porcentaje: promocion.porcentaje_descuento,
+              precioOriginal: precioOriginal,
+              precioConDescuento: precioConDescuento.toFixed(2),
+              fechaFin: promocion.fecha_fin
+            }
+          };
+        }
+        return {
+          ...producto,
+          tienePromocion: false
+        };
+      });
+    },
     aplicarFiltros() {
       const query = this.searchQuery.trim().toLowerCase();
 

@@ -100,8 +100,48 @@
   .carousel-indicators .active {
     background-color: #fff;
   }
+    /* Estilos para banners clickeables */
+  .carousel-item.clickable {
+    cursor: pointer;
+  }
   
-  .no-banners {
+  .carousel-item.clickable:hover .banner-image {
+    transform: scale(1.05);
+    filter: brightness(0.9);
+  }
+  
+  .click-indicator {
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .carousel-item.clickable:hover .click-indicator {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .click-icon {
+    font-size: 20px;
+  }
+  
+  .click-text {
+    white-space: nowrap;
+  }
+    .no-banners {
     text-align: center;
     color: #888;
     font-size: 1.2rem;

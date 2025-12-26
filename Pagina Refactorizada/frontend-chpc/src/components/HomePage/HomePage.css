@@ -198,6 +198,61 @@ body {
   .product-card:hover::before {
     left: 100%;
   }
+
+  /* Estilos para productos en promoción */
+  .product-card.producto-promocion {
+    border: 2px solid #ff6b6b;
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.2);
+  }
+
+  .promo-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    z-index: 10;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  .precio-container {
+    margin: 15px 0;
+  }
+
+  .precio-promocion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .precio-original {
+    color: #999;
+    text-decoration: line-through;
+    font-size: 0.9rem;
+    margin: 0;
+  }
+
+  .precio-descuento {
+    color: #ff6b6b;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+  }
   
   /* Animación para cada tarjeta de producto */
   @keyframes fadeIn {

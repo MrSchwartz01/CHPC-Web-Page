@@ -6,7 +6,21 @@ import { Banner } from '@prisma/client';
 export class BannersService {
   constructor(private prisma: PrismaService) {}
 
+  /**
+   * Obtiene todos los banners con información del producto relacionado
+   */
   async findAll(): Promise<Banner[]> {
-    return await this.prisma.banner.findMany();
+    return await this.prisma.banner.findMany({
+      include: {
+        producto: {
+          select: {
+            id: true,
+            nombre_producto: true,
+            precio: true,
+            stock: true,
+          },
+        },
+      },
+    });
   }
 }

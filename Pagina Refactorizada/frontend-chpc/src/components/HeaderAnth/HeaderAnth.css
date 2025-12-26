@@ -160,6 +160,19 @@
     background-color: #fb8c00; /* Naranja más oscuro */
     transform: scale(1.05);
   }
+
+  .admin-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .admin-button:hover {
+    background: linear-gradient(135deg, #5568d3 0%, #5a3d7d 100%);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
   
   /* Menú de navegación */
   .main-menu {

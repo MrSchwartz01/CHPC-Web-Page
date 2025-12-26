@@ -16,6 +16,32 @@
   
       <form @submit.prevent="register">
         <div class="input-group">
+          <label for="nombre">Nombre *</label>
+          <input
+            v-model="nombre"
+            id="nombre"
+            type="text"
+            placeholder="Nombre"
+            required
+            @input="clearError('nombre')"
+          />
+          <p v-if="errors.nombre" class="error">{{ errors.nombre }}</p>
+        </div>
+
+        <div class="input-group">
+          <label for="apellido">Apellido *</label>
+          <input
+            v-model="apellido"
+            id="apellido"
+            type="text"
+            placeholder="Apellido"
+            required
+            @input="clearError('apellido')"
+          />
+          <p v-if="errors.apellido" class="error">{{ errors.apellido }}</p>
+        </div>
+
+        <div class="input-group">
           <label for="nombre_usuario">Nombre de usuario *</label>
           <input
             v-model="nombre_usuario"

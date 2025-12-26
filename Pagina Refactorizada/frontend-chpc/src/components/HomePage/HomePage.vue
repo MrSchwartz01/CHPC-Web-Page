@@ -54,7 +54,13 @@
     v-for="producto in productosMostrados"
     :key="producto.id"
     class="product-card"
+    :class="{ 'producto-promocion': producto.tienePromocion }"
   >
+    <!-- Badge de promoción -->
+    <div v-if="producto.tienePromocion" class="promo-badge">
+      -{{ producto.promocion.porcentaje }}% OFF
+    </div>
+
     <!-- Imagen del producto -->
     <img
       :src="producto.imagen_url || 'ruta-imagen-default.png'"
@@ -66,9 +72,17 @@
     <p>{{ producto.descripcion }}</p>
 
     <!-- Precio del producto (solo para usuarios autenticados) -->
-    <p v-if="isAuthenticated">
-      <strong>Precio:</strong> ${{ producto.precio }}
-    </p>
+    <div v-if="isAuthenticated" class="precio-container">
+      <div v-if="producto.tienePromocion" class="precio-promocion">
+        <p class="precio-original">${{ producto.promocion.precioOriginal }}</p>
+        <p class="precio-descuento">
+          <strong>${{ producto.promocion.precioConDescuento }}</strong>
+        </p>
+      </div>
+      <p v-else>
+        <strong>Precio:</strong> ${{ producto.precio }}
+      </p>
+    </div>
 
     <!-- Mostrar cantidad en stock -->
     <p>

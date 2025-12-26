@@ -120,7 +120,7 @@ import VentasPorCategoria from './DashboardCharts/VentasPorCategoria.vue';
 import axios from 'axios';
 
 export default {
-  name: 'Dashboard',
+  name: 'DashboardMain',
   components: {
     HeaderAnth,
     FooterAnth,

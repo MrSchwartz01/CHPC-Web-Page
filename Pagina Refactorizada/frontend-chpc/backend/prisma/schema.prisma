@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -58,19 +58,26 @@ model Product {
   imagen_url      String
   marca           String?
   color           String?
+  erpId           String? @unique
 
   wishlistItems   WishlistItem[]
   serviceOrders   ServiceOrder[]
+  productImages   ProductImage[]
+  banners         Banner[]
+  promotions      Promotion[]
 
   @@map("productos")
 }
 
 model Banner {
-  id         Int    @id @default(autoincrement())
-  titulo     String
-  imagen_url String
+  id          Int      @id @default(autoincrement())
+  titulo      String
+  imagen_url  String
+  producto_id Int?     @map("producto_id")
+  producto    Product? @relation(fields: [producto_id], references: [id], onDelete: SetNull)
 
   @@map("banners")
+  @@index([producto_id])
 }
 
 model Order {
@@ -153,3 +160,59 @@ model ServiceOrder {
 
   @@map("ordenes_servicio")
 }
+
+model SyncLog {
+  id          Int      @id @default(autoincrement())
+  entityName  String   @unique
+  lastSync    DateTime
+  status      String
+  updatedAt   DateTime @updatedAt
+}
+
+model ProductImage {
+  id                 Int      @id @default(autoincrement())
+  producto_id        Int
+  ruta_imagen        String   @db.VarChar(500)
+  nombre_archivo     String?  @db.VarChar(255)
+  tipo_archivo       String?  @db.VarChar(50)
+  tamano_archivo     Int?
+  es_principal       Boolean  @default(false)
+  orden              Int      @default(0)
+  version_optimizada Boolean  @default(false)
+  fecha_subida       DateTime @default(now())
+  
+  producto           Product  @relation(fields: [producto_id], references: [id], onDelete: Cascade)
+  
+  @@map("imagenes")
+  @@index([producto_id])
+  @@index([es_principal])
+  @@index([orden])
+}
+
+model Promotion {
+  id                Int      @id @default(autoincrement())
+  producto_id       Int
+  porcentaje_descuento Float
+  fecha_inicio      DateTime
+  fecha_fin         DateTime
+  activa            Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  producto          Product  @relation(fields: [producto_id], references: [id], onDelete: Cascade)
+  
+  @@map("promociones")
+  @@index([producto_id])
+  @@index([activa])
+  @@index([fecha_inicio, fecha_fin])
+}
+
+model SiteConfig {
+  id         Int      @id @default(autoincrement())
+  clave      String   @unique
+  valor      String
+  updatedAt  DateTime @updatedAt
+  
+  @@map("configuracion_sitio")
+}
+

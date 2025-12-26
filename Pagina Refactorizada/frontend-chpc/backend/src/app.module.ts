@@ -11,6 +11,8 @@ import { OrdersModule } from './orders/orders.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { ServiceOrdersModule } from './service-orders/service-orders.module';
 import { AnalyticsModule } from './analytics/analytics.module';
+import { PromotionsModule } from './promotions/promotions.module';
+import { SiteConfigModule } from './site-config/site-config.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { AnalyticsModule } from './analytics/analytics.module';
     WishlistModule,
     ServiceOrdersModule,
     AnalyticsModule,
+    PromotionsModule,
+    SiteConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],

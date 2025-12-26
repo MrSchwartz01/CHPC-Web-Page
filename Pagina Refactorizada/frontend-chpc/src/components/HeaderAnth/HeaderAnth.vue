@@ -56,6 +56,14 @@
               <button class="action-button" @click="goToRegister">Hacerse cliente</button>
             </template>
             <template v-else>
+              <button 
+                v-if="isAdmin || isVendedor" 
+                class="action-button admin-button" 
+                @click="goToAdminPanel"
+                title="Panel de Administración"
+              >
+                ⚙️ Panel Admin
+              </button>
               <button class="action-button" @click="cerrarSesion">Cerrar Sesión</button>
             </template>
           </div>

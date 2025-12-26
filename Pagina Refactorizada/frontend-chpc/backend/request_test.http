@@ -1,0 +1,13 @@
+### Prueba de Registro de Usuario
+POST http://localhost:5000/api/auth/registro
+Content-Type: application/json
+
+{
+  "nombre": "Juan",
+  "apellido": "Perez",
+  "username": "juan.perez",
+  "email": "juan.perez@test.com",
+  "password": "PasswordSeguro123!",
+  "telefono": "5512345678",
+  "direccion": "Calle de Prueba 123"
+}
