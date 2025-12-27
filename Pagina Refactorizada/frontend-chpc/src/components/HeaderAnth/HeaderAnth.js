@@ -115,6 +115,9 @@ export default {
       goToCarrito() {
         this.$router.push("/carrito");
       },
+      goToPerfil() {
+        this.$router.push("/perfil");
+      },
       goToAdminPanel() {
         this.$router.push("/admin/panel");
       },

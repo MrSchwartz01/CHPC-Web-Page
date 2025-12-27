@@ -11,8 +11,8 @@ const productos = [
     stock: 45,
     imagen_url: 'https://example.com/images/iphone15-pro.jpg',
     marca: 'Apple',
-    color: 'Titanio Natural',
-    erpId: 'PROD-APP-001'
+    color: 'Titanio Natural'
+    // erpId: 'PROD-APP-001'
   },
   {
     nombre_producto: 'Samsung Galaxy S24 Ultra',
@@ -21,8 +21,8 @@ const productos = [
     stock: 38,
     imagen_url: 'https://example.com/images/s24-ultra.jpg',
     marca: 'Samsung',
-    color: 'Titanio Negro',
-    erpId: 'PROD-SAM-001'
+    color: 'Titanio Negro'
+    // erpId: 'PROD-SAM-001'
   },
   {
     nombre_producto: 'Google Pixel 8 Pro',
@@ -31,8 +31,8 @@ const productos = [
     stock: 52,
     imagen_url: 'https://example.com/images/pixel8-pro.jpg',
     marca: 'Google',
-    color: 'Obsidiana',
-    erpId: 'PROD-GOO-001'
+    color: 'Obsidiana'
+    // erpId: 'PROD-GOO-001'
   },
   {
     nombre_producto: 'OnePlus 12',
@@ -41,8 +41,8 @@ const productos = [
     stock: 67,
     imagen_url: 'https://example.com/images/oneplus12.jpg',
     marca: 'OnePlus',
-    color: 'Verde Bosque',
-    erpId: 'PROD-ONE-001'
+    color: 'Verde Bosque'
+    // erpId: 'PROD-ONE-001'
   },
   {
     nombre_producto: 'Xiaomi 14 Ultra',
@@ -51,8 +51,8 @@ const productos = [
     stock: 42,
     imagen_url: 'https://example.com/images/xiaomi14-ultra.jpg',
     marca: 'Xiaomi',
-    color: 'Blanco',
-    erpId: 'PROD-XIA-001'
+    color: 'Blanco'
+    // erpId: 'PROD-XIA-001'
   },
   // 6-10: Laptops
   {
@@ -62,8 +62,8 @@ const productos = [
     stock: 22,
     imagen_url: 'https://example.com/images/macbook-pro-16.jpg',
     marca: 'Apple',
-    color: 'Gris Espacial',
-    erpId: 'PROD-APP-002'
+    color: 'Gris Espacial'
+    // erpId: 'PROD-APP-002'
   },
   {
     nombre_producto: 'Dell XPS 15',
@@ -72,8 +72,8 @@ const productos = [
     stock: 35,
     imagen_url: 'https://example.com/images/dell-xps15.jpg',
     marca: 'Dell',
-    color: 'Plata',
-    erpId: 'PROD-DEL-001'
+    color: 'Plata'
+    // erpId: 'PROD-DEL-001'
   },
   {
     nombre_producto: 'Microsoft Surface Laptop Studio 2',
@@ -82,8 +82,8 @@ const productos = [
     stock: 28,
     imagen_url: 'https://example.com/images/surface-studio2.jpg',
     marca: 'Microsoft',
-    color: 'Platino',
-    erpId: 'PROD-MIC-001'
+    color: 'Platino'
+    // erpId: 'PROD-MIC-001'
   },
   {
     nombre_producto: 'Asus ROG Zephyrus G16',
@@ -92,8 +92,8 @@ const productos = [
     stock: 18,
     imagen_url: 'https://example.com/images/rog-zephyrus.jpg',
     marca: 'Asus',
-    color: 'Luna Gris',
-    erpId: 'PROD-ASU-001'
+    color: 'Luna Gris'
+    // erpId: 'PROD-ASU-001'
   },
   {
     nombre_producto: 'Lenovo Yoga 9i',
@@ -102,8 +102,8 @@ const productos = [
     stock: 41,
     imagen_url: 'https://example.com/images/yoga9i.jpg',
     marca: 'Lenovo',
-    color: 'Peltre',
-    erpId: 'PROD-LEN-001'
+    color: 'Peltre'
+    // erpId: 'PROD-LEN-001'
   },
   // 11-15: Tablets
   {
@@ -113,8 +113,8 @@ const productos = [
     stock: 58,
     imagen_url: 'https://example.com/images/ipad-pro.jpg',
     marca: 'Apple',
-    color: 'Gris Espacial',
-    erpId: 'PROD-APP-003'
+    color: 'Gris Espacial'
+    // erpId: 'PROD-APP-003'
   },
   {
     nombre_producto: 'Samsung Galaxy Tab S9 Ultra',
@@ -123,8 +123,8 @@ const productos = [
     stock: 39,
     imagen_url: 'https://example.com/images/tabs9-ultra.jpg',
     marca: 'Samsung',
-    color: 'Grafito',
-    erpId: 'PROD-SAM-002'
+    color: 'Grafito'
+    // erpId: 'PROD-SAM-002'
   },
   {
     nombre_producto: 'Microsoft Surface Pro 10',
@@ -133,8 +133,8 @@ const productos = [
     stock: 33,
     imagen_url: 'https://example.com/images/surface-pro10.jpg',
     marca: 'Microsoft',
-    color: 'Negro',
-    erpId: 'PROD-MIC-002'
+    color: 'Negro'
+    // erpId: 'PROD-MIC-002'
   },
   {
     nombre_producto: 'Amazon Fire Max 11',
@@ -143,8 +143,8 @@ const productos = [
     stock: 120,
     imagen_url: 'https://example.com/images/fire-max11.jpg',
     marca: 'Amazon',
-    color: 'Negro Pizarra',
-    erpId: 'PROD-AMA-001'
+    color: 'Negro Pizarra'
+    // erpId: 'PROD-AMA-001'
   },
   {
     nombre_producto: 'Xiaomi Pad 6 Max',
@@ -153,8 +153,8 @@ const productos = [
     stock: 47,
     imagen_url: 'https://example.com/images/xiaomi-pad6max.jpg',
     marca: 'Xiaomi',
-    color: 'Negro',
-    erpId: 'PROD-XIA-002'
+    color: 'Negro'
+    // erpId: 'PROD-XIA-002'
   },
   // 16-20: Wearables
   {
@@ -164,8 +164,8 @@ const productos = [
     stock: 62,
     imagen_url: 'https://example.com/images/watch-ultra2.jpg',
     marca: 'Apple',
-    color: 'Titanio',
-    erpId: 'PROD-APP-004'
+    color: 'Titanio'
+    // erpId: 'PROD-APP-004'
   },
   {
     nombre_producto: 'Samsung Galaxy Watch 6 Classic',
@@ -174,8 +174,8 @@ const productos = [
     stock: 75,
     imagen_url: 'https://example.com/images/watch6-classic.jpg',
     marca: 'Samsung',
-    color: 'Negro',
-    erpId: 'PROD-SAM-003'
+    color: 'Negro'
+    // erpId: 'PROD-SAM-003'
   },
   {
     nombre_producto: 'Google Pixel Watch 2',
@@ -184,8 +184,8 @@ const productos = [
     stock: 68,
     imagen_url: 'https://example.com/images/pixel-watch2.jpg',
     marca: 'Google',
-    color: 'Obsidiana',
-    erpId: 'PROD-GOO-002'
+    color: 'Obsidiana'
+    // erpId: 'PROD-GOO-002'
   },
   {
     nombre_producto: 'Fitbit Charge 6',
@@ -194,8 +194,8 @@ const productos = [
     stock: 110,
     imagen_url: 'https://example.com/images/fitbit-charge6.jpg',
     marca: 'Fitbit',
-    color: 'Negro Grafito',
-    erpId: 'PROD-FIT-001'
+    color: 'Negro Grafito'
+    // erpId: 'PROD-FIT-001'
   },
   {
     nombre_producto: 'Garmin Epix Pro (Gen 2)',
@@ -204,8 +204,8 @@ const productos = [
     stock: 29,
     imagen_url: 'https://example.com/images/garmin-epix.jpg',
     marca: 'Garmin',
-    color: 'Carbono Gris',
-    erpId: 'PROD-GAR-001'
+    color: 'Carbono Gris'
+    // erpId: 'PROD-GAR-001'
   },
   // 21-26: Audio y Accesorios
   {
@@ -215,8 +215,8 @@ const productos = [
     stock: 95,
     imagen_url: 'https://example.com/images/airpods-pro2.jpg',
     marca: 'Apple',
-    color: 'Blanco',
-    erpId: 'PROD-APP-005'
+    color: 'Blanco'
+    // erpId: 'PROD-APP-005'
   },
   {
     nombre_producto: 'Sony WH-1000XM5',
@@ -225,8 +225,8 @@ const productos = [
     stock: 54,
     imagen_url: 'https://example.com/images/sony-xm5.jpg',
     marca: 'Sony',
-    color: 'Negro',
-    erpId: 'PROD-SON-001'
+    color: 'Negro'
+    // erpId: 'PROD-SON-001'
   },
   {
     nombre_producto: 'Meta Quest 3',
@@ -235,8 +235,8 @@ const productos = [
     stock: 36,
     imagen_url: 'https://example.com/images/quest3.jpg',
     marca: 'Meta',
-    color: 'Blanco',
-    erpId: 'PROD-MET-001'
+    color: 'Blanco'
+    // erpId: 'PROD-MET-001'
   },
   {
     nombre_producto: 'PlayStation Portal',
@@ -245,8 +245,8 @@ const productos = [
     stock: 41,
     imagen_url: 'https://example.com/images/ps-portal.jpg',
     marca: 'Sony',
-    color: 'Blanco',
-    erpId: 'PROD-SON-002'
+    color: 'Blanco'
+    // erpId: 'PROD-SON-002'
   },
   {
     nombre_producto: 'Logitech MX Master 3S',
@@ -255,8 +255,8 @@ const productos = [
     stock: 82,
     imagen_url: 'https://example.com/images/mx-master3s.jpg',
     marca: 'Logitech',
-    color: 'Gris Pálido',
-    erpId: 'PROD-LOG-001'
+    color: 'Gris Pálido'
+    // erpId: 'PROD-LOG-001'
   },
   {
     nombre_producto: 'Nintendo Switch OLED',
@@ -265,8 +265,8 @@ const productos = [
     stock: 57,
     imagen_url: 'https://example.com/images/switch-oled.jpg',
     marca: 'Nintendo',
-    color: 'Blanco',
-    erpId: 'PROD-NIN-001'
+    color: 'Blanco'
+    // erpId: 'PROD-NIN-001'
   }
 ];
 

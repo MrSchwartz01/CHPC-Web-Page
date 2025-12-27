@@ -57,6 +57,13 @@
             </template>
             <template v-else>
               <button 
+                class="action-button perfil-button" 
+                @click="goToPerfil"
+                title="Mi Perfil"
+              >
+                👤 Mi Perfil
+              </button>
+              <button 
                 v-if="isAdmin || isVendedor" 
                 class="action-button admin-button" 
                 @click="goToAdminPanel"
@@ -82,6 +89,8 @@
               <a href="#" @click.prevent>Productos</a>
               <transition name="dropdown-fade">
                 <ul v-if="showProductsMenu" class="dropdown-content">
+                  <li class="ver-todos-item"><a href="/productos"><strong>🛍️ Ver Todos los Productos</strong></a></li>
+                  <li class="divider"></li>
                   <li><a href="/productos/categoria/laptops">Laptops</a></li>
                   <li><a href="/productos/categoria/desktops">Computadoras de Escritorio</a></li>
                   <li><a href="/productos/categoria/monitores">Monitores</a></li>
@@ -97,7 +106,7 @@
             </li>
             <li><a href="/promociones">Promociones</a></li>
             <li><a href="/servicio-tecnico">Servicio Técnico</a></li>
-            <li><a href="/redes-sociales">Redes Sociales</a></li>
+            <li><a href="/redes-sociales">Contáctanos</a></li>
             <li><a href="/marcas">Marcas</a></li>
           </ul>
         </nav>

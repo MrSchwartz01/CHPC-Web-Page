@@ -16,6 +16,8 @@ import ProductosPorCategoria from '../components/ProductosPorCategoria/Productos
 import CarritoCompras from '../components/CarritoCompras/CarritoCompras.vue';
 import Promociones from '../components/Promociones/Promociones.vue';
 import CreateProduct from '../components/Admin/CreateProduct.vue';
+import TodosLosProductos from '../components/TodosLosProductos/TodosLosProductos.vue';
+import PerfilUsuario from '../components/PerfilUsuario/PerfilUsuario.vue';
 
 
 const routes = [
@@ -91,6 +93,11 @@ const routes = [
     component: ProductosPorCategoria,
   },
   {
+    path: "/productos",
+    name: "TodosLosProductos",
+    component: TodosLosProductos,
+  },
+  {
     path: "/carrito",
     name: "CarritoCompras",
     component: CarritoCompras,
@@ -99,6 +106,19 @@ const routes = [
     path: "/promociones",
     name: "Promociones",
     component: Promociones,
+  },
+  {
+    path: '/perfil',
+    name: 'PerfilUsuario',
+    component: PerfilUsuario,
+    beforeEnter: (to, from, next) => {
+      const isAuthenticated = !!localStorage.getItem('access_token');
+      if (isAuthenticated) {
+        next();
+      } else {
+        next('/login');
+      }
+    }
   },
   {
     path: '/admin/crear-producto',

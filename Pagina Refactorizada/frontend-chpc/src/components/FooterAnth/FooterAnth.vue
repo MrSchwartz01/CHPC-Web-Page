@@ -37,34 +37,7 @@
           referrerpolicy="no-referrer-when-downgrade"
         ></iframe>
       </div>
-      <!-- Nueva sección para Misión y Visión -->
-      <div class="mission-vision-section">
-    <div class="mission-section">
-      <h4 class="section-title">Nuestra Misión</h4>
-      <p class="section-content">
-        En CHPC Tecnología, nuestra misión es ir más allá de la simple venta de equipos tecnológicos. Nos dedicamos a crear 
-        experiencias únicas mediante la combinación de innovación, calidad y servicio personalizado. Lo que nos hace 
-        especiales es nuestro enfoque centrado en el cliente: analizamos profundamente sus desafíos, diseñamos soluciones 
-        a medida y brindamos un acompañamiento continuo. Cada producto que ofrecemos refleja nuestro compromiso con la 
-        excelencia y la tecnología de punta. Nos destacamos por integrar sostenibilidad en cada etapa del proceso, desde 
-        la selección de productos hasta la gestión de residuos electrónicos, asegurando que nuestra huella tecnológica sea 
-        positiva para nuestros clientes, la industria y el planeta.
-      </p>
-    </div>
-    
-    <div class="vision-section">
-      <h4 class="section-title">Nuestra Visión</h4>
-      <p class="section-content">
-        Convertirnos en la referencia global en soluciones tecnológicas integrales, distinguiéndonos por nuestra capacidad 
-        de anticipar las necesidades del mercado y ofrecer productos y servicios que redefinan la experiencia tecnológica. 
-        Nos visualizamos liderando un ecosistema innovador donde cada equipo y solución que ofrecemos no solo resuelve 
-        problemas, sino que transforma la manera en que las personas y las empresas interactúan con la tecnología. En CHPC 
-        Tecnología, creemos que la verdadera innovación no es solo adelantarse al futuro, sino construirlo de la mano de 
-        nuestros clientes, con un enfoque en sostenibilidad, inclusión y excelencia operativa.
-      </p>
-    </div>
-  </div>
-  
+      
       <div class="footer-bottom">
         <p>&copy; 2025 CHCP Tecnología. Todos los derechos reservados.</p>
       </div>

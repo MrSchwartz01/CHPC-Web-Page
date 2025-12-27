@@ -99,33 +99,5 @@
     color: #ffa726;
     
   }
-  
-  /* Estilos para la sección Misión y Visión */
-  .mission-vision-section {
-    margin-top: 20px;
-    padding: 20px 10px;
-    border-top: 1px solid #ffa726; /* Línea divisoria en naranja suave */
-    text-align: center;
-  }
-  
-  .mission-vision-section h4 {
-    margin-bottom: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffa726; /* Naranja suave */
-    text-transform: uppercase;
-  }
-  
-  .mission-vision-section p {
-    margin: 10px auto;
-    max-width: 800px;
-    line-height: 1.6;
-    color: #ffffff; /* Texto blanco */
-    font-size: 16px;
-  }
-  
-  .mission-vision-section p:hover {
-    color: #ffa726; /* Efecto hover en texto */
-    transition: color 0.3s ease;
-  }
+
   

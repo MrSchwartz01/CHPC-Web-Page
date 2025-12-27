@@ -31,6 +31,7 @@ export default {
         });
         localStorage.setItem('access_token', response.data.access_token); // Guarda el token en localStorage
         localStorage.setItem('user_rol', response.data.usuario.rol); // Guarda el rol del usuario
+        localStorage.setItem('user_id', response.data.usuario.id); // Guarda el ID del usuario
         this.$router.replace('/home'); // Usa replace en lugar de push
       } catch (err) {
         this.error = err.response?.data?.mensaje || "Credenciales inválidas. Intenta de nuevo.";
