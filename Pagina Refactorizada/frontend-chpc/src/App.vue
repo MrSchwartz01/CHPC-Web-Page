@@ -1,12 +1,18 @@
 <template>
   <div id="app" :class="{ 'dark-mode': isDarkMode }">
     <router-view /> <!-- Muestra el componente basado en la ruta actual -->
+    <WhatsAppWidget /> <!-- Widget flotante de WhatsApp -->
   </div>
 </template>
 
 <script>
+import WhatsAppWidget from './components/WhatsAppWidget/WhatsAppWidget.vue';
+
 export default {
   name: 'App',
+  components: {
+    WhatsAppWidget
+  },
   data() {
     return {
       isDarkMode: false,

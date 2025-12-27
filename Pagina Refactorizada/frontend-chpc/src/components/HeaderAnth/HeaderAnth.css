@@ -147,7 +147,7 @@
   }
   
   .action-button {
-    background-color: #ffa726; /* Naranja suave */
+    background-color: #FF8000;
     color: white;
     border: none;
     padding: 8px 15px;
@@ -157,12 +157,12 @@
   }
   
   .action-button:hover {
-    background-color: #fb8c00; /* Naranja más oscuro */
+    background-color: #FF6000;
     transform: scale(1.05);
   }
 
   .admin-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF8000 0%, #FF6000 100%);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -170,12 +170,12 @@
   }
 
   .admin-button:hover {
-    background: linear-gradient(135deg, #5568d3 0%, #5a3d7d 100%);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #FF6000 0%, #E55000 100%);
+    box-shadow: 0 4px 12px rgba(255, 128, 0, 0.4);
   }
 
   .perfil-button {
-    background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+    background: linear-gradient(135deg, #FF8000 0%, #FF6000 100%);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -183,8 +183,8 @@
   }
 
   .perfil-button:hover {
-    background: linear-gradient(135deg, #229954 0%, #1e7e44 100%);
-    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+    background: linear-gradient(135deg, #FF6000 0%, #E55000 100%);
+    box-shadow: 0 4px 12px rgba(255, 128, 0, 0.4);
   }
   
   /* Menú de navegación */

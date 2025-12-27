@@ -105,9 +105,9 @@
               </transition>
             </li>
             <li><a href="/promociones">Promociones</a></li>
+            <li><a href="/marcas">Marcas</a></li>
             <li><a href="/servicio-tecnico">Servicio Técnico</a></li>
             <li><a href="/redes-sociales">Contáctanos</a></li>
-            <li><a href="/marcas">Marcas</a></li>
           </ul>
         </nav>
       </header>
