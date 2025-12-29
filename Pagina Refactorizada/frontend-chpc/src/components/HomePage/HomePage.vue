@@ -19,6 +19,64 @@
       <h1>Bienvenidos a Nuestra Tienda </h1>
       <p>Explora nuestros productos y encuentra lo que necesitas.</p>
 
+      <!-- Sección de Categorías Más Visitadas -->
+      <section class="categorias-section">
+        <h2 class="section-title">📊 Categorías Más Visitadas</h2>
+        <div class="categorias-grid">
+          <div
+            v-for="categoria in categoriasMasVisitadas"
+            :key="categoria.id"
+            class="categoria-card"
+            @click="filtrarPorCategoria(categoria.nombre)"
+          >
+            <div class="categoria-icon">{{ categoria.icon }}</div>
+            <h3>{{ categoria.nombre }}</h3>
+            <p class="categoria-stats">{{ categoria.visitas }} visitas</p>
+            <p class="categoria-productos">{{ categoria.productos }} productos</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sección de Productos Más Vendidos por Categoría -->
+      <section class="productos-vendidos-section">
+        <h2 class="section-title">🔥 Productos Más Vendidos por Categoría</h2>
+        
+        <div v-for="categoria in categoriasMasVisitadas" :key="'vendidos-' + categoria.id" class="categoria-vendidos">
+          <h3 class="categoria-vendidos-title">
+            {{ categoria.icon }} {{ categoria.nombre }}
+          </h3>
+          
+          <div class="productos-vendidos-grid">
+            <div
+              v-for="producto in getProductosPorCategoria(categoria.nombre)"
+              :key="producto.id"
+              class="producto-vendido-card"
+              @click="verDetalle(producto.id)"
+            >
+              <div class="vendido-badge">
+                <span>⭐ Top {{ producto.ranking }}</span>
+              </div>
+              
+              <img
+                :src="producto.imagen_url || 'ruta-imagen-default.png'"
+                :alt="producto.nombre_producto"
+              />
+              
+              <div class="producto-vendido-info">
+                <h4>{{ producto.nombre_producto }}</h4>
+                <p class="producto-marca">{{ producto.marca || 'Sin marca' }}</p>
+                
+                <div v-if="isAuthenticated" class="producto-precio">
+                  <span class="precio-actual">${{ producto.precio }}</span>
+                </div>
+                
+                <p class="producto-ventas">{{ producto.ventas }} vendidos</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Filtros de precio -->
       <div class="price-filters">
         <span>Filtrar por precio:</span>

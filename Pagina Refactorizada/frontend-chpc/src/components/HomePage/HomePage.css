@@ -1,4 +1,6 @@
 /* Estilos del fondo principal */
+@import './HomePage-categorias.css';
+
 body {
     background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
     margin: 0;

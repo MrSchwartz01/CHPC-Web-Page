@@ -22,6 +22,26 @@ export default {
       isAuthenticated: false,
       limiteProductos: 10,
       selectedPriceRange: "", // '', 'low', 'mid', 'high'
+      
+      // Datos de categorías más visitadas (placeholder)
+      categoriasMasVisitadas: [
+        { id: 1, nombre: 'Laptops', icon: '💻', visitas: 1250, productos: 45 },
+        { id: 2, nombre: 'Componentes', icon: '🔧', visitas: 980, productos: 120 },
+        { id: 3, nombre: 'Periféricos', icon: '⌨️', visitas: 850, productos: 85 },
+        { id: 4, nombre: 'Almacenamiento', icon: '💾', visitas: 720, productos: 60 },
+        { id: 5, nombre: 'Redes', icon: '🌐', visitas: 650, productos: 38 },
+        { id: 6, nombre: 'Audio', icon: '🎧', visitas: 540, productos: 52 },
+      ],
+      
+      // Mapeo de categorías a marcas (para simular productos por categoría)
+      categoriaMapping: {
+        'Laptops': ['Dell', 'HP', 'Lenovo', 'Asus'],
+        'Componentes': ['Intel', 'AMD', 'NVIDIA', 'Corsair'],
+        'Periféricos': ['Logitech', 'Razer', 'HyperX', 'SteelSeries'],
+        'Almacenamiento': ['Kingston', 'Samsung', 'WD', 'Seagate'],
+        'Redes': ['TP-Link', 'Cisco', 'Ubiquiti', 'Netgear'],
+        'Audio': ['Sony', 'JBL', 'Bose', 'Audio-Technica'],
+      },
     };
   },
   async created() {
@@ -156,6 +176,34 @@ export default {
     },
     redirigirLogin() {
       this.$router.push("/login");
+    },
+    filtrarPorCategoria(nombreCategoria) {
+      const marcas = this.categoriaMapping[nombreCategoria];
+      if (!marcas) return;
+      
+      this.productosMostrados = this.productos.filter(producto => 
+        marcas.some(marca => producto.marca?.toLowerCase().includes(marca.toLowerCase()))
+      );
+      
+      window.scrollTo({ top: 600, behavior: 'smooth' });
+    },
+    getProductosPorCategoria(nombreCategoria) {
+      const marcas = this.categoriaMapping[nombreCategoria];
+      if (!marcas) return [];
+      
+      let productosFiltrados = this.productos.filter(producto => 
+        marcas.some(marca => producto.marca?.toLowerCase().includes(marca.toLowerCase()))
+      );
+      
+      productosFiltrados = productosFiltrados.map((producto, index) => ({
+        ...producto,
+        ventas: Math.floor(Math.random() * 500) + 100,
+        ranking: index + 1,
+      }));
+      
+      return productosFiltrados
+        .sort((a, b) => b.ventas - a.ventas)
+        .slice(0, 3);
     },
   },
 };
