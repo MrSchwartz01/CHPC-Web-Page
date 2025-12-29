@@ -1,7 +1,13 @@
-import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
+import { CreateUserAdminDto } from './dto/create-user-admin.dto';
+import { UpdateUserAdminDto } from './dto/update-user-admin.dto';
 
 @Injectable()
 export class UsersService {
@@ -82,8 +88,9 @@ export class UsersService {
     userId: number,
     refreshToken: string | null,
   ): Promise<void> {
-    const hashedToken = refreshToken ? await bcrypt.hash(refreshToken, 10) : null;
-    
+    const hashedToken = refreshToken
+      ? await bcrypt.hash(refreshToken, 10)
+      : null;
     await this.prisma.user.update({
       where: { id: userId },
       data: { refresh_token: hashedToken },
@@ -113,7 +120,6 @@ export class UsersService {
     if (newAttempts >= 5) {
       const bloqueadoHasta = new Date();
       bloqueadoHasta.setMinutes(bloqueadoHasta.getMinutes() + 15);
-      
       await this.prisma.user.update({
         where: { id: userId },
         data: {
@@ -192,6 +198,105 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     return await this.prisma.user.findMany({
       orderBy: { fecha_creacion: 'desc' },
+    });
+  }
+
+  /**
+   * Crear usuario desde panel de administrador
+   */
+  async createUserByAdmin(createUserDto: CreateUserAdminDto): Promise<User> {
+    // Verificar si el usuario o email ya existe
+    const existingUsername = await this.prisma.user.findUnique({
+      where: { username: createUserDto.username },
+    });
+
+    if (existingUsername) {
+      throw new ConflictException('El nombre de usuario ya está registrado');
+    }
+
+    const existingEmail = await this.prisma.user.findUnique({
+      where: { email: createUserDto.email },
+    });
+
+    if (existingEmail) {
+      throw new ConflictException('El correo electrónico ya está registrado');
+    }
+
+    // Hashear contraseña
+    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+
+    return await this.prisma.user.create({
+      data: {
+        nombre: createUserDto.nombre,
+        apellido: createUserDto.apellido,
+        username: createUserDto.username,
+        email: createUserDto.email,
+        password: hashedPassword,
+        telefono: createUserDto.telefono,
+        direccion: createUserDto.direccion,
+        rol: createUserDto.rol,
+      },
+    });
+  }
+
+  /**
+   * Actualizar usuario desde panel de administrador
+   */
+  async updateUserByAdmin(
+    id: number,
+    updateUserDto: UpdateUserAdminDto,
+  ): Promise<User> {
+    // Verificar que el usuario existe
+    const user = await this.findById(id);
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    // Si se intenta actualizar username, verificar que no exista
+    if (updateUserDto.username && updateUserDto.username !== user.username) {
+      const existingUsername = await this.prisma.user.findUnique({
+        where: { username: updateUserDto.username },
+      });
+
+      if (existingUsername) {
+        throw new ConflictException('El nombre de usuario ya está registrado');
+      }
+    }
+
+    // Si se intenta actualizar email, verificar que no exista
+    if (updateUserDto.email && updateUserDto.email !== user.email) {
+      const existingEmail = await this.prisma.user.findUnique({
+        where: { email: updateUserDto.email },
+      });
+
+      if (existingEmail) {
+        throw new ConflictException('El correo electrónico ya está registrado');
+      }
+    }
+
+    return await this.prisma.user.update({
+      where: { id },
+      data: {
+        ...updateUserDto,
+        fecha_actualizacion: new Date(),
+      },
+    });
+  }
+
+  /**
+   * Eliminar usuario (solo admin)
+   */
+  async deleteUser(id: number): Promise<void> {
+    const user = await this.findById(id);
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    // No permitir eliminar al propio administrador
+    // Esta validación se hace en el controller con el userId del token
+
+    await this.prisma.user.delete({
+      where: { id },
     });
   }
 }

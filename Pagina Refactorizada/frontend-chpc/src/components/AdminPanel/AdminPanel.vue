@@ -243,6 +243,167 @@
           </form>
         </div>
       </div>
+
+      <!-- Tab de Usuarios -->
+      <div v-if="activeTab === 'usuarios'" class="tab-panel">
+        <h2>Gestión de Usuarios</h2>
+        
+        <div v-if="isAdmin" class="form-section">
+          <h3>{{ editingUser ? 'Editar Usuario' : 'Nuevo Usuario' }}</h3>
+          <form @submit.prevent="submitUser" class="user-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Nombre:</label>
+                <input
+                  type="text"
+                  v-model="userForm.nombre"
+                  required
+                  minlength="2"
+                  maxlength="50"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Apellido:</label>
+                <input
+                  type="text"
+                  v-model="userForm.apellido"
+                  required
+                  minlength="2"
+                  maxlength="50"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Username:</label>
+                <input
+                  type="text"
+                  v-model="userForm.username"
+                  required
+                  minlength="3"
+                  maxlength="30"
+                  pattern="[a-zA-Z0-9_]+"
+                  :disabled="editingUser"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  v-model="userForm.email"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div v-if="!editingUser" class="form-group">
+                <label>Contraseña:</label>
+                <input
+                  type="password"
+                  v-model="userForm.password"
+                  required
+                  minlength="6"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>Teléfono:</label>
+                <input
+                  type="text"
+                  v-model="userForm.telefono"
+                  pattern="[0-9+\-\s()]+"
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Rol:</label>
+                <select v-model="userForm.rol" required>
+                  <option value="">Seleccione un rol</option>
+                  <option value="administrador">Administrador</option>
+                  <option value="vendedor">Vendedor</option>
+                  <option value="tecnico">Técnico</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Dirección:</label>
+              <textarea
+                v-model="userForm.direccion"
+                rows="2"
+                maxlength="200"
+              ></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                {{ editingUser ? 'Actualizar' : 'Crear' }} Usuario
+              </button>
+              <button
+                v-if="editingUser"
+                type="button"
+                class="btn btn-secondary"
+                @click="cancelEditUser"
+              >
+                Cancelar
+              </button>
+            </div>
+
+            <div v-if="userMessage" :class="['message', userMessageType]">
+              {{ userMessage }}
+            </div>
+          </form>
+        </div>
+
+        <div class="users-list">
+          <h3>Usuarios Registrados</h3>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre Completo</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Rol</th>
+                <th>Fecha Creación</th>
+                <th>Último Acceso</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="user in usuarios" :key="user.id">
+                <td>{{ user.id }}</td>
+                <td>{{ user.nombre }} {{ user.apellido }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                  <span :class="['role-badge', getRoleClass(user.rol)]">
+                    {{ getRoleLabel(user.rol) }}
+                  </span>
+                </td>
+                <td>{{ formatDate(user.fecha_creacion) }}</td>
+                <td>{{ user.ultimo_acceso ? formatDate(user.ultimo_acceso) : 'Nunca' }}</td>
+                <td class="actions">
+                  <button v-if="isAdmin" @click="editUser(user)" class="btn-icon" title="Editar">✏️</button>
+                  <button 
+                    v-if="isAdmin && !isCurrentUser(user.id)" 
+                    @click="deleteUser(user.id)" 
+                    class="btn-icon" 
+                    title="Eliminar"
+                  >🗑️</button>
+                  <span v-if="isCurrentUser(user.id)" class="readonly-badge">👤 Tú</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -261,6 +422,7 @@ export default {
         { id: 'promociones', label: 'Promociones' },
         { id: 'banners', label: 'Banners' },
         { id: 'logo', label: 'Logo' },
+        { id: 'usuarios', label: 'Usuarios' },
       ],
 
       // Permisos
@@ -300,6 +462,23 @@ export default {
       },
       logoMessage: '',
       logoMessageType: '',
+
+      // Usuarios
+      usuarios: [],
+      editingUser: null,
+      currentUserId: null,
+      userForm: {
+        nombre: '',
+        apellido: '',
+        username: '',
+        email: '',
+        password: '',
+        telefono: '',
+        direccion: '',
+        rol: '',
+      },
+      userMessage: '',
+      userMessageType: '',
     };
   },
 
@@ -309,6 +488,8 @@ export default {
     this.loadProductos();
     this.loadBanners();
     this.loadLogo();
+    this.loadUsuarios();
+    this.loadCurrentUserId();
   },
 
   methods: {
@@ -552,6 +733,145 @@ export default {
       setTimeout(() => {
         this.logoMessage = '';
       }, 3000);
+    },
+
+    // ========== USUARIOS ==========
+    async loadUsuarios() {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/usuarios`,
+          this.getAuthHeaders()
+        );
+        this.usuarios = response.data;
+      } catch (error) {
+        console.error('Error al cargar usuarios:', error);
+      }
+    },
+
+    async loadCurrentUserId() {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/usuarios/perfil`,
+          this.getAuthHeaders()
+        );
+        this.currentUserId = response.data.id;
+      } catch (error) {
+        console.error('Error al obtener ID del usuario actual:', error);
+      }
+    },
+
+    async submitUser() {
+      try {
+        if (this.editingUser) {
+          // Actualizar usuario (sin password)
+          // eslint-disable-next-line no-unused-vars
+          const { password, ...updateData } = this.userForm;
+          await axios.patch(
+            `${API_BASE_URL}/usuarios/${this.editingUser.id}`,
+            updateData,
+            this.getAuthHeaders()
+          );
+          this.showUserMessage('Usuario actualizado exitosamente', 'success');
+        } else {
+          // Crear usuario nuevo
+          await axios.post(
+            `${API_BASE_URL}/usuarios`,
+            this.userForm,
+            this.getAuthHeaders()
+          );
+          this.showUserMessage('Usuario creado exitosamente', 'success');
+        }
+        this.resetUserForm();
+        this.loadUsuarios();
+      } catch (error) {
+        console.error('Error al guardar usuario:', error);
+        this.showUserMessage(
+          error.response?.data?.message || 'Error al guardar el usuario',
+          'error'
+        );
+      }
+    },
+
+    editUser(user) {
+      this.editingUser = user;
+      this.userForm = {
+        nombre: user.nombre,
+        apellido: user.apellido,
+        username: user.username,
+        email: user.email,
+        password: '', // No cargar password
+        telefono: user.telefono || '',
+        direccion: user.direccion || '',
+        rol: user.rol,
+      };
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+
+    async deleteUser(id) {
+      if (!confirm('¿Está seguro de eliminar este usuario? Esta acción no se puede deshacer.')) return;
+
+      try {
+        await axios.delete(
+          `${API_BASE_URL}/usuarios/${id}`,
+          this.getAuthHeaders()
+        );
+        this.showUserMessage('Usuario eliminado exitosamente', 'success');
+        this.loadUsuarios();
+      } catch (error) {
+        console.error('Error al eliminar usuario:', error);
+        this.showUserMessage(
+          error.response?.data?.message || 'Error al eliminar el usuario',
+          'error'
+        );
+      }
+    },
+
+    cancelEditUser() {
+      this.resetUserForm();
+    },
+
+    resetUserForm() {
+      this.editingUser = null;
+      this.userForm = {
+        nombre: '',
+        apellido: '',
+        username: '',
+        email: '',
+        password: '',
+        telefono: '',
+        direccion: '',
+        rol: '',
+      };
+    },
+
+    showUserMessage(message, type) {
+      this.userMessage = message;
+      this.userMessageType = type;
+      setTimeout(() => {
+        this.userMessage = '';
+      }, 3000);
+    },
+
+    isCurrentUser(userId) {
+      return this.currentUserId === userId;
+    },
+
+    getRoleClass(rol) {
+      const roleClasses = {
+        'administrador': 'role-admin',
+        'vendedor': 'role-vendedor',
+        'tecnico': 'role-tecnico'
+      };
+      return roleClasses[rol] || 'role-default';
+    },
+
+    getRoleLabel(rol) {
+      const roleLabels = {
+        'administrador': 'Administrador',
+        'vendedor': 'Vendedor',
+        'tecnico': 'Técnico'
+      };
+      return roleLabels[rol] || rol;
     },
 
     // ========== UTILIDADES ==========
@@ -964,6 +1284,61 @@ export default {
   border-radius: 8px;
   padding: 10px;
   background: white;
+}
+
+/* Usuarios */
+.user-form input[type="email"],
+.user-form input[type="password"],
+.user-form input[type="text"],
+.user-form select,
+.user-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.user-form textarea {
+  resize: vertical;
+}
+
+.user-form input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+}
+
+.users-list {
+  margin-top: 30px;
+}
+
+.role-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.role-badge.role-admin {
+  background: #fce4ec;
+  color: #c2185b;
+}
+
+.role-badge.role-vendedor {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.role-badge.role-tecnico {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.role-badge.role-default {
+  background: #e0e0e0;
+  color: #666;
 }
 
 @media (max-width: 768px) {

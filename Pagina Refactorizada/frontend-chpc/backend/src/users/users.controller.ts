@@ -1,17 +1,24 @@
 import {
   Controller,
   Get,
+  Post,
   Patch,
+  Delete,
   Body,
+  Param,
   UseGuards,
   Request,
   HttpCode,
   HttpStatus,
+  ParseIntPipe,
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { ChangePasswordDto } from './dto/change-password.dto';
+import { CreateUserAdminDto } from './dto/create-user-admin.dto';
+import { UpdateUserAdminDto } from './dto/update-user-admin.dto';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Role } from '../auth/roles.enum';
@@ -131,5 +138,85 @@ export class UsersController {
       fecha_actualizacion: user.fecha_actualizacion,
       ultimo_acceso: user.ultimo_acceso,
     }));
+  }
+
+  /**
+   * Crear nuevo usuario (solo rol ADMIN)
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  async createUser(@Body() createUserDto: CreateUserAdminDto) {
+    const user = await this.usersService.createUserByAdmin(createUserDto);
+
+    // Devolver usuario sin campos sensibles
+    return {
+      mensaje: 'Usuario creado exitosamente',
+      usuario: {
+        id: user.id,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        username: user.username,
+        email: user.email,
+        telefono: user.telefono,
+        direccion: user.direccion,
+        rol: user.rol,
+        fecha_creacion: user.fecha_creacion,
+      },
+    };
+  }
+
+  /**
+   * Actualizar usuario (solo rol ADMIN)
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Patch(':id')
+  @HttpCode(HttpStatus.OK)
+  async updateUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserDto: UpdateUserAdminDto,
+  ) {
+    const user = await this.usersService.updateUserByAdmin(id, updateUserDto);
+
+    // Devolver usuario sin campos sensibles
+    return {
+      mensaje: 'Usuario actualizado exitosamente',
+      usuario: {
+        id: user.id,
+        nombre: user.nombre,
+        apellido: user.apellido,
+        username: user.username,
+        email: user.email,
+        telefono: user.telefono,
+        direccion: user.direccion,
+        rol: user.rol,
+        fecha_actualizacion: user.fecha_actualizacion,
+      },
+    };
+  }
+
+  /**
+   * Eliminar usuario (solo rol ADMIN)
+   */
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  async deleteUser(
+    @Request() req: AuthRequest,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    // No permitir que el admin se elimine a sí mismo
+    if (req.user.userId === id) {
+      throw new BadRequestException('No puedes eliminar tu propia cuenta');
+    }
+
+    await this.usersService.deleteUser(id);
+
+    return {
+      mensaje: 'Usuario eliminado exitosamente',
+    };
   }
 }
