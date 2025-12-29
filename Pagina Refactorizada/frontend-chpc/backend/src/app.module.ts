@@ -13,6 +13,7 @@ import { ServiceOrdersModule } from './service-orders/service-orders.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { PromotionsModule } from './promotions/promotions.module';
 import { SiteConfigModule } from './site-config/site-config.module';
+import { PermisosModule } from './permisos/permisos.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { SiteConfigModule } from './site-config/site-config.module';
     AnalyticsModule,
     PromotionsModule,
     SiteConfigModule,
+    PermisosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

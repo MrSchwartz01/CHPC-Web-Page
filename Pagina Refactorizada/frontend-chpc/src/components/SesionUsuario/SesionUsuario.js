@@ -30,6 +30,7 @@ export default {
           password: this.contraseña,
         });
         localStorage.setItem('access_token', response.data.access_token); // Guarda el token en localStorage
+        localStorage.setItem('refresh_token', response.data.refresh_token); // Guarda el refresh token
         localStorage.setItem('user_rol', response.data.usuario.rol); // Guarda el rol del usuario
         localStorage.setItem('user_id', response.data.usuario.id); // Guarda el ID del usuario
         this.$router.replace('/home'); // Usa replace en lugar de push

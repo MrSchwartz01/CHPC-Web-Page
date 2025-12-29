@@ -25,11 +25,14 @@
         <h2>Gestión de Promociones</h2>
         
         <!-- Alerta para vendedores -->
-        <div v-if="isVendedor" class="info-message">
+        <div v-if="isVendedor && !permisosVendedor.promociones" class="info-message">
           ℹ️ <strong>Modo Solo Lectura:</strong> Como vendedor, puedes visualizar las promociones pero no crear, editar o eliminar.
         </div>
+        <div v-if="isVendedor && permisosVendedor.promociones" class="info-message success">
+          ✅ <strong>Permiso Temporal Activo:</strong> Tienes acceso para gestionar promociones.
+        </div>
         
-        <div v-if="isAdmin" class="form-section">
+        <div v-if="puedeEditarPromocion()" class="form-section">
           <h3>{{ editingPromotion ? 'Editar Promoción' : 'Nueva Promoción' }}</h3>
           <form @submit.prevent="submitPromotion" class="promotion-form">
             <div class="form-group">
@@ -132,9 +135,9 @@
                   </span>
                 </td>
                 <td class="actions">
-                  <button v-if="isAdmin" @click="editPromotion(promo)" class="btn-icon" title="Editar">✏️</button>
-                  <button v-if="isAdmin" @click="deletePromotion(promo.id)" class="btn-icon" title="Eliminar">🗑️</button>
-                  <span v-if="isVendedor" class="readonly-badge">👁️ Solo lectura</span>
+                  <button v-if="puedeEditarPromocion()" @click="editPromotion(promo)" class="btn-icon" title="Editar">✏️</button>
+                  <button v-if="puedeEditarPromocion()" @click="deletePromotion(promo.id)" class="btn-icon" title="Eliminar">🗑️</button>
+                  <span v-if="isVendedor && !permisosVendedor.promociones" class="readonly-badge">👁️ Solo lectura</span>
                 </td>
               </tr>
             </tbody>
@@ -146,11 +149,14 @@
       <div v-if="activeTab === 'banners'" class="tab-panel">
         <h2>Gestión de Banners</h2>
         
-        <div v-if="isVendedor" class="info-message">
+        <div v-if="isVendedor && !permisosVendedor.banners" class="info-message">
           ℹ️ <strong>Modo Solo Lectura:</strong> Como vendedor, puedes visualizar los banners pero no modificarlos.
         </div>
-        
-        <div v-if="isAdmin" class="form-section">
+        <div v-if="isVendedor && permisosVendedor.banners" class="info-message success">
+          ✅ <strong>Permiso Temporal Activo:</strong> Tienes acceso para gestionar banners.
+        </div>
+
+        <div v-if="puedeEditarBanner()" class="form-section">
           <h3>{{ editingBanner ? 'Editar Banner' : 'Nuevo Banner' }}</h3>
           <form @submit.prevent="submitBanner" class="banner-form">
             <div class="form-group">
@@ -203,9 +209,9 @@
                 <p v-if="banner.producto">Asociado a: {{ banner.producto.nombre_producto }}</p>
                 <p v-else>Sin producto asociado</p>
                 <div class="banner-actions">
-                  <button v-if="isAdmin" @click="editBanner(banner)" class="btn-small">Editar</button>
-                  <button v-if="isAdmin" @click="deleteBanner(banner.id)" class="btn-small btn-danger">Eliminar</button>
-                  <span v-if="isVendedor" class="readonly-badge">👁️ Solo lectura</span>
+                  <button v-if="puedeEditarBanner()" @click="editBanner(banner)" class="btn-small">Editar</button>
+                  <button v-if="puedeEditarBanner()" @click="deleteBanner(banner.id)" class="btn-small btn-danger">Eliminar</button>
+                  <span v-if="isVendedor && !permisosVendedor.banners" class="readonly-badge">👁️ Solo lectura</span>
                 </div>
               </div>
             </div>
@@ -217,11 +223,14 @@
       <div v-if="activeTab === 'logo'" class="tab-panel">
         <h2>Configuración del Logo</h2>
         
-        <div v-if="isVendedor" class="info-message">
+        <div v-if="isVendedor && !permisosVendedor.logo" class="info-message">
           ℹ️ <strong>Acceso Restringido:</strong> Como vendedor, no tienes permisos para cambiar el logo del sitio.
         </div>
+        <div v-if="isVendedor && permisosVendedor.logo" class="info-message success">
+          ✅ <strong>Permiso Temporal Activo:</strong> Tienes acceso para actualizar el logo.
+        </div>
         
-        <div v-if="isAdmin" class="form-section">
+        <div v-if="puedeEditarLogo()" class="form-section">
           <form @submit.prevent="submitLogo" class="logo-form">
             <div class="logo-preview" v-if="currentLogo">
               <h3>Logo Actual:</h3>
@@ -404,6 +413,176 @@
           </table>
         </div>
       </div>
+
+      <!-- Tab de Permisos Temporales -->
+      <div v-if="activeTab === 'permisos'" class="tab-panel">
+        <h2>Permisos Temporales para Vendedores</h2>
+        
+        <div v-if="isAdmin" class="form-section">
+          <h3>{{ editingPermiso ? 'Editar Permiso' : 'Otorgar Nuevo Permiso' }}</h3>
+          <form @submit.prevent="submitPermiso" class="permiso-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Vendedor:</label>
+                <select v-model="permisoForm.user_id" required :disabled="editingPermiso">
+                  <option value="">Seleccione un vendedor</option>
+                  <option 
+                    v-for="vendedor in vendedores" 
+                    :key="vendedor.id" 
+                    :value="vendedor.id"
+                  >
+                    {{ vendedor.nombre }} {{ vendedor.apellido }} (@{{ vendedor.username }})
+                  </option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Tipo de Permiso:</label>
+                <select v-model="permisoForm.tipo_permiso" required :disabled="editingPermiso">
+                  <option value="">Seleccione tipo</option>
+                  <option value="banners">Banners</option>
+                  <option value="promociones">Promociones</option>
+                  <option value="logo">Logo</option>
+                  <option value="all">Todos los permisos</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Fecha de Expiración:</label>
+                <input
+                  type="datetime-local"
+                  v-model="permisoForm.fecha_expiracion"
+                  required
+                  :min="getCurrentDateTime()"
+                />
+              </div>
+
+              <div v-if="editingPermiso" class="form-group">
+                <label>Estado:</label>
+                <select v-model="permisoForm.activo">
+                  <option :value="true">Activo</option>
+                  <option :value="false">Inactivo</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Razón del Permiso:</label>
+              <textarea
+                v-model="permisoForm.razon"
+                rows="3"
+                placeholder="Ej: Permiso para actualizar banners durante campaña de fin de año"
+              ></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">
+                {{ editingPermiso ? 'Actualizar' : 'Otorgar' }} Permiso
+              </button>
+              <button
+                v-if="editingPermiso"
+                type="button"
+                class="btn btn-secondary"
+                @click="cancelEditPermiso"
+              >
+                Cancelar
+              </button>
+            </div>
+
+            <div v-if="permisoMessage" :class="['message', permisoMessageType]">
+              {{ permisoMessage }}
+            </div>
+          </form>
+        </div>
+
+        <div class="permisos-list">
+          <h3>Permisos Otorgados</h3>
+          
+          <div class="filter-tabs">
+            <button 
+              :class="{ active: permisoFilter === 'all' }"
+              @click="permisoFilter = 'all'"
+            >
+              Todos
+            </button>
+            <button 
+              :class="{ active: permisoFilter === 'activos' }"
+              @click="permisoFilter = 'activos'"
+            >
+              Activos
+            </button>
+            <button 
+              :class="{ active: permisoFilter === 'expirados' }"
+              @click="permisoFilter = 'expirados'"
+            >
+              Expirados/Revocados
+            </button>
+          </div>
+
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Vendedor</th>
+                <th>Tipo Permiso</th>
+                <th>Fecha Expiración</th>
+                <th>Estado</th>
+                <th>Otorgado Por</th>
+                <th>Razón</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="permiso in permisosFiltrados" :key="permiso.id">
+                <td>{{ permiso.id }}</td>
+                <td>
+                  {{ permiso.usuario.nombre }} {{ permiso.usuario.apellido }}<br>
+                  <small>@{{ permiso.usuario.username }}</small>
+                </td>
+                <td>
+                  <span :class="['permiso-badge', getPermisoBadgeClass(permiso.tipo_permiso)]">
+                    {{ getPermisoLabel(permiso.tipo_permiso) }}
+                  </span>
+                </td>
+                <td>{{ formatDate(permiso.fecha_expiracion) }}</td>
+                <td>
+                  <span :class="['status-badge', getPermisoStatusClass(permiso)]">
+                    {{ getPermisoStatus(permiso) }}
+                  </span>
+                </td>
+                <td>{{ permiso.otorgado_por || 'N/A' }}</td>
+                <td>
+                  <span class="razon-text" :title="permiso.razon">
+                    {{ permiso.razon ? truncateText(permiso.razon, 30) : 'Sin razón' }}
+                  </span>
+                </td>
+                <td class="actions">
+                  <button 
+                    v-if="isAdmin && permiso.activo && !isPermisoExpirado(permiso)"
+                    @click="editPermiso(permiso)" 
+                    class="btn-icon" 
+                    title="Editar"
+                  >✏️</button>
+                  <button 
+                    v-if="isAdmin && permiso.activo && !isPermisoExpirado(permiso)"
+                    @click="revocarPermiso(permiso.id)" 
+                    class="btn-icon btn-warning" 
+                    title="Revocar"
+                  >🚫</button>
+                  <button 
+                    v-if="isAdmin"
+                    @click="deletePermiso(permiso.id)" 
+                    class="btn-icon" 
+                    title="Eliminar"
+                  >🗑️</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -423,6 +602,7 @@ export default {
         { id: 'banners', label: 'Banners' },
         { id: 'logo', label: 'Logo' },
         { id: 'usuarios', label: 'Usuarios' },
+        { id: 'permisos', label: 'Permisos Temporales' },
       ],
 
       // Permisos
@@ -479,6 +659,28 @@ export default {
       },
       userMessage: '',
       userMessageType: '',
+
+      // Permisos Temporales
+      permisos: [],
+      vendedores: [],
+      editingPermiso: null,
+      permisoFilter: 'all', // 'all', 'activos', 'expirados'
+      permisoForm: {
+        user_id: '',
+        tipo_permiso: '',
+        fecha_expiracion: '',
+        activo: true,
+        razon: '',
+      },
+      permisoMessage: '',
+      permisoMessageType: '',
+
+      // Control de permisos para vendedores
+      permisosVendedor: {
+        banners: false,
+        promociones: false,
+        logo: false,
+      },
     };
   },
 
@@ -490,6 +692,9 @@ export default {
     this.loadLogo();
     this.loadUsuarios();
     this.loadCurrentUserId();
+    this.loadPermisos();
+    this.loadVendedores();
+    this.loadPermisosVendedor();
   },
 
   methods: {
@@ -507,6 +712,38 @@ export default {
         this.$router.push('/');
         alert('Acceso denegado: Solo administradores y vendedores');
       }
+    },
+
+    async loadPermisosVendedor() {
+      if (!this.isVendedor) return;
+      
+      try {
+        const [bannersRes, promocionesRes, logoRes] = await Promise.all([
+          axios.get(`${API_BASE_URL}/permisos-temporales/verificar/banners`, this.getAuthHeaders()),
+          axios.get(`${API_BASE_URL}/permisos-temporales/verificar/promociones`, this.getAuthHeaders()),
+          axios.get(`${API_BASE_URL}/permisos-temporales/verificar/logo`, this.getAuthHeaders()),
+        ]);
+
+        this.permisosVendedor = {
+          banners: bannersRes.data.tienePermiso,
+          promociones: promocionesRes.data.tienePermiso,
+          logo: logoRes.data.tienePermiso,
+        };
+      } catch (error) {
+        console.error('Error al verificar permisos del vendedor:', error);
+      }
+    },
+
+    puedeEditarPromocion() {
+      return this.isAdmin || (this.isVendedor && this.permisosVendedor.promociones);
+    },
+
+    puedeEditarBanner() {
+      return this.isAdmin || (this.isVendedor && this.permisosVendedor.banners);
+    },
+
+    puedeEditarLogo() {
+      return this.isAdmin || (this.isVendedor && this.permisosVendedor.logo);
     },
 
     getAuthHeaders() {
@@ -762,6 +999,13 @@ export default {
 
     async submitUser() {
       try {
+        // Debug: verificar token y headers
+        const token = localStorage.getItem('access_token');
+        const headers = this.getAuthHeaders();
+        console.log('Token:', token ? 'Existe' : 'No existe');
+        console.log('Headers:', headers);
+        console.log('UserForm:', this.userForm);
+
         if (this.editingUser) {
           // Actualizar usuario (sin password)
           // eslint-disable-next-line no-unused-vars
@@ -774,6 +1018,7 @@ export default {
           this.showUserMessage('Usuario actualizado exitosamente', 'success');
         } else {
           // Crear usuario nuevo
+          console.log('Enviando POST a:', `${API_BASE_URL}/usuarios`);
           await axios.post(
             `${API_BASE_URL}/usuarios`,
             this.userForm,
@@ -784,7 +1029,10 @@ export default {
         this.resetUserForm();
         this.loadUsuarios();
       } catch (error) {
-        console.error('Error al guardar usuario:', error);
+        console.error('Error completo al guardar usuario:', error);
+        console.error('Response data:', error.response?.data);
+        console.error('Response status:', error.response?.status);
+        console.error('Response headers:', error.response?.headers);
         this.showUserMessage(
           error.response?.data?.message || 'Error al guardar el usuario',
           'error'
@@ -899,6 +1147,198 @@ export default {
       const hours = String(date.getHours()).padStart(2, '0');
       const minutes = String(date.getMinutes()).padStart(2, '0');
       return `${year}-${month}-${day}T${hours}:${minutes}`;
+    },
+
+    // ========== PERMISOS TEMPORALES ==========
+    async loadPermisos() {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/permisos-temporales`,
+          this.getAuthHeaders()
+        );
+        this.permisos = response.data;
+      } catch (error) {
+        console.error('Error al cargar permisos:', error);
+      }
+    },
+
+    async loadVendedores() {
+      try {
+        const response = await axios.get(
+          `${API_BASE_URL}/usuarios`,
+          this.getAuthHeaders()
+        );
+        this.vendedores = response.data.filter(u => u.rol === 'vendedor');
+      } catch (error) {
+        console.error('Error al cargar vendedores:', error);
+      }
+    },
+
+    async submitPermiso() {
+      try {
+        if (this.editingPermiso) {
+          await axios.patch(
+            `${API_BASE_URL}/permisos-temporales/${this.editingPermiso.id}`,
+            {
+              fecha_expiracion: this.permisoForm.fecha_expiracion,
+              activo: this.permisoForm.activo,
+              razon: this.permisoForm.razon,
+            },
+            this.getAuthHeaders()
+          );
+          this.showPermisoMessage('Permiso actualizado exitosamente', 'success');
+        } else {
+          await axios.post(
+            `${API_BASE_URL}/permisos-temporales`,
+            this.permisoForm,
+            this.getAuthHeaders()
+          );
+          this.showPermisoMessage('Permiso otorgado exitosamente', 'success');
+        }
+        this.resetPermisoForm();
+        this.loadPermisos();
+      } catch (error) {
+        console.error('Error al guardar permiso:', error);
+        this.showPermisoMessage(
+          error.response?.data?.message || 'Error al guardar el permiso',
+          'error'
+        );
+      }
+    },
+
+    editPermiso(permiso) {
+      this.editingPermiso = permiso;
+      this.permisoForm = {
+        user_id: permiso.user_id,
+        tipo_permiso: permiso.tipo_permiso,
+        fecha_expiracion: this.formatDateForInput(permiso.fecha_expiracion),
+        activo: permiso.activo,
+        razon: permiso.razon || '',
+      };
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    },
+
+    async revocarPermiso(id) {
+      if (!confirm('¿Está seguro de revocar este permiso?')) return;
+
+      try {
+        await axios.patch(
+          `${API_BASE_URL}/permisos-temporales/${id}/revocar`,
+          {},
+          this.getAuthHeaders()
+        );
+        this.showPermisoMessage('Permiso revocado exitosamente', 'success');
+        this.loadPermisos();
+      } catch (error) {
+        console.error('Error al revocar permiso:', error);
+        this.showPermisoMessage(
+          error.response?.data?.message || 'Error al revocar el permiso',
+          'error'
+        );
+      }
+    },
+
+    async deletePermiso(id) {
+      if (!confirm('¿Está seguro de eliminar este permiso? Esta acción no se puede deshacer.')) return;
+
+      try {
+        await axios.delete(
+          `${API_BASE_URL}/permisos-temporales/${id}`,
+          this.getAuthHeaders()
+        );
+        this.showPermisoMessage('Permiso eliminado exitosamente', 'success');
+        this.loadPermisos();
+      } catch (error) {
+        console.error('Error al eliminar permiso:', error);
+        this.showPermisoMessage(
+          error.response?.data?.message || 'Error al eliminar el permiso',
+          'error'
+        );
+      }
+    },
+
+    cancelEditPermiso() {
+      this.resetPermisoForm();
+    },
+
+    resetPermisoForm() {
+      this.editingPermiso = null;
+      this.permisoForm = {
+        user_id: '',
+        tipo_permiso: '',
+        fecha_expiracion: '',
+        activo: true,
+        razon: '',
+      };
+    },
+
+    showPermisoMessage(message, type) {
+      this.permisoMessage = message;
+      this.permisoMessageType = type;
+      setTimeout(() => {
+        this.permisoMessage = '';
+      }, 3000);
+    },
+
+    getCurrentDateTime() {
+      const now = new Date();
+      return this.formatDateForInput(now);
+    },
+
+    isPermisoExpirado(permiso) {
+      return new Date(permiso.fecha_expiracion) < new Date();
+    },
+
+    getPermisoStatus(permiso) {
+      if (!permiso.activo) return 'Revocado';
+      if (this.isPermisoExpirado(permiso)) return 'Expirado';
+      return 'Activo';
+    },
+
+    getPermisoStatusClass(permiso) {
+      if (!permiso.activo) return 'inactive';
+      if (this.isPermisoExpirado(permiso)) return 'expired';
+      return 'active';
+    },
+
+    getPermisoLabel(tipo) {
+      const labels = {
+        'banners': 'Banners',
+        'promociones': 'Promociones',
+        'logo': 'Logo',
+        'all': 'Todos'
+      };
+      return labels[tipo] || tipo;
+    },
+
+    getPermisoBadgeClass(tipo) {
+      const classes = {
+        'banners': 'permiso-banners',
+        'promociones': 'permiso-promociones',
+        'logo': 'permiso-logo',
+        'all': 'permiso-all'
+      };
+      return classes[tipo] || 'permiso-default';
+    },
+
+    truncateText(text, maxLength) {
+      if (!text) return '';
+      return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    },
+  },
+
+  computed: {
+    permisosFiltrados() {
+      const now = new Date();
+      
+      return this.permisos.filter(permiso => {
+        if (this.permisoFilter === 'activos') {
+          return permiso.activo && new Date(permiso.fecha_expiracion) > now;
+        } else if (this.permisoFilter === 'expirados') {
+          return !permiso.activo || new Date(permiso.fecha_expiracion) <= now;
+        }
+        return true; // 'all'
+      });
     },
   },
 };
@@ -1115,6 +1555,22 @@ export default {
 }
 
 /* Messages */
+.info-message {
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+  font-weight: 500;
+}
+
+.info-message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
 .message {
   padding: 12px;
   border-radius: 4px;
@@ -1195,6 +1651,100 @@ export default {
 .status-badge.inactive {
   background: #f8d7da;
   color: #721c24;
+}
+
+.status-badge.expired {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/* Permisos Temporales */
+.permiso-form input[type="datetime-local"],
+.permiso-form select,
+.permiso-form textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.permiso-form textarea {
+  resize: vertical;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.filter-tabs button {
+  padding: 8px 16px;
+  border: 2px solid #0066cc;
+  background: white;
+  color: #0066cc;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.filter-tabs button.active {
+  background: #0066cc;
+  color: white;
+}
+
+.filter-tabs button:hover {
+  background: #0052a3;
+  color: white;
+}
+
+.permiso-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.permiso-badge.permiso-banners {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+
+.permiso-badge.permiso-promociones {
+  background: #fce4ec;
+  color: #c2185b;
+}
+
+.permiso-badge.permiso-logo {
+  background: #f3e5f5;
+  color: #7b1fa2;
+}
+
+.permiso-badge.permiso-all {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.permiso-badge.permiso-default {
+  background: #e0e0e0;
+  color: #666;
+}
+
+.razon-text {
+  cursor: help;
+  text-decoration: underline dotted;
+}
+
+.btn-warning {
+  background: #ff9800 !important;
+}
+
+.btn-warning:hover {
+  background: #f57c00 !important;
 }
 
 /* Banners Grid */

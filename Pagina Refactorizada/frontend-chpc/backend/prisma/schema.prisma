@@ -42,9 +42,9 @@ model User {
   fecha_actualizacion DateTime  @updatedAt
 
   orders            Order[]
-
   wishlistItems     WishlistItem[]
   serviceOrders     ServiceOrder[]
+  permisosTemporales PermisoTemporal[]
 
   @@map("usuarios")
 }
@@ -216,3 +216,22 @@ model SiteConfig {
   @@map("configuracion_sitio")
 }
 
+model PermisoTemporal {
+  id              Int      @id @default(autoincrement())
+  user_id         Int
+  tipo_permiso    String   // 'banners', 'promociones', 'logo', 'all'
+  fecha_inicio    DateTime @default(now())
+  fecha_expiracion DateTime
+  activo          Boolean  @default(true)
+  otorgado_por    String?  // username del admin que otorgó el permiso
+  razon           String?  // razón del permiso temporal
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  usuario         User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  
+  @@map("permisos_temporales")
+  @@index([user_id])
+  @@index([activo])
+  @@index([fecha_expiracion])
+}
