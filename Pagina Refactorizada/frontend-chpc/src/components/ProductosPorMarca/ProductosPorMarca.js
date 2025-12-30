@@ -1,5 +1,7 @@
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
 import FooterAnth from "../FooterAnth/FooterAnth.vue";
+import axios from "axios";
+import { API_BASE_URL } from '@/config/api';
 
 export default {
   name: "ProductosPorMarca",
@@ -12,31 +14,41 @@ export default {
       productos: [],
       nombreMarca: "",
       isAuthenticated: false,
-      marcasInfo: {
-        1: "Apple",
-        2: "Samsung",
-        3: "HP",
-        4: "Dell",
-        5: "Lenovo",
-        6: "Asus",
-        7: "Acer",
-        8: "Microsoft",
-        9: "Logitech",
-        10: "Canon",
-        11: "Epson",
-        12: "Sony",
+      cargando: true,
+      error: null,
+      marcasMap: {
+        1: "ASUS",
+        2: "MSI",
+        3: "AMD",
+        4: "Intel",
+        5: "NVIDIA",
+        6: "Corsair",
+        7: "Kingston",
+        8: "Logitech",
+        9: "Razer",
+        10: "Samsung",
+        11: "Western Digital",
+        12: "Seagate",
+        13: "TP-Link",
+        14: "Cisco",
+        15: "Sony",
+        16: "JBL",
+        17: "Dell",
+        18: "HP",
+        19: "Lenovo",
+        20: "Apple",
       },
     };
   },
-  created() {
+  async created() {
     this.isAuthenticated = !!localStorage.getItem("access_token");
     const marcaId = this.$route.params.id;
     
-    // Obtener nombre de la marca
-    this.nombreMarca = this.marcasInfo[marcaId] || "Marca Desconocida";
+    // Obtener nombre de la marca desde el map
+    this.nombreMarca = this.marcasMap[marcaId] || "Marca";
     
-    // Generar productos placeholder para esta marca
-    this.productos = this.generarProductosPlaceholder(marcaId);
+    // Cargar productos reales de la base de datos
+    await this.cargarProductosPorMarca(this.nombreMarca);
   },
   methods: {
     cerrarSesion() {
@@ -47,19 +59,30 @@ export default {
     verDetalle(id) {
       this.$router.push({ name: "ProductoDetalle", params: { id } });
     },
-    generarProductosPlaceholder(marcaId) {
-      const productos = [];
-      for (let i = 1; i <= 6; i++) {
-        productos.push({
-          id: `${marcaId}-${i}`,
-          nombre_producto: `${this.marcasInfo[marcaId]} Producto ${i}`,
-          descripcion: `Descripción del producto ${i} de ${this.marcasInfo[marcaId]}. Este es un producto placeholder de ejemplo.`,
-          precio: (Math.random() * 1000 + 100).toFixed(2),
-          stock: Math.floor(Math.random() * 50) + 1,
-          imagen_url: "/Productos/placeholder-product.png",
-        });
+    async cargarProductosPorMarca(marca) {
+      try {
+        this.cargando = true;
+        this.error = null;
+        
+        const response = await axios.get(
+          `${API_BASE_URL}/tienda/productos`,
+          {
+            params: { marca: marca }
+          }
+        );
+        
+        this.productos = response.data;
+        
+        if (this.productos.length === 0) {
+          this.error = `No se encontraron productos de la marca ${marca}`;
+        }
+      } catch (error) {
+        console.error('Error al cargar productos por marca:', error);
+        this.error = 'Error al cargar los productos. Por favor, intenta nuevamente.';
+        this.productos = [];
+      } finally {
+        this.cargando = false;
       }
-      return productos;
     },
   },
 };

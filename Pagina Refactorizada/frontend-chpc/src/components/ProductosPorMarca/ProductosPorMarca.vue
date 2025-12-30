@@ -6,7 +6,22 @@
         <div class="home-container">
           <h1 class="animated-title">Productos de {{ nombreMarca }}</h1>
           <p class="animated-subtitle">Explora nuestra selección exclusiva.</p>
-          <div class="product-grid">
+          
+          <!-- Estado de carga -->
+          <div v-if="cargando" class="cargando">
+            <p>⏳ Cargando productos...</p>
+          </div>
+          
+          <!-- Mensaje de error -->
+          <div v-else-if="error" class="error-message">
+            <p>⚠️ {{ error }}</p>
+            <button @click="$router.push('/marcas')" class="btn-volver">
+              Volver a Marcas
+            </button>
+          </div>
+          
+          <!-- Grid de productos -->
+          <div v-else-if="productos.length > 0" class="product-grid">
             <div
               v-for="producto in productos"
               :key="producto.id"
@@ -32,6 +47,12 @@
   </div>
   
           </div>
+          
+          <!-- Sin resultados -->
+          <div v-else class="sin-resultados">
+            <p>🔍 No hay productos disponibles de esta marca actualmente.</p>
+          </div>
+          
         </div>
       </div>
   
