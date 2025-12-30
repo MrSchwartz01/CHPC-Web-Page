@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE_URL } from '@/config/api';
 
 export default {
     name: "HeaderAnth",
@@ -66,7 +67,7 @@ export default {
         this.cargandoSugerencias = true;
         try {
           const response = await axios.get(
-            "http://localhost:5000/api/tienda/productos",
+            `${API_BASE_URL}/tienda/productos`,
             {
               params: { search: query },
             },

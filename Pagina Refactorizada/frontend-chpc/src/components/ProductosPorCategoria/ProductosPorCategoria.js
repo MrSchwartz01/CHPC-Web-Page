@@ -1,6 +1,7 @@
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
 import FooterAnth from "../FooterAnth/FooterAnth.vue";
 import axios from "axios";
+import { API_BASE_URL } from '@/config/api';
 
 export default {
   name: "ProductosPorCategoria",
@@ -71,7 +72,7 @@ export default {
         const categoriaCapitalizada = this.categoriasInfo[categoria];
         
         const response = await axios.get(
-          `http://localhost:5000/api/tienda/productos?categoria=${categoriaCapitalizada}`
+          `${API_BASE_URL}/tienda/productos?categoria=${categoriaCapitalizada}`
         );
         
         this.productos = response.data.map(producto => ({

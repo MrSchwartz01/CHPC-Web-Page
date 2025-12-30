@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE_URL } from '@/config/api';
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
 import FooterAnth from "../FooterAnth/FooterAnth.vue";
 
@@ -26,7 +27,7 @@ export default {
       try {
         // Obtener los datos del producto
         const response = await axios.get(
-          `http://localhost:5000/api/tienda/productos/${productoId}`
+          `${API_BASE_URL}/tienda/productos/${productoId}`
         );
         this.producto = response.data;
 

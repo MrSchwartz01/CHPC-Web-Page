@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_BASE_URL } from '@/config/api';
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
 import FooterAnth from "../FooterAnth/FooterAnth.vue";
 import CarouselBanner from "../CarouselBanner/CarouselBanner.vue";
@@ -55,7 +56,7 @@ export default {
       ];
 
       // Cargar Productos
-      const productosResponse = await axios.get("http://localhost:5000/api/tienda/productos");
+      const productosResponse = await axios.get(`${API_BASE_URL}/tienda/productos`);
       this.productos = productosResponse.data.map((producto) => ({
         ...producto,
         imagen_url:
@@ -65,7 +66,7 @@ export default {
       }));
       
       // Cargar Promociones Activas
-      const promocionesResponse = await axios.get("http://localhost:5000/api/promociones/activas");
+      const promocionesResponse = await axios.get(`${API_BASE_URL}/promociones/activas`);
       this.promociones = promocionesResponse.data;
       
       // Combinar promociones con productos
