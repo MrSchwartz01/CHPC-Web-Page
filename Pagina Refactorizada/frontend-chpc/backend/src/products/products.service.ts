@@ -9,6 +9,28 @@ import { UpdateProductDto } from './dto/update-product.dto';
 export class ProductsService {
   constructor(private prisma: PrismaService) {}
 
+  /**
+   * Helper para agregar imagen_url a los productos
+   */
+  private addImagenUrl(productos: any[]): any[] {
+    return productos.map(producto => {
+      let imagen_url = '/Productos/placeholder-product.png';
+      
+      if (producto.productImages && producto.productImages.length > 0) {
+        // Buscar imagen principal o usar la primera
+        const imagenPrincipal = producto.productImages.find(img => img.es_principal);
+        imagen_url = imagenPrincipal 
+          ? imagenPrincipal.ruta_imagen 
+          : producto.productImages[0].ruta_imagen;
+      }
+      
+      return {
+        ...producto,
+        imagen_url,
+      };
+    });
+  }
+
   async create(createProductDto: CreateProductDto): Promise<Product> {
     return this.prisma.product.create({
       data: createProductDto,
@@ -117,17 +139,27 @@ export class ProductsService {
       ];
     }
 
-    return await this.prisma.product.findMany({ 
+    const productos = await this.prisma.product.findMany({ 
       where,
       orderBy: [
         { destacado: 'desc' }, // Productos destacados primero
         { fecha_creacion: 'desc' }, // Luego por fecha de creación
       ],
+      include: {
+        productImages: {
+          orderBy: [
+            { es_principal: 'desc' },
+            { orden: 'asc' },
+          ],
+        },
+      },
     });
+
+    return this.addImagenUrl(productos);
   }
 
   async findOne(id: number): Promise<Product | null> {
-    return await this.prisma.product.findUnique({
+    const producto = await this.prisma.product.findUnique({
       where: { 
         id,
       },
@@ -140,6 +172,12 @@ export class ProductsService {
         },
       },
     });
+
+    if (!producto) return null;
+
+    // Agregar imagen_url
+    const productosConImagen = this.addImagenUrl([producto]);
+    return productosConImagen[0];
   }
 
   async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {

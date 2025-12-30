@@ -12,11 +12,24 @@ export default {
   data() {
     return {
       producto: null,
+      imagenes: [],
       errorMessage: "",
       isLoading: true,
       isAuthenticated: false,
       searchQuery: "",
     };
+  },
+  computed: {
+    imagenPrincipal() {
+      if (this.imagenes && this.imagenes.length > 0) {
+        // Buscar imagen marcada como principal
+        const principal = this.imagenes.find(img => img.es_principal);
+        if (principal) return principal.ruta_imagen;
+        // Si no hay principal, usar la primera
+        return this.imagenes[0].ruta_imagen;
+      }
+      return '/Productos/placeholder-product.png';
+    }
   },
   methods: {
     async cargarProducto() {
@@ -30,6 +43,17 @@ export default {
           `${API_BASE_URL}/tienda/productos/${productoId}`
         );
         this.producto = response.data;
+
+        // Cargar imágenes del producto
+        try {
+          const imagenesResponse = await axios.get(
+            `${API_BASE_URL}/images/producto/${productoId}`
+          );
+          this.imagenes = imagenesResponse.data;
+        } catch (imgError) {
+          console.warn('No se pudieron cargar las imágenes:', imgError);
+          this.imagenes = [];
+        }
 
         // Registrar en historial de productos vistos (Vuex + localStorage)
         if (this.$store) {

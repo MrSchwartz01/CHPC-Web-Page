@@ -37,7 +37,7 @@
       <!-- Imagen del producto (Izquierda) -->
       <div class="imagen-producto-wrapper">
         <img
-          :src="producto.imagen_url || '/Productos/placeholder-product.png'"
+          :src="imagenPrincipal"
           :alt="producto.nombre_producto"
           class="imagen-producto-principal"
         />
