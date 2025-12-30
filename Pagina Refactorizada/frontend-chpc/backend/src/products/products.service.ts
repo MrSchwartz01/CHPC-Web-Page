@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, Product } from '@prisma/client';
 import { FilterProductsDto } from './dto/filter-products.dto';
 import { CreateProductDto } from './dto/create-product.dto';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -129,8 +130,42 @@ export class ProductsService {
     return await this.prisma.product.findUnique({
       where: { 
         id,
-        activo: true,
       },
+      include: {
+        productImages: {
+          orderBy: [
+            { es_principal: 'desc' },
+            { orden: 'asc' },
+          ],
+        },
+      },
+    });
+  }
+
+  async update(id: number, updateProductDto: UpdateProductDto): Promise<Product> {
+    // Verificar que el producto existe
+    const producto = await this.prisma.product.findUnique({ where: { id } });
+    if (!producto) {
+      throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+    }
+
+    return await this.prisma.product.update({
+      where: { id },
+      data: updateProductDto,
+    });
+  }
+
+  async remove(id: number): Promise<Product> {
+    // Verificar que el producto existe
+    const producto = await this.prisma.product.findUnique({ where: { id } });
+    if (!producto) {
+      throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+    }
+
+    // Soft delete: marcar como inactivo en lugar de eliminar
+    return await this.prisma.product.update({
+      where: { id },
+      data: { activo: false },
     });
   }
 }

@@ -20,6 +20,11 @@
     </div>
 
     <div class="tab-content">
+      <!-- Tab de Productos -->
+      <div v-if="activeTab === 'productos'" class="tab-panel">
+        <AdminProductos />
+      </div>
+      
       <!-- Tab de Promociones -->
       <div v-if="activeTab === 'promociones'" class="tab-panel">
         <h2>Gestión de Promociones</h2>
@@ -590,14 +595,19 @@
 <script>
 import axios from 'axios';
 import { API_BASE_URL } from '@/config/api';
+import AdminProductos from './AdminProductos.vue';
 
 export default {
   name: 'AdminPanelMain',
+  components: {
+    AdminProductos,
+  },
   data() {
     return {
       API_BASE_URL, // Exponer para usar en template si es necesario
       activeTab: 'promociones',
       tabs: [
+        { id: 'productos', label: 'Productos' },
         { id: 'promociones', label: 'Promociones' },
         { id: 'banners', label: 'Banners' },
         { id: 'logo', label: 'Logo' },

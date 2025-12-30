@@ -14,6 +14,7 @@ import { AnalyticsModule } from './analytics/analytics.module';
 import { PromotionsModule } from './promotions/promotions.module';
 import { SiteConfigModule } from './site-config/site-config.module';
 import { PermisosModule } from './permisos/permisos.module';
+import { ImagesModule } from './images/images.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { PermisosModule } from './permisos/permisos.module';
     PromotionsModule,
     SiteConfigModule,
     PermisosModule,
+    ImagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
