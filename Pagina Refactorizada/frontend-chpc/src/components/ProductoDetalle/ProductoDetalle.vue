@@ -99,6 +99,14 @@
 
         <!-- Botones de acción -->
         <div class="botones-accion">
+          <button 
+            @click="agregarAlCarrito" 
+            class="boton-agregar-carrito"
+            :disabled="producto.stock <= 0"
+          >
+            <i class="fas fa-shopping-cart"></i> 
+            {{ producto.stock > 0 ? 'Agregar al Carrito' : 'Sin Stock' }}
+          </button>
           <a href="https://wa.me/593995924867" target="_blank" class="boton-whatsapp">
             <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
           </a>

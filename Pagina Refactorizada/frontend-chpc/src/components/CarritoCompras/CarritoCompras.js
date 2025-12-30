@@ -1,5 +1,7 @@
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
 import FooterAnth from "../FooterAnth/FooterAnth.vue";
+import axios from 'axios';
+import { API_BASE_URL } from '@/config/api';
 
 export default {
   name: "CarritoCompras",
@@ -14,6 +16,16 @@ export default {
       productosCarrito: [],
       tasaIVA: 0.15,
       costoEnvio: 5.00,
+      mostrarCheckout: false,
+      procesandoPago: false,
+      datosEnvio: {
+        nombre_cliente: '',
+        email_cliente: '',
+        telefono: '',
+        direccion_envio: '',
+        paymentMethod: 'CARD',
+        observaciones: ''
+      }
     };
   },
   computed: {
@@ -36,8 +48,25 @@ export default {
   created() {
     this.isAuthenticated = !!localStorage.getItem("access_token");
     this.cargarCarrito();
+    if (this.isAuthenticated) {
+      this.cargarDatosUsuario();
+    }
   },
   methods: {
+    async cargarDatosUsuario() {
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await axios.get(`${API_BASE_URL}/usuarios/perfil`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        this.datosEnvio.nombre_cliente = response.data.nombre || '';
+        this.datosEnvio.email_cliente = response.data.email || '';
+        this.datosEnvio.telefono = response.data.telefono || '';
+      } catch (error) {
+        console.error('Error al cargar datos del usuario:', error);
+      }
+    },
     cerrarSesion() {
       localStorage.removeItem("access_token");
       this.isAuthenticated = false;
@@ -51,27 +80,6 @@ export default {
       const carritoGuardado = localStorage.getItem("carrito");
       if (carritoGuardado) {
         this.productosCarrito = JSON.parse(carritoGuardado);
-      } else {
-        // Productos de ejemplo para demostración
-        this.productosCarrito = [
-          {
-            id: "1",
-            nombre: "MacBook Pro 16\" M3",
-            marca: "Apple",
-            precio: "2499.99",
-            cantidad: 1,
-            imagen_url: "/Productos/placeholder-product.png",
-          },
-          {
-            id: "2",
-            nombre: "Dell XPS 15",
-            marca: "Dell",
-            precio: "1899.99",
-            cantidad: 1,
-            imagen_url: "/Productos/placeholder-product.png",
-          },
-        ];
-        this.guardarCarrito();
       }
     },
     guardarCarrito() {
@@ -109,9 +117,68 @@ export default {
         alert("Debes iniciar sesión para continuar con la compra");
         this.$router.push("/login");
       } else {
-        alert(`Proceder al pago por un total de $${this.total.toFixed(2)}`);
-        // Aquí iría la lógica para proceder al pago
+        this.mostrarCheckout = true;
       }
+    },
+    
+    async finalizarCompra() {
+      // Validar datos
+      if (!this.datosEnvio.nombre_cliente || !this.datosEnvio.email_cliente || !this.datosEnvio.direccion_envio) {
+        alert('Por favor completa todos los campos requeridos');
+        return;
+      }
+
+      this.procesandoPago = true;
+
+      try {
+        const token = localStorage.getItem('access_token');
+        
+        // Preparar items para el backend
+        const items = this.productosCarrito.map(producto => ({
+          productId: parseInt(producto.id),
+          cantidad: producto.cantidad
+        }));
+
+        // Crear orden
+        const orderData = {
+          items,
+          paymentMethod: this.datosEnvio.paymentMethod,
+          nombre_cliente: this.datosEnvio.nombre_cliente,
+          email_cliente: this.datosEnvio.email_cliente,
+          telefono: this.datosEnvio.telefono || '',
+          direccion_envio: this.datosEnvio.direccion_envio,
+          observaciones: this.datosEnvio.observaciones || '',
+        };
+
+        const response = await axios.post(
+          `${API_BASE_URL}/ordenes`,
+          orderData,
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        );
+
+        // Éxito
+        alert(`¡Orden creada exitosamente!\nCódigo: ${response.data.codigo}\nTotal: $${response.data.total.toFixed(2)}`);
+        
+        // Limpiar carrito
+        this.productosCarrito = [];
+        this.guardarCarrito();
+        this.mostrarCheckout = false;
+        
+        // Redirigir a home
+        this.$router.push('/home');
+
+      } catch (error) {
+        console.error('Error al crear orden:', error);
+        alert('Error al procesar la orden: ' + (error.response?.data?.message || error.message));
+      } finally {
+        this.procesandoPago = false;
+      }
+    },
+    
+    cancelarCheckout() {
+      this.mostrarCheckout = false;
     },
     irAInicio() {
       this.$router.push("/home");

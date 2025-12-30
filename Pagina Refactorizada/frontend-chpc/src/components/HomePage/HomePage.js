@@ -178,6 +178,46 @@ export default {
     redirigirLogin() {
       this.$router.push("/login");
     },
+    navegarACategoria(nombreCategoria) {
+      // Navegar a la página de productos por categoría
+      this.$router.push({ 
+        name: 'ProductosPorCategoria', 
+        params: { categoria: nombreCategoria } 
+      });
+    },
+    agregarAlCarrito(producto) {
+      if (!producto) return;
+
+      // Obtener carrito del localStorage
+      let carrito = [];
+      const carritoGuardado = localStorage.getItem('carrito');
+      if (carritoGuardado) {
+        carrito = JSON.parse(carritoGuardado);
+      }
+
+      // Verificar si el producto ya está en el carrito
+      const productoExistente = carrito.find(p => p.id === producto.id);
+      
+      if (productoExistente) {
+        // Aumentar cantidad
+        productoExistente.cantidad++;
+        alert('Cantidad actualizada en el carrito');
+      } else {
+        // Agregar nuevo producto
+        carrito.push({
+          id: producto.id,
+          nombre: producto.nombre_producto,
+          marca: producto.marca,
+          precio: producto.precio,
+          cantidad: 1,
+          imagen_url: producto.imagen_url
+        });
+        alert('Producto agregado al carrito');
+      }
+
+      // Guardar en localStorage
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+    },
     filtrarPorCategoria(nombreCategoria) {
       const marcas = this.categoriaMapping[nombreCategoria];
       if (!marcas) return;

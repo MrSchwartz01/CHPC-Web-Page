@@ -27,7 +27,7 @@
             v-for="categoria in categoriasMasVisitadas"
             :key="categoria.id"
             class="categoria-card"
-            @click="filtrarPorCategoria(categoria.nombre)"
+            @click="navegarACategoria(categoria.nombre)"
           >
             <div class="categoria-icon">{{ categoria.icon }}</div>
             <h3>{{ categoria.nombre }}</h3>
@@ -148,12 +148,22 @@
     </p>
 
     <!-- Botones de acción -->
-    <button v-if="isAuthenticated" @click="verDetalle(producto.id)">
-      Ver Detalles
-    </button>
-    <button v-else @click="redirigirLogin">
-      Inicia Sesión para Ver Precios
-    </button>
+    <div class="product-actions">
+      <button 
+        v-if="isAuthenticated" 
+        @click.stop="agregarAlCarrito(producto)" 
+        class="btn-agregar-carrito"
+        :disabled="producto.stock <= 0"
+      >
+        <i class="fas fa-shopping-cart"></i>
+      </button>
+      <button v-if="isAuthenticated" @click="verDetalle(producto.id)">
+        Ver Detalles
+      </button>
+      <button v-else @click="redirigirLogin">
+        Inicia Sesión para Ver Precios
+      </button>
+    </div>
   </div>
 </div>
 

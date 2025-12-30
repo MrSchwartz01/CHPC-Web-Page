@@ -87,6 +87,39 @@ export default {
     redirigirLogin() {
       this.$router.push("/login");
     },
+    agregarAlCarrito() {
+      if (!this.producto) return;
+
+      // Obtener carrito del localStorage
+      let carrito = [];
+      const carritoGuardado = localStorage.getItem('carrito');
+      if (carritoGuardado) {
+        carrito = JSON.parse(carritoGuardado);
+      }
+
+      // Verificar si el producto ya está en el carrito
+      const productoExistente = carrito.find(p => p.id === this.producto.id);
+      
+      if (productoExistente) {
+        // Aumentar cantidad
+        productoExistente.cantidad++;
+        alert('Cantidad actualizada en el carrito');
+      } else {
+        // Agregar nuevo producto
+        carrito.push({
+          id: this.producto.id,
+          nombre: this.producto.nombre_producto,
+          marca: this.producto.marca,
+          precio: this.producto.precio,
+          cantidad: 1,
+          imagen_url: this.imagenPrincipal
+        });
+        alert('Producto agregado al carrito');
+      }
+
+      // Guardar en localStorage
+      localStorage.setItem('carrito', JSON.stringify(carrito));
+    },
   },
   async created() {
     this.isAuthenticated = !!localStorage.getItem("access_token");

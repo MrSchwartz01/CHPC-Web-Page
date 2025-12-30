@@ -99,6 +99,103 @@
           </div>
         </div>
       </div>
+
+      <!-- Modal de Checkout -->
+      <div v-if="mostrarCheckout" class="checkout-modal">
+        <div class="checkout-content">
+          <div class="checkout-header">
+            <h2>Finalizar Compra</h2>
+            <button @click="cancelarCheckout" class="btn-cerrar">✕</button>
+          </div>
+
+          <form @submit.prevent="finalizarCompra" class="checkout-form">
+            <div class="form-group">
+              <label>Nombre Completo *</label>
+              <input 
+                v-model="datosEnvio.nombre_cliente" 
+                type="text" 
+                required 
+                placeholder="Juan Pérez"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Email *</label>
+              <input 
+                v-model="datosEnvio.email_cliente" 
+                type="email" 
+                required 
+                placeholder="correo@ejemplo.com"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Teléfono</label>
+              <input 
+                v-model="datosEnvio.telefono" 
+                type="tel" 
+                placeholder="0999-999-999"
+              />
+            </div>
+
+            <div class="form-group">
+              <label>Dirección de Envío *</label>
+              <textarea 
+                v-model="datosEnvio.direccion_envio" 
+                required 
+                rows="3"
+                placeholder="Calle, número, ciudad, provincia"
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Método de Pago *</label>
+              <select v-model="datosEnvio.paymentMethod" required>
+                <option value="CARD">Tarjeta de Crédito/Débito</option>
+                <option value="TRANSFER">Transferencia Bancaria</option>
+                <option value="CASH">Efectivo (Contra Entrega)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Observaciones</label>
+              <textarea 
+                v-model="datosEnvio.observaciones" 
+                rows="2"
+                placeholder="Instrucciones especiales, horarios de entrega, etc."
+              ></textarea>
+            </div>
+
+            <div class="checkout-resumen">
+              <div class="resumen-linea">
+                <span>Subtotal:</span>
+                <span>${{ subtotal.toFixed(2) }}</span>
+              </div>
+              <div class="resumen-linea">
+                <span>IVA (15%):</span>
+                <span>${{ iva.toFixed(2) }}</span>
+              </div>
+              <div class="resumen-linea">
+                <span>Envío:</span>
+                <span>${{ envio.toFixed(2) }}</span>
+              </div>
+              <div class="resumen-linea total">
+                <span>TOTAL:</span>
+                <span>${{ total.toFixed(2) }}</span>
+              </div>
+            </div>
+
+            <div class="checkout-actions">
+              <button type="button" @click="cancelarCheckout" class="btn-cancelar">
+                Cancelar
+              </button>
+              <button type="submit" class="btn-confirmar" :disabled="procesandoPago">
+                {{ procesandoPago ? 'Procesando...' : 'Confirmar Compra' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
 
     <FooterAnth />
