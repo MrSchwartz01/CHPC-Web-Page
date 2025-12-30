@@ -58,7 +58,17 @@ model Product {
   imagen_url      String
   marca           String?
   color           String?
-  erpId           String? @unique
+  categoria       String?  // Agregar campo categoría
+  subcategoria    String?  // Agregar subcategoría opcional
+  modelo          String?  // Modelo del producto
+  sku             String?  @unique // SKU único del producto
+  especificaciones String? @db.Text // Especificaciones técnicas
+  garantia        String?  // Información de garantía
+  activo          Boolean @default(true) // Si el producto está activo
+  destacado       Boolean @default(false) // Si es producto destacado
+  fecha_creacion  DateTime @default(now())
+  fecha_actualizacion DateTime @updatedAt
+  erpId           String? @unique // Mantener para futura integración ERP
 
   wishlistItems   WishlistItem[]
   serviceOrders   ServiceOrder[]
@@ -67,6 +77,10 @@ model Product {
   promotions      Promotion[]
 
   @@map("productos")
+  @@index([categoria])
+  @@index([marca])
+  @@index([activo])
+  @@index([destacado])
 }
 
 model Banner {

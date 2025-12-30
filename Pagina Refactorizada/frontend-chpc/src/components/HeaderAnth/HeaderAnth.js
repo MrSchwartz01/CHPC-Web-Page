@@ -66,7 +66,7 @@ export default {
         this.cargandoSugerencias = true;
         try {
           const response = await axios.get(
-            "http://localhost:5000/tienda/productos",
+            "http://localhost:5000/api/tienda/productos",
             {
               params: { search: query },
             },

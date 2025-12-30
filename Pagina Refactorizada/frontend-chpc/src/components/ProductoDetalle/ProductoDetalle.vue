@@ -32,102 +32,77 @@
     v-if="producto && !isLoading && !errorMessage && isAuthenticated"
     class="producto-contenedor"
   >
-    <h2 class="seccion-titulo">Detalles del Producto</h2> <!-- Título de la sección -->
+    <h2 class="seccion-titulo">Detalles del Producto</h2>
     <div class="detalle-contenedor">
-      <!-- Galería de medios del producto -->
-      <div class="galeria-imagenes">
-        <div class="miniaturas">
-          <template v-for="(media, index) in producto.media || []" :key="index">
-            <img
-              v-if="media.tipo_media === 'imagen'"
-              :src="getFullImageUrl(media.url)"
-              :alt="`Imagen adicional ${index + 1}`"
-              class="imagen-miniatura"
-              @click="cambiarImagenPrincipal(index)"
-            />
-            <div
-              v-else-if="media.tipo_media === 'video'"
-              class="video-miniatura-wrapper"
-              @click="cambiarImagenPrincipal(index)"
-            >
-              <video
-                class="video-miniatura"
-                :src="getFullImageUrl(media.url)"
-                muted
-                loop
-              ></video>
-            </div>
-          </template>
-        </div>
-        <div class="imagen-principal">
-          <!-- Imagen principal -->
-          <img
-            v-if="producto.media?.[imagenSeleccionada]?.tipo_media === 'imagen'"
-            :src="getFullImageUrl(producto.media?.[imagenSeleccionada]?.url || '')"
-            :alt="`Imagen principal de ${producto.nombre_producto || ''}`"
-            class="imagen-grande"
-          />
-          <!-- Video principal -->
-          <video
-            v-else-if="producto.media?.[imagenSeleccionada]?.tipo_media === 'video'"
-            class="video-grande"
-            :src="getFullImageUrl(producto.media?.[imagenSeleccionada]?.url || '')"
-            controls
-            autoplay
-          ></video>
-        </div>
+      <!-- Imagen del producto (Izquierda) -->
+      <div class="imagen-producto-wrapper">
+        <img
+          :src="producto.imagen_url || '/Productos/placeholder-product.png'"
+          :alt="producto.nombre_producto"
+          class="imagen-producto-principal"
+        />
       </div>
-  
-      <!-- Información del producto -->
+
+      <!-- Información del producto (Derecha) -->
       <div class="informacion-producto">
         <h1 class="nombre-producto">{{ producto.nombre_producto }}</h1>
-  
-        <!-- Precio con descuento y original -->
-        <div class="precio-contenedor">
-          <span class="precio-descuento">USD ${{ formatPrice(producto.precio) }}</span>
-          <span class="precio-original" v-if="producto.precio_original">
-            USD ${{ formatPrice(producto.precio_original) }}
+        
+        <div class="detalle-item">
+          <strong>Código (SKU):</strong>
+          <span>{{ producto.sku || 'No disponible' }}</span>
+        </div>
+
+        <div class="detalle-item">
+          <strong>Descripción:</strong>
+          <p class="descripcion-texto">{{ producto.descripcion }}</p>
+        </div>
+
+        <div class="detalle-item" v-if="producto.marca">
+          <strong>Marca:</strong>
+          <span>{{ producto.marca }}</span>
+        </div>
+
+        <div class="detalle-item" v-if="producto.categoria">
+          <strong>Categoría:</strong>
+          <span>{{ producto.categoria }}</span>
+        </div>
+
+        <div class="detalle-item" v-if="producto.modelo">
+          <strong>Modelo:</strong>
+          <span>{{ producto.modelo }}</span>
+        </div>
+
+        <div class="detalle-item" v-if="producto.especificaciones">
+          <strong>Especificaciones:</strong>
+          <p class="especificaciones-texto">{{ producto.especificaciones }}</p>
+        </div>
+
+        <div class="detalle-item" v-if="producto.garantia">
+          <strong>Garantía:</strong>
+          <span>{{ producto.garantia }}</span>
+        </div>
+
+        <div class="detalle-item stock-info">
+          <strong>Stock disponible:</strong>
+          <span :class="{'stock-disponible': producto.stock > 0, 'stock-agotado': producto.stock <= 0}">
+            {{ producto.stock }} unidades
           </span>
         </div>
-  
-        <!-- Estado del stock -->
-        <p class="stock-producto">
-          {{ producto.stock > 0 ? "En stock" : "Agotado" }}
-        </p>
-  
-      <!-- Descripción en formato de lista -->
-  <div class="descripcion-producto">
-    <p><strong>Descripción:</strong></p>
-    <ul>
-      <li><strong>Nombre del Producto:</strong> {{ producto.nombre_producto || 'Sin nombre' }}</li>
-      <li v-if="producto.descripcion">
-        <strong>Descripción del Producto:</strong> {{ producto.descripcion }}
-      </li>
-      <li><strong>Precio:</strong> USD ${{ formatPrice(producto.precio) }}</li>
-      <li><strong>Stock:</strong> {{ producto.stock }} unidades</li>
-      <li v-if="producto.peso"><strong>Peso:</strong> {{ producto.peso }} kg</li>
-      <li v-if="producto.color"><strong>Color:</strong> {{ producto.color }}</li>
-      <li v-if="producto.volumen"><strong>Volumen:</strong> {{ producto.volumen }} ml</li>
-  
-      <li><strong>Marca:</strong> {{ producto.marca?.nombre_marca || 'Sin marca' }}</li>
-      <li v-if="producto.marca?.descripcion">
-        <strong>Descripción de la Marca:</strong> {{ producto.marca.descripcion }}
-      </li>
-      <li v-if="producto.marca?.sitio_web">
-        <strong>Sitio Web de la Marca:</strong>
-        <a :href="producto.marca.sitio_web" target="_blank">{{ producto.marca.sitio_web }}</a>
-      </li>
-  
-      <li><strong>Categoría:</strong> {{ producto.categoria?.nombre_categoria || 'Sin categoría' }}</li>
-    </ul>
-  </div>
-  
-  
+
+        <!-- Precio -->
+        <div class="precio-contenedor">
+          <div class="precio-wrapper">
+            <span class="precio-label">Precio:</span>
+            <span class="precio-valor">USD ${{ formatPrice(producto.precio) }}</span>
+          </div>
+        </div>
+
+        <!-- Botones de acción -->
         <div class="botones-accion">
-    <a href="https://wa.me/593995924867" target="_blank" class="boton-compra">Comprar ahora</a>
-   
-  </div>
-  
+          <a href="https://wa.me/593995924867" target="_blank" class="boton-whatsapp">
+            <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
+          </a>
+        </div>
       </div>
     </div>
   </div>

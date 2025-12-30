@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, IsInt, Min } from 'class-validator';
+import { IsString, IsNumber, IsOptional, IsInt, Min, IsBoolean } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -25,6 +25,38 @@ export class CreateProductDto {
   @IsString()
   @IsOptional()
   color?: string;
+
+  @IsString()
+  @IsOptional()
+  categoria?: string;
+
+  @IsString()
+  @IsOptional()
+  subcategoria?: string;
+
+  @IsString()
+  @IsOptional()
+  modelo?: string;
+
+  @IsString()
+  @IsOptional()
+  sku?: string;
+
+  @IsString()
+  @IsOptional()
+  especificaciones?: string;
+
+  @IsString()
+  @IsOptional()
+  garantia?: string;
+
+  @IsBoolean()
+  @IsOptional()
+  activo?: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  destacado?: boolean;
 
   @IsString()
   @IsOptional()

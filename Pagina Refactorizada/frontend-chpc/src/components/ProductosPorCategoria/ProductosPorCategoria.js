@@ -1,5 +1,6 @@
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
 import FooterAnth from "../FooterAnth/FooterAnth.vue";
+import axios from "axios";
 
 export default {
   name: "ProductosPorCategoria",
@@ -24,18 +25,12 @@ export default {
         camaras: "Cámaras de Seguridad",
         tablets: "Tablets",
         accesorios: "Accesorios",
-        redes: "Equipos de Red",
+        redes: "Redes",
+        componentes: "Componentes",
+        perifericos: "Perifericos",
+        almacenamiento: "Almacenamiento",
+        audio: "Audio",
       },
-      marcasDisponibles: [
-        { id: 1, nombre: "Apple" },
-        { id: 2, nombre: "Samsung" },
-        { id: 3, nombre: "HP" },
-        { id: 4, nombre: "Dell" },
-        { id: 5, nombre: "Lenovo" },
-        { id: 6, nombre: "Asus" },
-        { id: 9, nombre: "Logitech" },
-        { id: 10, nombre: "Canon" },
-      ],
     };
   },
   computed: {
@@ -44,8 +39,13 @@ export default {
         return this.productos;
       }
       return this.productos.filter(
-        (p) => p.marca_id === this.marcaSeleccionada
+        (p) => p.marca?.toLowerCase() === this.marcaSeleccionada.toLowerCase()
       );
+    },
+    marcasDisponibles() {
+      // Extraer marcas únicas de los productos cargados
+      const marcas = [...new Set(this.productos.map(p => p.marca).filter(Boolean))];
+      return marcas.map(marca => ({ nombre: marca }));
     },
   },
   created() {
@@ -65,41 +65,28 @@ export default {
       this.searchQuery = query;
       // Implementar lógica de búsqueda
     },
-    cargarProductos(categoria) {
-      // Generar productos placeholder basados en la categoría
-      this.productos = this.generarProductosPlaceholder(categoria);
-    },
-    generarProductosPlaceholder(categoria) {
-      const productos = [];
-      const marcasIds = [1, 2, 3, 4, 5, 6, 9, 10];
-      const marcasNombres = {
-        1: "Apple",
-        2: "Samsung",
-        3: "HP",
-        4: "Dell",
-        5: "Lenovo",
-        6: "Asus",
-        9: "Logitech",
-        10: "Canon",
-      };
-
-      for (let i = 1; i <= 12; i++) {
-        const marcaId = marcasIds[Math.floor(Math.random() * marcasIds.length)];
-        productos.push({
-          id: `${categoria}-${i}`,
-          nombre: `${this.nombreCategoria} ${marcasNombres[marcaId]} ${i}`,
-          descripcion: `Producto ${i} de ${this.nombreCategoria}. Excelente calidad y rendimiento.`,
-          precio: (Math.random() * 2000 + 100).toFixed(2),
-          stock: Math.floor(Math.random() * 50) + 1,
-          marca: marcasNombres[marcaId],
-          marca_id: marcaId,
-          imagen_url: "/Productos/placeholder-product.png",
-        });
+    async cargarProductos(categoria) {
+      try {
+        // Capitalizar la primera letra de la categoría para que coincida con la base de datos
+        const categoriaCapitalizada = this.categoriasInfo[categoria];
+        
+        const response = await axios.get(
+          `http://localhost:5000/api/tienda/productos?categoria=${categoriaCapitalizada}`
+        );
+        
+        this.productos = response.data.map(producto => ({
+          ...producto,
+          imagen_url: producto.imagen_url || "/Productos/placeholder-product.png"
+        }));
+        
+        console.log(`Productos cargados para ${categoriaCapitalizada}:`, this.productos.length);
+      } catch (error) {
+        console.error("Error al cargar productos:", error);
+        this.productos = [];
       }
-      return productos;
     },
-    filtrarPorMarca(marcaId) {
-      this.marcaSeleccionada = marcaId;
+    filtrarPorMarca(marca) {
+      this.marcaSeleccionada = marca;
     },
     verDetalle(id) {
       this.$router.push({ name: "ProductoDetalle", params: { id } });

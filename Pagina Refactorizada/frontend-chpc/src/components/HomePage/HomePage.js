@@ -55,13 +55,13 @@ export default {
       ];
 
       // Cargar Productos
-      const productosResponse = await axios.get("http://localhost:5000/tienda/productos");
+      const productosResponse = await axios.get("http://localhost:5000/api/tienda/productos");
       this.productos = productosResponse.data.map((producto) => ({
         ...producto,
         imagen_url:
           producto.media?.length > 0
             ? `http://localhost:5000${producto.media[0].url}`
-            : "ruta-imagen-default.png",
+            : producto.imagen_url || "ruta-imagen-default.png",
       }));
       
       // Cargar Promociones Activas

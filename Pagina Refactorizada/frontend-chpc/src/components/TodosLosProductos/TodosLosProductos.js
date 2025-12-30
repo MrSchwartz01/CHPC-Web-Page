@@ -1,7 +1,6 @@
 import HeaderAnth from '../HeaderAnth/HeaderAnth.vue';
 import FooterAnth from '../FooterAnth/FooterAnth.vue';
 import axios from 'axios';
-import { API_BASE_URL } from '@/config/api';
 
 export default {
   name: 'TodosLosProductos',
@@ -66,7 +65,7 @@ export default {
     async cargarProductos() {
       try {
         this.cargando = true;
-        const response = await axios.get(`${API_BASE_URL}/products`);
+        const response = await axios.get('http://localhost:5000/api/tienda/productos');
         this.productos = response.data;
         this.productosFiltrados = [...this.productos];
         

@@ -1,5 +1,5 @@
-import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
-import { Type } from 'class-transformer';
+import { IsIn, IsNumber, IsOptional, IsString, IsBoolean } from 'class-validator';
+import { Type, Transform } from 'class-transformer';
 
 export class FilterProductsDto {
   @IsOptional()
@@ -19,6 +19,19 @@ export class FilterProductsDto {
   @IsOptional()
   @IsString()
   color?: string;
+
+  @IsOptional()
+  @IsString()
+  categoria?: string;
+
+  @IsOptional()
+  @IsString()
+  subcategoria?: string;
+
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  destacado?: boolean;
 
   @IsOptional()
   @IsString()

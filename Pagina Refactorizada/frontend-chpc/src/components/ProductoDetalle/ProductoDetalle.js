@@ -10,24 +10,15 @@ export default {
   },
   data() {
     return {
-      producto: {
-        media: [], // Lista de medios del producto (imágenes y videos)
-        categoria: {}, // Información de la categoría del producto
-        marca: {}, // Información de la marca del producto
-      },
+      producto: null,
       errorMessage: "",
       isLoading: true,
       isAuthenticated: false,
-      imagenSeleccionada: 0, // Índice del medio seleccionado
       searchQuery: "",
     };
   },
   methods: {
     async cargarProducto() {
-      if (!this.isAuthenticated) {
-        return;
-      }
-
       this.isLoading = true;
       this.errorMessage = "";
 
@@ -35,63 +26,38 @@ export default {
       try {
         // Obtener los datos del producto
         const response = await axios.get(
-          `http://localhost:5000/tienda/productos/${productoId}`,
-          { headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` } }
+          `http://localhost:5000/api/tienda/productos/${productoId}`
         );
         this.producto = response.data;
 
-        // Validar que todos los medios tengan el campo `tipo_media`
-        this.producto.media = this.producto.media.map((media) => ({
-          ...media,
-          tipo_media: media.tipo_media || "imagen", // Predeterminar como "imagen" si no está definido
-        }));
-
-        // Llamar a los endpoints de categoría y marca si existen
-        if (this.producto.categoria_id) {
-          const categoriaResponse = await axios.get(
-            `http://localhost:5000/tienda/categorias/${this.producto.categoria_id}`
-          );
-          this.producto.categoria = categoriaResponse.data;
-        }
-
-        if (this.producto.marca_id) {
-          const marcaResponse = await axios.get(
-            `http://localhost:5000/tienda/marcas/${this.producto.marca_id}`
-          );
-          this.producto.marca = marcaResponse.data;
-        }
-
         // Registrar en historial de productos vistos (Vuex + localStorage)
-        this.$store.dispatch('registrarProductoVisto', this.producto);
+        if (this.$store) {
+          this.$store.dispatch('registrarProductoVisto', this.producto);
+        }
       } catch (error) {
+        console.error('Error al cargar producto:', error);
         this.errorMessage =
           error.response?.data?.message || "Hubo un problema al cargar el producto.";
       } finally {
         this.isLoading = false;
       }
     },
+    recargarProducto() {
+      this.cargarProducto();
+    },
     buscarProductos(query) {
-      this.searchQuery = query; // Actualiza el valor local del query
+      this.searchQuery = query;
       if (query.trim() !== "") {
-        // Redirige al HomePage con el término de búsqueda como parámetro de consulta
         this.$router.push({ name: "HomePage", query: { search: query } });
       }
-    },
-    cambiarImagenPrincipal(index) {
-      // Cambiar el medio seleccionado (imagen o video)
-      this.imagenSeleccionada = index;
     },
     formatPrice(price) {
       return parseFloat(price).toFixed(2);
     },
-    getFullImageUrl(relativeUrl) {
-      return `http://localhost:5000${relativeUrl}`;
-    },
     cerrarSesion() {
-      // Elimina el token y actualiza el estado de autenticación
       localStorage.removeItem("access_token");
       this.isAuthenticated = false;
-      this.$router.push("/login"); // Redirige al usuario al login
+      this.$router.push("/login");
     },
     redirigirLogin() {
       this.$router.push("/login");
@@ -99,9 +65,6 @@ export default {
   },
   async created() {
     this.isAuthenticated = !!localStorage.getItem("access_token");
-
-    if (this.isAuthenticated) {
-      await this.cargarProducto();
-    }
+    await this.cargarProducto();
   },
 };

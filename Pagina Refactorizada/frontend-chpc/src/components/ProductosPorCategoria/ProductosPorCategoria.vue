@@ -18,24 +18,24 @@
       </div>
 
       <!-- Filtros por marca -->
-      <div class="filtros-section">
+      <div class="filtros-section" v-if="marcasDisponibles.length > 0">
         <h3>Filtrar por Marca</h3>
         <div class="marcas-filter">
-          <button
-            v-for="marca in marcasDisponibles"
-            :key="marca.id"
-            :class="{ active: marcaSeleccionada === marca.id }"
-            @click="filtrarPorMarca(marca.id)"
-            class="marca-filter-btn"
-          >
-            {{ marca.nombre }}
-          </button>
           <button
             :class="{ active: marcaSeleccionada === null }"
             @click="filtrarPorMarca(null)"
             class="marca-filter-btn"
           >
             Todas
+          </button>
+          <button
+            v-for="marca in marcasDisponibles"
+            :key="marca.nombre"
+            :class="{ active: marcaSeleccionada === marca.nombre }"
+            @click="filtrarPorMarca(marca.nombre)"
+            class="marca-filter-btn"
+          >
+            {{ marca.nombre }}
           </button>
         </div>
       </div>
@@ -47,13 +47,14 @@
           :key="producto.id"
           class="producto-card"
         >
-          <img :src="producto.imagen_url" :alt="producto.nombre" />
+          <img :src="producto.imagen_url" :alt="producto.nombre_producto" />
           <div class="producto-info">
             <span class="marca-tag">{{ producto.marca }}</span>
-            <h3>{{ producto.nombre }}</h3>
+            <h3>{{ producto.nombre_producto }}</h3>
             <p class="descripcion">{{ producto.descripcion }}</p>
             <div class="producto-footer">
-              <p class="precio">${{ producto.precio }}</p>
+              <p class="precio" v-if="isAuthenticated">${{ producto.precio }}</p>
+              <p class="precio" v-else>Inicia sesión para ver precio</p>
               <p class="stock">Stock: {{ producto.stock }}</p>
             </div>
             <button @click="verDetalle(producto.id)" class="ver-btn">

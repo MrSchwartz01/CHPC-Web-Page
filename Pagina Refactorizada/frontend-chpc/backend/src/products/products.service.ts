@@ -15,9 +15,11 @@ export class ProductsService {
   }
 
   async findAll(filters: FilterProductsDto): Promise<Product[]> {
-    const { minPrice, maxPrice, marca, color, search, priceRange } = filters;
+    const { minPrice, maxPrice, marca, color, categoria, subcategoria, destacado, search, priceRange } = filters;
 
-    const where: Prisma.ProductWhereInput = {};
+    const where: Prisma.ProductWhereInput = {
+      activo: true, // Solo mostrar productos activos
+    };
 
     // Determinar rango de precio según priceRange o min/max explícitos
     let effectiveMin = minPrice;
@@ -50,13 +52,33 @@ export class ProductsService {
     if (marca) {
       where.marca = {
         contains: marca,
+        mode: 'insensitive',
       };
     }
 
     if (color) {
       where.color = {
         contains: color,
+        mode: 'insensitive',
       };
+    }
+
+    if (categoria) {
+      where.categoria = {
+        contains: categoria,
+        mode: 'insensitive',
+      };
+    }
+
+    if (subcategoria) {
+      where.subcategoria = {
+        contains: subcategoria,
+        mode: 'insensitive',
+      };
+    }
+
+    if (destacado !== undefined) {
+      where.destacado = destacado;
     }
 
     if (search) {
@@ -64,21 +86,51 @@ export class ProductsService {
         {
           nombre_producto: {
             contains: search,
+            mode: 'insensitive',
           },
         },
         {
           descripcion: {
             contains: search,
+            mode: 'insensitive',
           },
         },
         {
           marca: {
             contains: search,
+            mode: 'insensitive',
+          },
+        },
+        {
+          categoria: {
+            contains: search,
+            mode: 'insensitive',
+          },
+        },
+        {
+          modelo: {
+            contains: search,
+            mode: 'insensitive',
           },
         },
       ];
     }
 
-    return await this.prisma.product.findMany({ where });
+    return await this.prisma.product.findMany({ 
+      where,
+      orderBy: [
+        { destacado: 'desc' }, // Productos destacados primero
+        { fecha_creacion: 'desc' }, // Luego por fecha de creación
+      ],
+    });
+  }
+
+  async findOne(id: number): Promise<Product | null> {
+    return await this.prisma.product.findUnique({
+      where: { 
+        id,
+        activo: true,
+      },
+    });
   }
 }

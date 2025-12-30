@@ -91,13 +91,12 @@
                 <ul v-if="showProductsMenu" class="dropdown-content">
                   <li class="ver-todos-item"><a href="/productos"><strong>🛍️ Ver Todos los Productos</strong></a></li>
                   <li class="divider"></li>
-                  <li><a href="/productos/categoria/laptops">Laptops</a></li>
-                  <li><a href="/productos/categoria/desktops">Computadoras de Escritorio</a></li>
-                  <li><a href="/productos/categoria/monitores">Monitores</a></li>
-                  <li><a href="/productos/categoria/teclados">Teclados</a></li>
-                  <li><a href="/productos/categoria/mouses">Mouses</a></li>
-                  <li><a href="/productos/categoria/impresoras">Impresoras</a></li>
-                  <li><a href="/productos/categoria/camaras">Cámaras de Seguridad</a></li>
+                  <li><a href="/productos/categoria/laptops">💻 Laptops</a></li>
+                  <li><a href="/productos/categoria/componentes">🔧 Componentes</a></li>
+                  <li><a href="/productos/categoria/perifericos">⌨️ Periféricos</a></li>
+                  <li><a href="/productos/categoria/almacenamiento">💾 Almacenamiento</a></li>
+                  <li><a href="/productos/categoria/redes">🌐 Redes</a></li>
+                  <li><a href="/productos/categoria/audio">🎧 Audio</a></li>
                   <li><a href="/productos/categoria/tablets">Tablets</a></li>
                   <li><a href="/productos/categoria/accesorios">Accesorios</a></li>
                   <li><a href="/productos/categoria/redes">Equipos de Red</a></li>

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Param, UseGuards, NotFoundException } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { FilterProductsDto } from './dto/filter-products.dto';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -21,5 +21,14 @@ export class ProductsController {
   @Get()
   async findAll(@Query() filters: FilterProductsDto) {
     return await this.productsService.findAll(filters);
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string) {
+    const producto = await this.productsService.findOne(+id);
+    if (!producto) {
+      throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+    }
+    return producto;
   }
 }
