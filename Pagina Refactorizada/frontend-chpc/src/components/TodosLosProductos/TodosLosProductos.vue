@@ -56,6 +56,22 @@
             </div>
           </div>
 
+          <!-- Filtro por Subcategoría -->
+          <div class="filtro-seccion">
+            <h3>Subcategoría</h3>
+            <div class="filtro-opciones">
+              <label v-for="subcategoria in subcategoriasDisponibles" :key="subcategoria" class="checkbox-label">
+                <input
+                  type="checkbox"
+                  :value="subcategoria"
+                  v-model="filtros.subcategorias"
+                  @change="aplicarFiltros"
+                />
+                <span>{{ subcategoria }}</span>
+              </label>
+            </div>
+          </div>
+
           <!-- Filtro por Rango de Precio -->
           <div class="filtro-seccion">
             <h3>Precio</h3>

@@ -21,6 +21,7 @@ export default {
       filtros: {
         marcas: [],
         colores: [],
+        subcategorias: [],
         precioMin: null,
         precioMax: null,
         soloDisponibles: false
@@ -29,6 +30,7 @@ export default {
       // Opciones disponibles
       marcasDisponibles: [],
       coloresDisponibles: [],
+      subcategoriasDisponibles: [],
       precioMinimo: 0,
       precioMaximo: 0,
       
@@ -94,6 +96,13 @@ export default {
         if (p.color) coloresSet.add(p.color);
       });
       this.coloresDisponibles = Array.from(coloresSet).sort();
+      
+      // Extraer subcategorías únicas
+      const subcategoriasSet = new Set();
+      this.productos.forEach(p => {
+        if (p.subcategoria) subcategoriasSet.add(p.subcategoria);
+      });
+      this.subcategoriasDisponibles = Array.from(subcategoriasSet).sort();
     },
     
     calcularRangoPrecio() {
@@ -121,6 +130,13 @@ export default {
       if (this.filtros.colores.length > 0) {
         resultado = resultado.filter(p => 
           this.filtros.colores.includes(p.color)
+        );
+      }
+      
+      // Filtro por subcategoría
+      if (this.filtros.subcategorias.length > 0) {
+        resultado = resultado.filter(p => 
+          this.filtros.subcategorias.includes(p.subcategoria)
         );
       }
       
@@ -174,6 +190,7 @@ export default {
       this.filtros = {
         marcas: [],
         colores: [],
+        subcategorias: [],
         precioMin: this.precioMinimo,
         precioMax: this.precioMaximo,
         soloDisponibles: false
