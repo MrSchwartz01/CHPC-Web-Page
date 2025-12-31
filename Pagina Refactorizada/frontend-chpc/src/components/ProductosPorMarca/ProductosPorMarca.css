@@ -144,3 +144,18 @@ body {
       transform: translateX(0);
     }
   }
+  
+  /* ================= Stock Styles ================= */
+  .stock {
+    color: #27ae60;
+    font-weight: 500;
+  }
+  
+  .stock.sin-stock {
+    color: #e74c3c;
+  }
+  
+  .stock.pocas-unidades {
+    color: #ff9800;
+    font-weight: 600;
+  }

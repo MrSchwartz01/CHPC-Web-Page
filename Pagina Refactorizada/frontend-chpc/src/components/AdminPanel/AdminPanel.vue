@@ -6,6 +6,8 @@
       </button>
       <h1>Panel de Administración</h1>
       <div class="spacer"></div>
+      <!-- Campana de notificaciones -->
+      <NotificationsBell v-if="isAuthenticated" />
     </div>
 
     <div class="tabs">
@@ -17,9 +19,21 @@
       >
         {{ tab.label }}
       </button>
+      <!-- Agregar tab de notificaciones -->
+      <button
+        :class="['tab-button', { active: activeTab === 'notificaciones' }]"
+        @click="activeTab = 'notificaciones'"
+      >
+        🔔 Notificaciones
+      </button>
     </div>
 
     <div class="tab-content">
+      <!-- Tab de Notificaciones -->
+      <div v-if="activeTab === 'notificaciones'" class="tab-panel">
+        <NotificationsPanel />
+      </div>
+      
       <!-- Tab de Productos -->
       <div v-if="activeTab === 'productos'" class="tab-panel">
         <AdminProductos />
@@ -596,11 +610,15 @@
 import axios from 'axios';
 import { API_BASE_URL } from '@/config/api';
 import AdminProductos from './AdminProductos.vue';
+import NotificationsPanel from '../NotificationsPanel/NotificationsPanel.vue';
+import NotificationsBell from '../NotificationsPanel/NotificationsBell.vue';
 
 export default {
   name: 'AdminPanelMain',
   components: {
     AdminProductos,
+    NotificationsPanel,
+    NotificationsBell,
   },
   data() {
     return {
@@ -614,6 +632,7 @@ export default {
         { id: 'usuarios', label: 'Usuarios' },
         { id: 'permisos', label: 'Permisos Temporales' },
       ],
+      isAuthenticated: !!localStorage.getItem('access_token'),
 
       // Permisos
       userRole: '',
@@ -1198,9 +1217,17 @@ export default {
           );
           this.showPermisoMessage('Permiso actualizado exitosamente', 'success');
         } else {
+          // Convertir user_id a número y asegurar formato correcto
+          const permisoData = {
+            user_id: parseInt(this.permisoForm.user_id),
+            tipo_permiso: this.permisoForm.tipo_permiso,
+            fecha_expiracion: new Date(this.permisoForm.fecha_expiracion).toISOString(),
+            razon: this.permisoForm.razon || undefined,
+          };
+          
           await axios.post(
             `${API_BASE_URL}/permisos-temporales`,
-            this.permisoForm,
+            permisoData,
             this.getAuthHeaders()
           );
           this.showPermisoMessage('Permiso otorgado exitosamente', 'success');

@@ -7,6 +7,7 @@ import ListaMarcas from '../components/ListaMarcas/ListaMarcas.vue';
 import CarouselBanner from '../components/CarouselBanner/CarouselBanner.vue';
 import Dashboard from '../components/Dashboard/DashboardMain.vue';
 import AdminPanel from '../components/AdminPanel/AdminPanel.vue';
+import NotificationsPanel from '../components/NotificationsPanel/NotificationsPanel.vue';
 
 import RedesSociales from '../components/RedesSociales/RedesSociales.vue';
 import ServicioTecnico from '../components/ServicioTecnico/ServicioTecnico.vue';
@@ -155,6 +156,20 @@ const routes = [
     path: '/admin/panel',
     name: 'AdminPanel',
     component: AdminPanel,
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem('access_token');
+      const role = localStorage.getItem('user_rol');
+      if (token && (role === 'administrador' || role === 'vendedor')) {
+        next();
+      } else {
+        next('/login');
+      }
+    }
+  },
+  {
+    path: '/admin/notifications',
+    name: 'NotificationsPanel',
+    component: NotificationsPanel,
     beforeEnter: (to, from, next) => {
       const token = localStorage.getItem('access_token');
       const role = localStorage.getItem('user_rol');

@@ -401,6 +401,11 @@
   color: #e74c3c;
 }
 
+.stock.pocas-unidades {
+  color: #ff9800;
+  font-weight: 600;
+}
+
 .producto-acciones {
   display: flex;
   gap: 10px;

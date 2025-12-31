@@ -42,7 +42,19 @@ export default {
   methods: {
       buscarProductos() {
         const query = (this.localSearchQuery ?? "").toString().trim();
-        this.$emit('buscar', query);
+        if (query.length > 0) {
+          // Cerrar sugerencias
+          this.mostrandoSugerencias = false;
+          this.sugerencias = [];
+          
+          // Si estamos en HomePage, emitir evento
+          if (this.$route.name === 'HomePage') {
+            this.$emit('buscar', query);
+          } else {
+            // Si estamos en otra página, redirigir a HomePage con búsqueda
+            this.$router.push({ name: 'HomePage', query: { search: query } });
+          }
+        }
       },
       onInput() {
         this.buscarProductos();

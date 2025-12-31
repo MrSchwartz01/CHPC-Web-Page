@@ -133,11 +133,19 @@ export default {
       // Filtrado por texto
       if (query !== "") {
         lista = lista.filter(
-          (producto) =>
-            producto.nombre_producto
-              .toLowerCase()
-              .includes(query) ||
-            producto.descripcion.toLowerCase().includes(query)
+          (producto) => {
+            const nombre = (producto.nombre_producto || "").toLowerCase();
+            const descripcion = (producto.descripcion || "").toLowerCase();
+            const marca = (producto.marca || "").toLowerCase();
+            const categoria = (producto.categoria || "").toLowerCase();
+            const sku = (producto.sku || "").toLowerCase();
+            
+            return nombre.includes(query) ||
+                   descripcion.includes(query) ||
+                   marca.includes(query) ||
+                   categoria.includes(query) ||
+                   sku.includes(query);
+          }
         );
       }
 
@@ -165,6 +173,8 @@ export default {
     buscarProductos(query) {
       this.searchQuery = query.trim();
       this.aplicarFiltros();
+      // Scroll al inicio para ver los resultados
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     },
     cambiarRangoPrecio(rango) {
       this.selectedPriceRange = rango;

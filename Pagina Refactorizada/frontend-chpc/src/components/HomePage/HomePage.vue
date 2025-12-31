@@ -31,7 +31,6 @@
           >
             <div class="categoria-icon">{{ categoria.icon }}</div>
             <h3>{{ categoria.nombre }}</h3>
-            <p class="categoria-stats">{{ categoria.visitas }} visitas</p>
             <p class="categoria-productos">{{ categoria.productos }} productos</p>
           </div>
         </div>

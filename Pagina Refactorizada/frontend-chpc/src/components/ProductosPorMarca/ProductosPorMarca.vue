@@ -39,8 +39,8 @@
     <p class="precio">Precio: ${{ producto.precio }}</p>
     
     <!-- Mostrar stock disponible -->
-    <p class="stock">
-      <strong>Stock disponible:</strong> {{ producto.stock }} unidades
+    <p class="stock" :class="{ 'sin-stock': producto.stock === 0, 'pocas-unidades': producto.stock > 0 && producto.stock <= 5 }">
+      <strong>Stock:</strong> {{ obtenerTextoStock(producto.stock) }}
     </p>
   
     <button @click="verDetalle(producto.id)">Ver Detalles</button>
@@ -56,6 +56,7 @@
         </div>
       </div>
   
+      <ContactoAsesor />
       <FooterAnth />
     </div>
   </template>

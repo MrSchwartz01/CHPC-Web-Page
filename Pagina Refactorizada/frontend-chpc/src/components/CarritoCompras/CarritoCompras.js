@@ -159,7 +159,19 @@ export default {
         );
 
         // Éxito
-        alert(`¡Orden creada exitosamente!\nCódigo: ${response.data.codigo}\nTotal: $${response.data.total.toFixed(2)}`);
+        const mensajeExito = `
+¡Pedido creado exitosamente!
+
+📦 Código de Pedido: ${response.data.codigo}
+💰 Total: $${response.data.total.toFixed(2)}
+
+✅ Se ha notificado a nuestros administradores y vendedores.
+📧 Recibirás un email de confirmación en breve.
+
+Gracias por tu compra!
+        `;
+        
+        alert(mensajeExito);
         
         // Limpiar carrito
         this.productosCarrito = [];

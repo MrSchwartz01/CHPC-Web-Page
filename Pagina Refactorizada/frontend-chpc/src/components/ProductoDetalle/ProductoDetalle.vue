@@ -83,9 +83,9 @@
         </div>
 
         <div class="detalle-item stock-info">
-          <strong>Stock disponible:</strong>
-          <span :class="{'stock-disponible': producto.stock > 0, 'stock-agotado': producto.stock <= 0}">
-            {{ producto.stock }} unidades
+          <strong>Stock:</strong>
+          <span :class="{'stock-disponible': producto.stock > 0, 'stock-agotado': producto.stock === 0, 'pocas-unidades': producto.stock > 0 && producto.stock <= 5}">
+            {{ mostrarStock }}
           </span>
         </div>
 
@@ -121,6 +121,7 @@
     <br>
     <br>
   
+    <ContactoAsesor />
     <FooterAnth />
   </template>
   

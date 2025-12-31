@@ -10,33 +10,33 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
+    padding: 11px 23px;
   }
   
   .logo img {
-    width: 120px;
+    width: 90px;
     height: auto;
-    border-radius: 5px;
+    border-radius: 4px;
   }
   
   /* Barra de búsqueda estilo tienda online */
 .search-bar {
   position: relative;
   flex: 1;
-  max-width: 650px;
-  margin: 0 40px;
+  max-width: 488px;
+  margin: 0 30px;
   display: flex;
   align-items: stretch;
 }
 
 .search-bar input {
   flex: 1;
-  padding: 10px 16px;
+  padding: 8px 12px;
   border: 1px solid #ddd;
   border-right: none;
   border-radius: 999px 0 0 999px;
   outline: none;
-  font-size: 16px;
+  font-size: 12px;
   background-color: #f8f9fa;
   transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
@@ -50,14 +50,14 @@
 .search-bar button {
   background: linear-gradient(90deg, #ffa726, #fb8c00);
   color: white;
-  padding: 0 18px;
+  padding: 0 14px;
   border: none;
   border-radius: 0 999px 999px 0;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 14px;
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
 
@@ -72,12 +72,12 @@
   top: 100%;
   left: 0;
   width: 100%;
-  max-height: 320px;
+  max-height: 240px;
   overflow-y: auto;
   background: #ffffff;
   border: 1px solid #e0e0e0;
   border-top: none;
-  border-radius: 0 0 12px 12px;
+  border-radius: 0 0 9px 9px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   z-index: 1000;
 }
@@ -86,7 +86,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 16px;
+  padding: 8px 12px;
   cursor: pointer;
   transition: background 0.15s;
 }
@@ -96,11 +96,11 @@
 }
 
 .sugerencia-nombre {
-  font-size: 14px;
+  font-size: 11px;
 }
 
 .sugerencia-precio {
-  font-size: 13px;
+  font-size: 10px;
   font-weight: 600;
   color: #e67e22;
 }
@@ -116,10 +116,10 @@
     background-color: #3498db;
     color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 8px 11px;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 15px;
     position: relative;
     transition: background-color 0.3s ease, transform 0.3s;
   }
@@ -131,17 +131,17 @@
   
   .carrito-badge {
     position: absolute;
-    top: -5px;
-    right: -5px;
+    top: -4px;
+    right: -4px;
     background-color: #e74c3c;
     color: white;
     border-radius: 50%;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
+    font-size: 9px;
     font-weight: bold;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
@@ -150,8 +150,8 @@
     background-color: #FF8000;
     color: white;
     border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
+    padding: 6px 11px;
+    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s;
   }
@@ -190,7 +190,7 @@
   /* Menú de navegación */
   .main-menu {
     background: linear-gradient(135deg, #000, #333); /* Gradiente negro */
-    padding: 10px 0;
+    padding: 8px 0;
   }
   
   .main-menu ul {
@@ -204,7 +204,7 @@
   .main-menu a {
     color: #ffa726; /* Naranja suave */
     text-decoration: none;
-    font-size: 16px;
+    font-size: 12px;
     font-weight: bold;
     transition: color 0.3s ease;
   }
@@ -240,14 +240,14 @@
     top: 100%;
     left: 0;
     background-color: #1a1a1a;
-    min-width: 280px;
-    max-width: 320px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    min-width: 210px;
+    max-width: 240px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     list-style: none;
-    padding: 10px 0;
+    padding: 8px 0;
     margin: 0;
-    border-radius: 0 0 8px 8px;
+    border-radius: 0 0 6px 6px;
     display: flex;
     flex-direction: column;
   }

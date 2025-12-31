@@ -2,10 +2,14 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderStatusDto } from './dto/update-order-status.dto';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class OrdersService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private notificationsService: NotificationsService,
+  ) {}
 
   private generateOrderCode(orderId: number): string {
     const padded = orderId.toString().padStart(6, '0');
@@ -81,6 +85,16 @@ export class OrdersService {
       });
 
       return updated;
+    });
+
+    // Crear notificación para administradores y vendedores
+    await this.notificationsService.createNotification({
+      tipo: 'NUEVO_PEDIDO' as any,
+      titulo: '🛒 Nuevo Pedido Recibido',
+      mensaje: `Se ha recibido un nuevo pedido #${created.codigo} por un total de $${created.total.toFixed(2)} de ${created.nombre_cliente}`,
+      orderId: created.id,
+      orderCodigo: created.codigo,
+      destinatarios: ['admin', 'vendedor'],
     });
 
     return created;

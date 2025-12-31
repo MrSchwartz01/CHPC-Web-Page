@@ -178,8 +178,8 @@
                   <div class="precio-info">
                     <p class="precio">${{ formatearPrecio(producto.precio) }}</p>
                   </div>
-                  <p class="stock" :class="{ 'sin-stock': producto.stock === 0 }">
-                    Stock: {{ producto.stock }}
+                  <p class="stock" :class="{ 'sin-stock': producto.stock === 0, 'pocas-unidades': producto.stock > 0 && producto.stock <= 5 }">
+                    {{ obtenerTextoStock(producto.stock) }}
                   </p>
                 </div>
                 <div class="producto-acciones">
@@ -196,7 +196,7 @@
                   </button>
                 </div>
               </div>
-            </div>
+            n</div>
           </div>
 
           <!-- Paginación -->
@@ -221,6 +221,7 @@
       </div>
     </div>
 
+    <ContactoAsesor />
     <FooterAnth />
   </div>
 </template>

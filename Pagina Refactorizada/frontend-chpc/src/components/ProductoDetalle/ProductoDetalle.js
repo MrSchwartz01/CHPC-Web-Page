@@ -2,12 +2,14 @@ import axios from "axios";
 import { API_BASE_URL } from '@/config/api';
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
 import FooterAnth from "../FooterAnth/FooterAnth.vue";
+import ContactoAsesor from '../ContactoAsesor/ContactoAsesor.vue';
 
 export default {
   name: "ProductoDetalle",
   components: {
     HeaderAnth,
     FooterAnth,
+    ContactoAsesor,
   },
   data() {
     return {
@@ -29,6 +31,16 @@ export default {
         return this.imagenes[0].ruta_imagen;
       }
       return '/Productos/placeholder-product.png';
+    },
+    mostrarStock() {
+      if (!this.producto) return '';
+      if (this.producto.stock === 0) {
+        return 'Sin stock';
+      } else if (this.producto.stock <= 5) {
+        return `${this.producto.stock} unidades - Quedan pocas unidades`;
+      } else {
+        return 'Disponible';
+      }
     }
   },
   methods: {
@@ -125,4 +137,18 @@ export default {
     this.isAuthenticated = !!localStorage.getItem("access_token");
     await this.cargarProducto();
   },
+  mounted() {
+    // Scroll hacia arriba al cargar el componente
+    window.scrollTo(0, 0);
+  },
+  watch: {
+    '$route.params.id': {
+      immediate: false,
+      handler() {
+        // Scroll hacia arriba cuando cambia el producto
+        window.scrollTo(0, 0);
+        this.cargarProducto();
+      }
+    }
+  }
 };

@@ -47,7 +47,12 @@
           :key="producto.id"
           class="producto-card"
         >
-          <img :src="producto.imagen_url" :alt="producto.nombre_producto" />
+          <img 
+            :src="producto.imagen_url" 
+            :alt="producto.nombre_producto" 
+            @click="verDetalle(producto.id)"
+            style="cursor: pointer;"
+          />
           <div class="producto-info">
             <span class="marca-tag">{{ producto.marca }}</span>
             <h3>{{ producto.nombre_producto }}</h3>
@@ -55,7 +60,9 @@
             <div class="producto-footer">
               <p class="precio" v-if="isAuthenticated">${{ producto.precio }}</p>
               <p class="precio" v-else>Inicia sesión para ver precio</p>
-              <p class="stock">Stock: {{ producto.stock }}</p>
+              <p class="stock" :class="{ 'sin-stock': producto.stock === 0, 'pocas-unidades': producto.stock > 0 && producto.stock <= 5 }">
+                {{ obtenerTextoStock(producto.stock) }}
+              </p>
             </div>
             <button @click="verDetalle(producto.id)" class="ver-btn">
               Ver Detalles
@@ -69,6 +76,7 @@
       </div>
     </div>
 
+    <ContactoAsesor />
     <FooterAnth />
   </div>
 </template>

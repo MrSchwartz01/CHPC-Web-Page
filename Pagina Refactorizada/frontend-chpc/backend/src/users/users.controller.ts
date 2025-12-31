@@ -116,10 +116,10 @@ export class UsersController {
   }
 
   /**
-   * Obtener todos los usuarios (solo rol ADMIN)
+   * Obtener todos los usuarios (solo rol ADMIN y VENDEDOR)
    */
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.VENDEDOR)
   @Get()
   async findAll() {
     const users = await this.usersService.findAll();

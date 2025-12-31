@@ -10,8 +10,11 @@
     <div class="dashboard-container">
       <!-- Header del dashboard -->
       <div class="dashboard-header">
-        <h1>Dashboard de Ventas</h1>
-        <p>Análisis y métricas de tu negocio</p>
+        <div>
+          <h1>Dashboard de Ventas</h1>
+          <p>Análisis y métricas de tu negocio</p>
+        </div>
+        <NotificationsBell v-if="isAuthenticated" />
       </div>
 
       <!-- KPIs principales -->
@@ -117,6 +120,7 @@ import FooterAnth from '../FooterAnth/FooterAnth.vue';
 import VentasTotales from './DashboardCharts/VentasTotales.vue';
 import ProductosTop from './DashboardCharts/ProductosTop.vue';
 import VentasPorCategoria from './DashboardCharts/VentasPorCategoria.vue';
+import NotificationsBell from '../NotificationsPanel/NotificationsBell.vue';
 import axios from 'axios';
 
 export default {
@@ -126,7 +130,8 @@ export default {
     FooterAnth,
     VentasTotales,
     ProductosTop,
-    VentasPorCategoria
+    VentasPorCategoria,
+    NotificationsBell,
   },
   data() {
     return {

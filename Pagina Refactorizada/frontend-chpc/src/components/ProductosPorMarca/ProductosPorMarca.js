@@ -1,5 +1,6 @@
 import HeaderAnth from "../HeaderAnth/HeaderAnth.vue";
 import FooterAnth from "../FooterAnth/FooterAnth.vue";
+import ContactoAsesor from '../ContactoAsesor/ContactoAsesor.vue';
 import axios from "axios";
 import { API_BASE_URL } from '@/config/api';
 
@@ -8,6 +9,7 @@ export default {
   components: {
     HeaderAnth,
     FooterAnth,
+    ContactoAsesor,
   },
   data() {
     return {
@@ -84,5 +86,31 @@ export default {
         this.cargando = false;
       }
     },
+    obtenerTextoStock(stock) {
+      if (stock === 0) {
+        return 'Sin stock';
+      } else if (stock <= 5) {
+        return `${stock} unidades - Quedan pocas unidades`;
+      } else {
+        return 'Disponible';
+      }
+    },
   },
+  mounted() {
+    // Scroll hacia arriba al cargar el componente
+    window.scrollTo(0, 0);
+  },
+  watch: {
+    '$route.params.id': {
+      immediate: false,
+      handler() {
+        // Scroll hacia arriba cuando cambia la marca
+        window.scrollTo(0, 0);
+        const marcaId = this.$route.params.id;
+        const marca = this.marcasMap[marcaId] || "Marca";
+        this.nombreMarca = marca;
+        this.cargarProductosPorMarca(marca);
+      }
+    }
+  }
 };

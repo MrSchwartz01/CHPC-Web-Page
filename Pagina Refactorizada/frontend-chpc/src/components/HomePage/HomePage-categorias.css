@@ -1,32 +1,32 @@
 /* Estilos para Categorías Más Visitadas */
 .categorias-section,
 .productos-vendidos-section {
-  margin: 50px 0;
-  padding: 30px;
+  margin: 20px 0;
+  padding: 15px;
   background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
 }
 
 .section-title {
-  font-size: 2rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #2c3e50;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
   text-align: center;
 }
 
 .categorias-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 10px;
+  margin-top: 15px;
 }
 
 .categoria-card {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-  border-radius: 12px;
-  padding: 25px;
+  border-radius: 8px;
+  padding: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid transparent;
@@ -57,129 +57,129 @@
 }
 
 .categoria-icon {
-  font-size: 3rem;
-  margin-bottom: 15px;
+  font-size: 1.5rem;
+  margin-bottom: 6px;
 }
 
 .categoria-card h3 {
-  font-size: 1.2rem;
+  font-size: 0.65rem;
   font-weight: 600;
   color: #2c3e50;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .categoria-stats,
 .categoria-productos {
-  font-size: 0.9rem;
+  font-size: 0.5rem;
   color: #6c757d;
-  margin: 5px 0;
+  margin: 2px 0;
 }
 
 /* Estilos para Productos Más Vendidos */
 .categoria-vendidos {
-  margin: 40px 0;
-  padding: 25px;
+  margin: 24px 0;
+  padding: 15px;
   background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
-  border-radius: 12px;
-  border-left: 4px solid #667eea;
+  border-radius: 8px;
+  border-left: 3px solid #667eea;
 }
 
 .categoria-vendidos-title {
-  font-size: 1.5rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: #2c3e50;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   text-align: left;
 }
 
 .productos-vendidos-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(168px, 1fr));
+  gap: 12px;
 }
 
 .producto-vendido-card {
   background: white;
-  border-radius: 12px;
-  padding: 20px;
+  border-radius: 8px;
+  padding: 12px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 9px rgba(0, 0, 0, 0.08);
   position: relative;
   overflow: hidden;
 }
 
 .producto-vendido-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
 }
 
 .vendido-badge {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 9px;
+  right: 9px;
   background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.51rem;
   font-weight: 600;
   color: #333;
-  box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(255, 215, 0, 0.3);
 }
 
 .producto-vendido-card img {
   width: 100%;
-  height: 200px;
+  height: 120px;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
+  border-radius: 5px;
+  margin-bottom: 9px;
 }
 
 .producto-vendido-info h4 {
-  font-size: 1.1rem;
+  font-size: 0.66rem;
   font-weight: 600;
   color: #2c3e50;
-  margin: 10px 0;
-  min-height: 50px;
+  margin: 6px 0;
+  min-height: 30px;
 }
 
 .producto-marca {
-  font-size: 0.9rem;
+  font-size: 0.54rem;
   color: #667eea;
   font-weight: 500;
-  margin: 5px 0;
+  margin: 3px 0;
 }
 
 .producto-precio {
-  margin: 10px 0;
+  margin: 6px 0;
 }
 
 .precio-actual {
-  font-size: 1.3rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: #28a745;
 }
 
 .producto-ventas {
-  font-size: 0.85rem;
+  font-size: 0.51rem;
   color: #6c757d;
-  margin-top: 10px;
+  margin-top: 6px;
   font-style: italic;
 }
 
 /* Responsive para categorías y productos vendidos */
 @media (max-width: 768px) {
   .categorias-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+    gap: 9px;
   }
 
   .categoria-card {
-    padding: 20px;
+    padding: 12px;
   }
 
   .categoria-icon {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
 
   .productos-vendidos-grid {
@@ -187,10 +187,10 @@
   }
 
   .section-title {
-    font-size: 1.6rem;
+    font-size: 0.96rem;
   }
 
   .categoria-vendidos-title {
-    font-size: 1.3rem;
+    font-size: 0.78rem;
   }
 }

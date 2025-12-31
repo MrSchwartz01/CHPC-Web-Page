@@ -167,6 +167,15 @@
   font-weight: 500;
 }
 
+.producto-card .stock.sin-stock {
+  color: #e74c3c;
+}
+
+.producto-card .stock.pocas-unidades {
+  color: #ff9800;
+  font-weight: 600;
+}
+
 .ver-btn {
   width: 100%;
   background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);

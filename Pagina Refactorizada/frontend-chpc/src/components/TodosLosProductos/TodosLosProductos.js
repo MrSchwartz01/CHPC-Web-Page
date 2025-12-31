@@ -1,5 +1,6 @@
 import HeaderAnth from '../HeaderAnth/HeaderAnth.vue';
 import FooterAnth from '../FooterAnth/FooterAnth.vue';
+import ContactoAsesor from '../ContactoAsesor/ContactoAsesor.vue';
 import axios from 'axios';
 import { API_BASE_URL } from '@/config/api';
 
@@ -7,7 +8,8 @@ export default {
   name: 'TodosLosProductos',
   components: {
     HeaderAnth,
-    FooterAnth
+    FooterAnth,
+    ContactoAsesor,
   },
   data() {
     return {
@@ -256,6 +258,16 @@ export default {
     
     handleImageError(event) {
       event.target.src = '/placeholder.jpg';
+    },
+    
+    obtenerTextoStock(stock) {
+      if (stock === 0) {
+        return 'Sin stock';
+      } else if (stock <= 5) {
+        return `${stock} unidades - Quedan pocas unidades`;
+      } else {
+        return 'Disponible';
+      }
     }
   }
 };
