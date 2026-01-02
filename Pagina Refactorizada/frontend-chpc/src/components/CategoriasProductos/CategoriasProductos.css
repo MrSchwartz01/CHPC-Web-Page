@@ -63,6 +63,11 @@
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.top-product-card:hover img {
+  transform: scale(1.1);
 }
 
 .top-product-card h3 {

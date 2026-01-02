@@ -40,6 +40,7 @@
                 </span>
                 <span v-if="producto.precio != null" class="sugerencia-precio">
                   ${{ Number(producto.precio).toFixed(2) }}
+                  <span style="font-size: 0.8em; color: #999; margin-left: 4px;">IVA incl.</span>
                 </span>
               </div>
             </div>
@@ -104,7 +105,22 @@
               </transition>
             </li>
             <li><a href="/promociones">Promociones</a></li>
-            <li><a href="/marcas">Marcas</a></li>
+            <li 
+              class="dropdown-menu"
+              @mouseenter="showMarcasMenu = true"
+              @mouseleave="showMarcasMenu = false"
+            >
+              <a href="#" @click.prevent="goToMarcas">Marcas</a>
+              <transition name="dropdown-fade">
+                <ul v-if="showMarcasMenu" class="dropdown-content">
+                  <li class="ver-todos-item"><a href="/marcas"><strong>🏪 Ver Todas las Marcas</strong></a></li>
+                  <li class="divider"></li>
+                  <li v-for="marca in marcasDisponibles" :key="marca">
+                    <a :href="`/productos/marca/${marca}`">{{ marca }}</a>
+                  </li>
+                </ul>
+              </transition>
+            </li>
             <li><a href="/servicio-tecnico">Servicio Técnico</a></li>
             <li><a href="/redes-sociales">Contáctanos</a></li>
           </ul>

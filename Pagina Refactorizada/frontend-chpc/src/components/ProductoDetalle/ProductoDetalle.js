@@ -19,6 +19,7 @@ export default {
       isLoading: true,
       isAuthenticated: false,
       searchQuery: "",
+      zoomActivo: false,
     };
   },
   computed: {
@@ -131,6 +132,14 @@ export default {
 
       // Guardar en localStorage
       localStorage.setItem('carrito', JSON.stringify(carrito));
+    },
+    abrirZoom() {
+      this.zoomActivo = true;
+      document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+    },
+    cerrarZoom() {
+      this.zoomActivo = false;
+      document.body.style.overflow = ''; // Restaurar scroll
     },
   },
   async created() {

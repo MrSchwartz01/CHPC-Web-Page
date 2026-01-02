@@ -37,6 +37,7 @@
     <h3>{{ producto.nombre_producto }}</h3>
     <p>{{ producto.descripcion }}</p>
     <p class="precio">Precio: ${{ producto.precio }}</p>
+    <p style="font-size: 0.75em; color: #999; margin: 0;">incluido IVA</p>
     
     <!-- Mostrar stock disponible -->
     <p class="stock" :class="{ 'sin-stock': producto.stock === 0, 'pocas-unidades': producto.stock > 0 && producto.stock <= 5 }">

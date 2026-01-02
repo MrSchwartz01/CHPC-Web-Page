@@ -32,6 +32,7 @@
               <h3>{{ item.nombre }}</h3>
               <p class="marca">{{ item.marca }}</p>
               <p class="precio-unitario">${{ item.precio }} c/u</p>
+              <p style="font-size: 0.7em; color: #999; margin: 0;">incluido IVA</p>
             </div>
             <div class="cantidad-control">
               <button @click="disminuirCantidad(item.id)" class="btn-cantidad">

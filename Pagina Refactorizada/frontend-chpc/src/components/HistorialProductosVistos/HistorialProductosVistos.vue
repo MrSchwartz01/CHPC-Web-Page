@@ -18,6 +18,7 @@
           <p v-if="producto.precio !== null" class="historial-precio">
             ${{ formatPrice(producto.precio) }}
           </p>
+          <p v-if="producto.precio !== null" style="font-size: 0.7em; color: #999; margin: 0;">incluido IVA</p>
           <p class="historial-fecha">Visto hace {{ tiempoRelativo(producto.vistoEn) }}</p>
         </div>
       </div>

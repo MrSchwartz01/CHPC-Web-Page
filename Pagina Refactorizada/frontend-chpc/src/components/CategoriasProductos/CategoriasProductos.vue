@@ -22,6 +22,7 @@
             <h3>{{ producto.nombre }}</h3>
             <p class="brand">{{ producto.marca }}</p>
             <p class="price">${{ producto.precio }}</p>
+            <p style="font-size: 0.7em; color: #999; margin: 0;">incluido IVA</p>
             <button @click="verDetalle(producto.id)" class="ver-detalle-btn">
               Ver Detalles
             </button>

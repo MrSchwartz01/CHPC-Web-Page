@@ -19,6 +19,7 @@ export default {
         localSearchQuery: this.searchQuery ?? "",
         isVisible: false, // Control de visibilidad para animación
         showProductsMenu: false, // Control del menú desplegable de productos
+        showMarcasMenu: false, // Control del menú desplegable de marcas
         cantidadCarrito: 0, // Cantidad de productos en el carrito
         sugerencias: [],
         mostrandoSugerencias: false,
@@ -26,6 +27,7 @@ export default {
         _sugerenciasTimeout: null,
         isAdmin: false,
         isVendedor: false,
+        marcasDisponibles: [],
       };
     },
     mounted() {
@@ -37,6 +39,8 @@ export default {
       this.actualizarCantidadCarrito();
       // Verificar rol del usuario
       this.checkUserRole();
+      // Cargar marcas disponibles
+      this.cargarMarcas();
     },
     //metodos llamados para navegacion y busqueda
   methods: {
@@ -133,6 +137,26 @@ export default {
       },
       goToAdminPanel() {
         this.$router.push("/admin/panel");
+      },
+      goToMarcas() {
+        this.$router.push("/marcas");
+      },
+      async cargarMarcas() {
+        try {
+          const response = await axios.get(`${API_BASE_URL}/tienda/productos`);
+          const productos = Array.isArray(response.data) ? response.data : [];
+          // Extraer marcas únicas
+          const marcasSet = new Set();
+          productos.forEach(producto => {
+            if (producto.marca && producto.marca.trim()) {
+              marcasSet.add(producto.marca.trim());
+            }
+          });
+          this.marcasDisponibles = Array.from(marcasSet).sort();
+        } catch (error) {
+          console.error('Error al cargar marcas:', error);
+          this.marcasDisponibles = [];
+        }
       },
       checkUserRole() {
         const role = localStorage.getItem('user_rol');

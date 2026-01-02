@@ -67,6 +67,7 @@
                 
                 <div v-if="isAuthenticated" class="producto-precio">
                   <span class="precio-actual">${{ producto.precio }}</span>
+                  <p style="font-size: 0.7em; color: #999; margin: 2px 0 0 0;">incluido IVA</p>
                 </div>
                 
                 <p class="producto-ventas">{{ producto.ventas }} vendidos</p>
@@ -135,9 +136,11 @@
         <p class="precio-descuento">
           <strong>${{ producto.promocion.precioConDescuento }}</strong>
         </p>
+        <p style="font-size: 0.75em; color: #999; margin: 2px 0 0 0;">incluido IVA</p>
       </div>
       <p v-else>
         <strong>Precio:</strong> ${{ producto.precio }}
+        <span style="font-size: 0.75em; color: #999; margin-left: 8px;">incluido IVA</span>
       </p>
     </div>
 

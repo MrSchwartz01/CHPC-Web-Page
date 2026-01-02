@@ -58,8 +58,11 @@
             <h3>{{ producto.nombre_producto }}</h3>
             <p class="descripcion">{{ producto.descripcion }}</p>
             <div class="producto-footer">
-              <p class="precio" v-if="isAuthenticated">${{ producto.precio }}</p>
-              <p class="precio" v-else>Inicia sesión para ver precio</p>
+              <div>
+                <p class="precio" v-if="isAuthenticated">${{ producto.precio }}</p>
+                <p class="precio" v-else>Inicia sesión para ver precio</p>
+                <p v-if="isAuthenticated" style="font-size: 0.75em; color: #999; margin: 0;">incluido IVA</p>
+              </div>
               <p class="stock" :class="{ 'sin-stock': producto.stock === 0, 'pocas-unidades': producto.stock > 0 && producto.stock <= 5 }">
                 {{ obtenerTextoStock(producto.stock) }}
               </p>

@@ -14,7 +14,7 @@ export default {
       searchQuery: "",
       isAuthenticated: false,
       productosCarrito: [],
-      tasaIVA: 0.15,
+      tasaIVA: 0.15, // Tasa de IVA para referencia (los precios ya incluyen IVA)
       costoEnvio: 5.00,
       mostrarCheckout: false,
       procesandoPago: false,
@@ -29,19 +29,26 @@ export default {
     };
   },
   computed: {
-    subtotal() {
+    subtotalConIVA() {
+      // Total de productos con IVA incluido
       return this.productosCarrito.reduce((total, item) => {
         return total + (parseFloat(item.precio) * item.cantidad);
       }, 0);
     },
+    subtotal() {
+      // Subtotal sin IVA (precio base antes del IVA)
+      return this.subtotalConIVA / (1 + this.tasaIVA);
+    },
     iva() {
+      // IVA calculado sobre el subtotal sin IVA
       return this.subtotal * this.tasaIVA;
     },
     envio() {
-      // Envío gratis si el subtotal es mayor a $100
-      return this.subtotal > 100 ? 0 : this.costoEnvio;
+      // Envío gratis si el subtotal con IVA es mayor a $100
+      return this.subtotalConIVA > 100 ? 0 : this.costoEnvio;
     },
     total() {
+      // Total = subtotal sin IVA + IVA + envío
       return this.subtotal + this.iva + this.envio;
     },
   },

@@ -177,6 +177,7 @@
                 <div class="producto-footer">
                   <div class="precio-info">
                     <p class="precio">${{ formatearPrecio(producto.precio) }}</p>
+                    <p style="font-size: 0.75em; color: #999; margin: 0;">incluido IVA</p>
                   </div>
                   <p class="stock" :class="{ 'sin-stock': producto.stock === 0, 'pocas-unidades': producto.stock > 0 && producto.stock <= 5 }">
                     {{ obtenerTextoStock(producto.stock) }}

@@ -17,21 +17,43 @@
 }
 
 .categorias-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-  gap: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 8px;
   margin-top: 15px;
+  padding-bottom: 5px;
+}
+
+.categorias-grid::-webkit-scrollbar {
+  height: 6px;
+}
+
+.categorias-grid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.categorias-grid::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.categorias-grid::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }
 
 .categoria-card {
   background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
   border-radius: 8px;
-  padding: 12px;
+  padding: 10px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: 2px solid transparent;
   position: relative;
   overflow: hidden;
+  min-width: 77px;
+  flex-shrink: 0;
 }
 
 .categoria-card::before {
@@ -57,20 +79,20 @@
 }
 
 .categoria-icon {
-  font-size: 1.5rem;
-  margin-bottom: 6px;
+  font-size: 1.28rem;
+  margin-bottom: 5px;
 }
 
 .categoria-card h3 {
-  font-size: 0.65rem;
+  font-size: 0.55rem;
   font-weight: 600;
   color: #2c3e50;
-  margin: 5px 0;
+  margin: 4px 0;
 }
 
 .categoria-stats,
 .categoria-productos {
-  font-size: 0.5rem;
+  font-size: 0.43rem;
   color: #6c757d;
   margin: 2px 0;
 }
@@ -133,6 +155,11 @@
   object-fit: cover;
   border-radius: 5px;
   margin-bottom: 9px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.producto-vendido-card:hover img {
+  transform: scale(1.12);
 }
 
 .producto-vendido-info h4 {

@@ -163,6 +163,48 @@
   animation: slideDown 0.6s ease;
 }
 
+/* Recuadro unificado y compacto */
+.detalles-compactos {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 20px;
+  border: 2px solid #e9ecef;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.detalle-item-compacto {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #dee2e6;
+  align-items: start;
+}
+
+.detalle-item-compacto:last-child {
+  border-bottom: none;
+}
+
+.detalle-item-compacto strong {
+  font-size: 14px;
+  color: #495057;
+  font-weight: 600;
+}
+
+.detalle-item-compacto span {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.descripcion-texto,
+.especificaciones-texto {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #495057;
+  margin: 0;
+}
+
+/* Mantener estilos antiguos para compatibilidad */
 .detalle-item {
   display: flex;
   flex-direction: column;
@@ -185,14 +227,6 @@
   color: #6c757d;
 }
 
-.descripcion-texto,
-.especificaciones-texto {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #495057;
-  margin: 5px 0 0 0;
-}
-
 .stock-info {
   border-left-color: #28a745;
 }
@@ -212,13 +246,25 @@
   font-weight: 600;
 }
 
+/* ================= Precio y Acciones ================= */
+.precio-y-acciones {
+  display: flex;
+  gap: 15px;
+  align-items: stretch;
+  margin-top: 20px;
+}
+
 /* ================= Precio ================= */
 .precio-contenedor {
-  margin-top: 10px;
-  padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #ffa726 0%, #fb8c00 100%);
+  border-radius: 8px;
   animation: scaleUp 0.6s ease;
+  box-shadow: 0 3px 10px rgba(255, 167, 38, 0.3);
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .precio-wrapper {
@@ -228,13 +274,13 @@
 }
 
 .precio-label {
-  font-size: 18px;
+  font-size: 12px;
   color: #ffffff;
   font-weight: 600;
 }
 
 .precio-valor {
-  font-size: 36px;
+  font-size: 22px;
   font-weight: 800;
   color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
@@ -243,8 +289,9 @@
 /* ================= Botones de Accion ================= */
 .botones-accion {
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
   animation: slideInRight 0.8s ease;
 }
 
@@ -355,4 +402,65 @@
 
 .boton-agregar-carrito i {
   font-size: 18px;
+}
+
+/* ================= Zoom de Imagen ================= */
+.zoom-hint {
+  text-align: center;
+  font-size: 12px;
+  color: #6c757d;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.modal-zoom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+  cursor: zoom-out;
+}
+
+.modal-zoom-contenido {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  animation: scaleUp 0.3s ease;
+}
+
+.imagen-zoom {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.btn-cerrar-zoom {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.btn-cerrar-zoom:hover {
+  transform: scale(1.2);
+  color: #ff4444;
 }

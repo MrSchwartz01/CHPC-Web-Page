@@ -32,7 +32,6 @@
     v-if="producto && !isLoading && !errorMessage && isAuthenticated"
     class="producto-contenedor"
   >
-    <h2 class="seccion-titulo">Detalles del Producto</h2>
     <div class="detalle-contenedor">
       <!-- Imagen del producto (Izquierda) -->
       <div class="imagen-producto-wrapper">
@@ -40,65 +39,69 @@
           :src="imagenPrincipal"
           :alt="producto.nombre_producto"
           class="imagen-producto-principal"
+          @click="abrirZoom"
+          style="cursor: zoom-in;"
         />
+        <p class="zoom-hint">Clic para ampliar</p>
       </div>
 
       <!-- Información del producto (Derecha) -->
       <div class="informacion-producto">
         <h1 class="nombre-producto">{{ producto.nombre_producto }}</h1>
         
-        <div class="detalle-item">
-          <strong>Código (SKU):</strong>
-          <span>{{ producto.sku || 'No disponible' }}</span>
-        </div>
+        <!-- Recuadro unificado de detalles -->
+        <div class="detalles-compactos">
+          <div class="detalle-item-compacto">
+            <strong>Descripción:</strong>
+            <p class="descripcion-texto">{{ producto.descripcion }}</p>
+          </div>
 
-        <div class="detalle-item">
-          <strong>Descripción:</strong>
-          <p class="descripcion-texto">{{ producto.descripcion }}</p>
-        </div>
+          <div class="detalle-item-compacto" v-if="producto.marca">
+            <strong>Marca:</strong>
+            <span>{{ producto.marca }}</span>
+          </div>
 
-        <div class="detalle-item" v-if="producto.marca">
-          <strong>Marca:</strong>
-          <span>{{ producto.marca }}</span>
-        </div>
+          <div class="detalle-item-compacto" v-if="producto.categoria">
+            <strong>Categoría:</strong>
+            <span>{{ producto.categoria }}</span>
+          </div>
 
-        <div class="detalle-item" v-if="producto.categoria">
-          <strong>Categoría:</strong>
-          <span>{{ producto.categoria }}</span>
-        </div>
+          <div class="detalle-item-compacto" v-if="producto.modelo">
+            <strong>Modelo:</strong>
+            <span>{{ producto.modelo }}</span>
+          </div>
 
-        <div class="detalle-item" v-if="producto.modelo">
-          <strong>Modelo:</strong>
-          <span>{{ producto.modelo }}</span>
-        </div>
+          <div class="detalle-item-compacto" v-if="producto.especificaciones">
+            <strong>Especificaciones:</strong>
+            <p class="especificaciones-texto">{{ producto.especificaciones }}</p>
+          </div>
 
-        <div class="detalle-item" v-if="producto.especificaciones">
-          <strong>Especificaciones:</strong>
-          <p class="especificaciones-texto">{{ producto.especificaciones }}</p>
-        </div>
+          <div class="detalle-item-compacto" v-if="producto.garantia">
+            <strong>Garantía:</strong>
+            <span>{{ producto.garantia }}</span>
+          </div>
 
-        <div class="detalle-item" v-if="producto.garantia">
-          <strong>Garantía:</strong>
-          <span>{{ producto.garantia }}</span>
-        </div>
-
-        <div class="detalle-item stock-info">
-          <strong>Stock:</strong>
-          <span :class="{'stock-disponible': producto.stock > 0, 'stock-agotado': producto.stock === 0, 'pocas-unidades': producto.stock > 0 && producto.stock <= 5}">
-            {{ mostrarStock }}
-          </span>
-        </div>
-
-        <!-- Precio -->
-        <div class="precio-contenedor">
-          <div class="precio-wrapper">
-            <span class="precio-label">Precio:</span>
-            <span class="precio-valor">USD ${{ formatPrice(producto.precio) }}</span>
+          <div class="detalle-item-compacto stock-info">
+            <strong>Stock:</strong>
+            <span :class="{'stock-disponible': producto.stock > 0, 'stock-agotado': producto.stock === 0, 'pocas-unidades': producto.stock > 0 && producto.stock <= 5}">
+              {{ mostrarStock }}
+            </span>
           </div>
         </div>
 
-        <!-- Botones de acción -->
-        <div class="botones-accion">
+        <!-- Precio y Botones de acción -->
+        <div class="precio-y-acciones">
+          <!-- Precio -->
+          <div class="precio-contenedor">
+            <div class="precio-wrapper">
+              <span class="precio-label">Precio:</span>
+              <span class="precio-valor">USD ${{ formatPrice(producto.precio) }}</span>
+            </div>
+            <p style="font-size: 0.7em; color: rgba(255,255,255,0.9); margin: 2px 0 0 0; text-align: center;">incluido IVA</p>
+          </div>
+
+          <!-- Botones de acción -->
+          <div class="botones-accion">
           <button 
             @click="agregarAlCarrito" 
             class="boton-agregar-carrito"
@@ -111,11 +114,20 @@
             <i class="fab fa-whatsapp"></i> Consultar por WhatsApp
           </a>
         </div>
+        </div>
       </div>
     </div>
   </div>
   </div>
   
+    <!-- Modal de zoom para imagen -->
+    <div v-if="zoomActivo" class="modal-zoom" @click="cerrarZoom">
+      <div class="modal-zoom-contenido">
+        <button class="btn-cerrar-zoom" @click="cerrarZoom">&times;</button>
+        <img :src="imagenPrincipal" :alt="producto.nombre_producto" class="imagen-zoom" />
+      </div>
+    </div>
+
     <br>
     <br>
     <br>
