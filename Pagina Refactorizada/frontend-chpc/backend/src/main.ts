@@ -9,8 +9,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Habilitar CORS para red local
+  const corsOrigin = process.env.CORS_ORIGIN || '*';
   app.enableCors({
-    origin: true, // Permitir cualquier origen (para desarrollo/red local)
+    origin: corsOrigin === '*' ? true : corsOrigin.split(','),
     credentials: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept, Authorization',

@@ -66,6 +66,14 @@
               </button>
               <button 
                 v-if="isAdmin || isVendedor" 
+                class="action-button pedidos-button" 
+                @click="goToPanelVendedores"
+                title="Panel de Pedidos"
+              >
+                📊 Pedidos
+              </button>
+              <button 
+                v-if="isAdmin || isVendedor" 
                 class="action-button admin-button" 
                 @click="goToAdminPanel"
                 title="Panel de Administración"

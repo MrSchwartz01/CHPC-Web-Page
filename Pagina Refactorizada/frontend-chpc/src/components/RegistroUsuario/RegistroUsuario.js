@@ -45,7 +45,10 @@ export default {
           this.$router.push('/login');
         }, 2000);
       } catch (err) {
-        this.error = err.response?.data?.message || 'Error en el registro. Intenta de nuevo.';
+        this.error =
+          err.response?.data?.mensaje ||
+          err.response?.data?.message ||
+          'Error en el registro. Intenta de nuevo.';
         this.success = '';
       }
     },

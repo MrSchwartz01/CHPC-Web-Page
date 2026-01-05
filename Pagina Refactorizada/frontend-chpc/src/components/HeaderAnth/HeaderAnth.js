@@ -138,6 +138,9 @@ export default {
       goToAdminPanel() {
         this.$router.push("/admin/panel");
       },
+      goToPanelVendedores() {
+        this.$router.push("/panel-vendedores");
+      },
       goToMarcas() {
         this.$router.push("/marcas");
       },

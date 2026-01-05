@@ -5,6 +5,8 @@ import * as bcrypt from 'bcrypt';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
+import { MailService } from '../mail/mail.service';
+import { NotificationsService } from '../notifications/notifications.service';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +14,8 @@ export class AuthService {
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
+    private mailService: MailService,
+    private notificationsService: NotificationsService,
   ) {}
 
   /**
@@ -19,6 +23,34 @@ export class AuthService {
    */
   async register(registerDto: RegisterDto) {
     const user = await this.usersService.create(registerDto);
+
+    // Crear notificación para administradores sobre nuevo registro
+    try {
+      await this.notificationsService.createNotification({
+        tipo: 'NUEVO_PEDIDO' as any,
+        titulo: '👤 Nuevo usuario registrado',
+        mensaje: `Se ha registrado un nuevo usuario: ${user.nombre} ${user.apellido} (${user.email})`,
+        orderId: undefined,
+        orderCodigo: undefined,
+        destinatarios: ['admin'],
+      });
+    } catch (error) {
+      // No bloquear el registro por fallos en notificaciones
+      console.error('Error al crear notificación de nuevo usuario:', error);
+    }
+
+    // Enviar email de bienvenida (no bloquea el registro si falla)
+    try {
+      if (user.email) {
+        await this.mailService.sendWelcomeEmail(user.email, {
+          nombre: user.nombre,
+          apellido: user.apellido,
+        });
+      }
+    } catch (error) {
+      // Solo registramos el error en logs; el flujo de registro continúa
+      console.error('Error al enviar email de bienvenida:', error);
+    }
 
     // Crear objeto sin campos sensibles
     const resultado = {

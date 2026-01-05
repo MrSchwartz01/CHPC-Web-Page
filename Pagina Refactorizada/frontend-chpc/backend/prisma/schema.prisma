@@ -18,6 +18,13 @@ enum OrderStatus {
   CANCELLED
 }
 
+enum EstadoPedido {
+  PENDIENTE
+  EN_TRAMITE
+  ATENDIDO
+  CANCELADO
+}
+
 enum PaymentMethod {
   CASH
   CARD
@@ -104,6 +111,10 @@ model Order {
   total            Float
 
   status           OrderStatus  @default(PENDING)
+  estado_gestion   EstadoPedido @default(PENDIENTE)
+  vendedor_id      Int?
+  vendedor_nombre  String?
+  
   paymentMethod    PaymentMethod
   paymentRef       String?
 
@@ -120,6 +131,8 @@ model Order {
   items            OrderItem[]
 
   @@map("ordenes")
+  @@index([vendedor_id])
+  @@index([estado_gestion])
 }
 
 model OrderItem {

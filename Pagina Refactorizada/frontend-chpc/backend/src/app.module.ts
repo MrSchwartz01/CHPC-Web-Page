@@ -15,6 +15,7 @@ import { SiteConfigModule } from './site-config/site-config.module';
 import { PermisosModule } from './permisos/permisos.module';
 import { ImagesModule } from './images/images.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     PermisosModule,
     ImagesModule,
     NotificationsModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

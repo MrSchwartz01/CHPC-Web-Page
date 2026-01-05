@@ -19,26 +19,9 @@
       <h1>Bienvenidos a Nuestra Tienda </h1>
       <p>Explora nuestros productos y encuentra lo que necesitas.</p>
 
-      <!-- Sección de Categorías Más Visitadas -->
-      <section class="categorias-section">
-        <h2 class="section-title">📊 Categorías Más Visitadas</h2>
-        <div class="categorias-grid">
-          <div
-            v-for="categoria in categoriasMasVisitadas"
-            :key="categoria.id"
-            class="categoria-card"
-            @click="navegarACategoria(categoria.nombre)"
-          >
-            <div class="categoria-icon">{{ categoria.icon }}</div>
-            <h3>{{ categoria.nombre }}</h3>
-            <p class="categoria-productos">{{ categoria.productos }} productos</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Sección de Productos Más Vendidos por Categoría -->
+      <!-- Sección de Productos Más Vendidos -->
       <section class="productos-vendidos-section">
-        <h2 class="section-title">🔥 Productos Más Vendidos por Categoría</h2>
+        <h2 class="section-title">Productos Más Vendidos</h2>
         
         <div v-for="categoria in categoriasMasVisitadas" :key="'vendidos-' + categoria.id" class="categoria-vendidos">
           <h3 class="categoria-vendidos-title">
