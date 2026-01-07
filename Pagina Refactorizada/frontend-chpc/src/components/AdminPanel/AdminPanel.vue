@@ -12,7 +12,7 @@
 
     <div class="tabs">
       <button
-        v-for="tab in tabs"
+        v-for="tab in visibleTabs"
         :key="tab.id"
         :class="['tab-button', { active: activeTab === tab.id }]"
         @click="activeTab = tab.id"
@@ -273,10 +273,10 @@
       </div>
 
       <!-- Tab de Usuarios -->
-      <div v-if="activeTab === 'usuarios'" class="tab-panel">
+      <div v-if="activeTab === 'usuarios' && isAdmin" class="tab-panel">
         <h2>Gestión de Usuarios</h2>
         
-        <div v-if="isAdmin" class="form-section">
+        <div class="form-section">
           <h3>{{ editingUser ? 'Editar Usuario' : 'Nuevo Usuario' }}</h3>
           <form @submit.prevent="submitUser" class="user-form">
             <div class="form-row">
@@ -434,10 +434,10 @@
       </div>
 
       <!-- Tab de Permisos Temporales -->
-      <div v-if="activeTab === 'permisos'" class="tab-panel">
+      <div v-if="activeTab === 'permisos' && isAdmin" class="tab-panel">
         <h2>Permisos Temporales para Vendedores</h2>
         
-        <div v-if="isAdmin" class="form-section">
+        <div class="form-section">
           <h3>{{ editingPermiso ? 'Editar Permiso' : 'Otorgar Nuevo Permiso' }}</h3>
           <form @submit.prevent="submitPermiso" class="permiso-form">
             <div class="form-row">
@@ -1365,6 +1365,17 @@ export default {
   },
 
   computed: {
+    visibleTabs() {
+      // Filtrar tabs según el rol del usuario
+      return this.tabs.filter(tab => {
+        // Solo administradores ven el tab de usuarios y permisos
+        if ((tab.id === 'usuarios' || tab.id === 'permisos') && !this.isAdmin) {
+          return false;
+        }
+        return true;
+      });
+    },
+
     permisosFiltrados() {
       const now = new Date();
       

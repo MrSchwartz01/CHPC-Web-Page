@@ -17,31 +17,11 @@
         </p>
       </div>
 
-      <!-- Filtros por marca -->
-      <div class="filtros-section" v-if="marcasDisponibles.length > 0">
-        <h3>Filtrar por Marca</h3>
-        <div class="marcas-filter">
-          <button
-            :class="{ active: marcaSeleccionada === null }"
-            @click="filtrarPorMarca(null)"
-            class="marca-filter-btn"
-          >
-            Todas
-          </button>
-          <button
-            v-for="marca in marcasDisponibles"
-            :key="marca.nombre"
-            :class="{ active: marcaSeleccionada === marca.nombre }"
-            @click="filtrarPorMarca(marca.nombre)"
-            class="marca-filter-btn"
-          >
-            {{ marca.nombre }}
-          </button>
-        </div>
-      </div>
-
-      <!-- Grid de productos -->
-      <div class="productos-grid">
+      <!-- Layout con productos y filtros -->
+      <div class="content-layout">
+        <!-- Grid de productos a la izquierda -->
+        <div class="productos-section">
+          <div class="productos-grid">
         <div
           v-for="producto in productosFiltrados"
           :key="producto.id"
@@ -72,10 +52,125 @@
             </button>
           </div>
         </div>
-      </div>
+          </div>
 
-      <div v-if="productosFiltrados.length === 0" class="no-productos">
-        <p>No hay productos disponibles en esta categoría.</p>
+          <div v-if="productosFiltrados.length === 0" class="no-productos">
+            <p>No hay productos disponibles en esta categoría.</p>
+          </div>
+        </div>
+
+        <!-- Filtros en sidebar a la derecha -->
+        <aside class="filtros-sidebar" v-if="marcasDisponibles.length > 0">
+          <div class="filtros-container">
+            <h3 class="filtros-title">Filtros</h3>
+            
+            <!-- Filtro por Categoría -->
+            <div class="filtro-group">
+              <button class="filtro-header" @click="toggleSection('category')">
+                <span>Categoría</span>
+                <span class="arrow" :class="{ 'arrow-up': sectionsOpen.category }">▼</span>
+              </button>
+              <div v-if="sectionsOpen.category" class="filtro-content">
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>Accesorios</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" checked />
+                  <span>Laptops</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>PC de Escritorio</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>Routers y Repetidores</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>Impresoras y Escáneres</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Filtro por Subcategoría -->
+            <div class="filtro-group">
+              <button class="filtro-header" @click="toggleSection('subcategory')">
+                <span>Subcategoría</span>
+                <span class="arrow" :class="{ 'arrow-up': sectionsOpen.subcategory }">▼</span>
+              </button>
+              <div v-if="sectionsOpen.subcategory" class="filtro-content">
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>Mouses</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>Adaptadores Y Antenas WiFi</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>Monitores</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>Tintas</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Filtro por Marca -->
+            <div class="filtro-group">
+              <button class="filtro-header" @click="toggleSection('brand')">
+                <span>Marca</span>
+                <span class="arrow" :class="{ 'arrow-up': sectionsOpen.brand }">▼</span>
+              </button>
+              <div v-if="sectionsOpen.brand" class="filtro-content">
+                <label class="checkbox-label" v-for="marca in marcasDisponibles" :key="marca.nombre">
+                  <input 
+                    type="checkbox" 
+                    :checked="marcaSeleccionada === marca.nombre"
+                    @change="filtrarPorMarca(marcaSeleccionada === marca.nombre ? null : marca.nombre)"
+                  />
+                  <span>{{ marca.nombre }}</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Filtro por Almacenamiento -->
+            <div class="filtro-group">
+              <button class="filtro-header" @click="toggleSection('storage')">
+                <span>Almacenamiento</span>
+                <span class="arrow" :class="{ 'arrow-up': sectionsOpen.storage }">▼</span>
+              </button>
+              <div v-if="sectionsOpen.storage" class="filtro-content">
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>256 GB</span>
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>512 GB</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Filtro por Bluetooth -->
+            <div class="filtro-group">
+              <button class="filtro-header" @click="toggleSection('bluetooth')">
+                <span>Bluetooth</span>
+                <span class="arrow" :class="{ 'arrow-up': sectionsOpen.bluetooth }">▼</span>
+              </button>
+              <div v-if="sectionsOpen.bluetooth" class="filtro-content">
+                <label class="checkbox-label">
+                  <input type="checkbox" />
+                  <span>Sí</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </aside>
       </div>
     </div>
 

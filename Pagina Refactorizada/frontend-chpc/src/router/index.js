@@ -20,6 +20,9 @@ import Promociones from '../components/Promociones/Promociones.vue';
 import CreateProduct from '../components/Admin/CreateProduct.vue';
 import TodosLosProductos from '../components/TodosLosProductos/TodosLosProductos.vue';
 import PerfilUsuario from '../components/PerfilUsuario/PerfilUsuario.vue';
+import OlvidePassword from '../components/OlvidePassword.vue';
+import RestablecerPassword from '../components/RestablecerPassword.vue';
+import EncuentranosPage from '../components/EncuentranosPage/EncuentranosPage.vue';
 
 
 const routes = [
@@ -39,6 +42,32 @@ const routes = [
   { 
     path: '/registro', 
     component: RegistroUsuario,
+    beforeEnter: (to, from, next) => {
+      const isAuthenticated = !!localStorage.getItem('access_token');
+      if (isAuthenticated) {
+        next('/home');
+      } else {
+        next();
+      }
+    }
+  },
+  { 
+    path: '/olvide-password', 
+    component: OlvidePassword,
+    name: 'OlvidePassword',
+    beforeEnter: (to, from, next) => {
+      const isAuthenticated = !!localStorage.getItem('access_token');
+      if (isAuthenticated) {
+        next('/home');
+      } else {
+        next();
+      }
+    }
+  },
+  { 
+    path: '/restablecer-password', 
+    component: RestablecerPassword,
+    name: 'RestablecerPassword',
     beforeEnter: (to, from, next) => {
       const isAuthenticated = !!localStorage.getItem('access_token');
       if (isAuthenticated) {
@@ -152,6 +181,11 @@ const routes = [
         next();
       }
     }
+  },
+  {
+    path: '/encuentranos',
+    name: 'EncuentranosPage',
+    component: EncuentranosPage
   },
   {
     path: '/admin/panel',

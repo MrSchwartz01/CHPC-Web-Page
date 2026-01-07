@@ -1,47 +1,67 @@
 <template>
-    <footer class="footer-container">
-      <div class="footer-content">
-        <div class="footer-section about-us">
-          <h4>Sobre Nosotros</h4>
-          <p>
-            Tenemos todo en Informática: Portátiles, Computadoras de escritorio, Impresoras, Tablets, Accesorios, Cámaras de seguridad, solo en CHCP Tecnología.
-          </p>
-          <p>Haz CLICK, lo tenemos...!</p>
-        </div>
-        <div class="footer-section contact-us">
-          <h4>Contáctanos</h4>
-          <p>Email: <a href="mailto:clickhereventas3@gmail.com">clickhereventas3@gmail.com</a></p>
-          <p>Teléfono: <a href="tel:+593995924867">099 592 4867</a></p>
-          <p>Dirección: Calle 12 Avenida 20 Esquina, Manta, Ecuador</p>
-        </div>
-        <div class="footer-section social-media">
-          <h4>Redes Sociales</h4>
-          <ul class="social-media-grid">
-            <li v-for="red in redesSociales" :key="red.nombre">
-              <a :href="red.url" target="_blank" rel="noopener noreferrer">
-                <img :src="red.icono" :alt="red.nombre" class="social-icon" />
-                {{ red.nombre }}
-              </a>
-            </li>
-          </ul>
-        </div>
+  <footer class="footer-container">
+    <div class="footer-main">
+    <div class="footer-brand" id="redes-sociales">
+      <div class="footer-logo">CH<span>pc</span></div>
+      <p class="footer-tagline">
+      Tu tienda de confianza para tecnología de vanguardia y productos gaming de alta calidad.
+      </p>
+      <div class="footer-social-row">
+      <a
+        v-for="red in redesSociales"
+        :key="red.nombre"
+        :href="red.url"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        <img :src="red.icono" :alt="red.nombre" class="social-icon" />
+      </a>
       </div>
-      <div class="map-section">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d838.6405537434595!2d-80.72806521686454!3d-0.9505578544621024!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x902be1e51964e08d%3A0x2d0fd996be1bacb!2sCHPC%20Tecnolog%C3%ADa%20(ClickHere.Pc)!5e0!3m2!1ses!2sec!4v1765573413729!5m2!1ses!2sec"
-          width="100%"
-          height="450"
-          style="border:0;"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
+    </div>
+
+    <div class="footer-columns">
+      <div class="footer-column">
+      <h4>Productos</h4>
+      <ul>
+        <li><a href="/productos/categoria/laptops">Laptops</a></li>
+        <li><a href="/productos/categoria/monitores">Monitores</a></li>
+        <li><a href="/productos/categoria/perifericos">Periféricos</a></li>
+        <li><a href="/productos/categoria/componentes">Componentes</a></li>
+      </ul>
       </div>
-      
-      <div class="footer-bottom">
-        <p>&copy; 2025 CHCP Tecnología. Todos los derechos reservados.</p>
+      <div class="footer-column">
+      <h4>Soporte</h4>
+      <ul>
+        <li><a href="/servicio-tecnico">Servicio Técnico</a></li>
+        <li><a href="/garantias">Garantías</a></li>
+        <li><a href="/faq">FAQ</a></li>
+        <li><a href="#redes-sociales">Contacto</a></li>
+      </ul>
       </div>
-    </footer>
+      <div class="footer-column">
+      <h4>Empresa</h4>
+      <ul>
+        <li><a href="/sobre-nosotros">Sobre Nosotros</a></li>
+        <li><a href="/encuentranos">Encuéntranos</a></li>
+        <li><a href="/marcas">Marcas</a></li>
+        <li><a href="/blog">Blog</a></li>
+        <li><a href="/empleo">Empleo</a></li>
+      </ul>
+      </div>
+    </div>
+    </div>
+
+    <div class="footer-bottom">
+    <div class="footer-bottom-left">
+      <span>&copy; 2025 CHpc TECNOLOGÍA. Todos los derechos reservados.</span>
+    </div>
+    <div class="footer-bottom-right">
+      <a href="/terminos">Términos</a>
+      <a href="/privacidad">Privacidad</a>
+      <a href="/cookies">Cookies</a>
+    </div>
+    </div>
+  </footer>
   </template>
 
 <script src="./FooterAnth.js"></script>

@@ -1,105 +1,146 @@
-/* Estilos relacionados con el footer */
+/* Footer estilo claro multi-columna */
 .footer-container {
-    background: linear-gradient(135deg, #000, #333); /* Gradiente negro */
-    color: white;
-    padding: 18px;
-    text-align: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+  color: #333333;
+  padding: 32px 48px 18px 48px;
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
   }
-  
-  .footer-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 18px;
+
+.footer-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto 24px auto;
   }
-  
-  .footer-section {
-    flex: 1;
-    min-width: 150px;
-    margin: 6px;
-    text-align: left;
+
+.footer-brand {
+  flex: 1.2;
+  min-width: 220px;
   }
-  
-  .footer-section h4 {
-    margin-bottom: 9px;
-    font-size: 11px;
-    font-weight: bold;
-    color: #ffa726; /* Naranja suave */
+
+.footer-logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #ff7a1a;
+  margin-bottom: 8px;
   }
-  
-  .footer-section p,
-  .footer-section ul {
-    margin: 6px 0;
-    line-height: 1.4;
-    font-size: 10px;
+
+.footer-logo span {
+  color: #000000;
   }
-  
-  .footer-section ul {
-    list-style: none;
-    padding: 0;
+
+.footer-tagline {
+  font-size: 0.85rem;
+  color: #555555;
+  max-width: 260px;
+  margin: 0 0 12px 0;
   }
-  
-  .footer-section ul li {
-    margin: 5px 0;
+
+.footer-social-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
   }
-  
-  .footer-section ul li a {
-    color: #ffa726; /* Naranja suave */
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    transition: color 0.3s;
-    font-size: 10px;
+
+.social-icon {
+  width: 18px;
+  height: 18px;
+  filter: grayscale(20%);
+  opacity: 0.9;
+  transition: transform 0.2s ease, opacity 0.2s ease;
   }
-  
-  .footer-section ul li a:hover {
-    color: #ffffff;
+
+.footer-social-row a:hover .social-icon {
+  transform: scale(1.05);
+  opacity: 1;
   }
-  
-  .footer-section a {
-    color: inherit;
+
+.footer-columns {
+  flex: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+  min-width: 260px;
   }
-  
-  .footer-section a:hover {
-    text-decoration: underline;
+
+.footer-column {
+  flex: 1;
+  min-width: 140px;
   }
-  
-  .social-media-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 9px;
-    justify-items: center;
-    align-items: center;
-    padding: 0;
-    list-style: none;
+
+.footer-column h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #222222;
   }
-  
-  .social-media-grid li {
-    display: flex;
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  }
+
+.footer-column li {
+  margin-bottom: 4px;
+  }
+
+.footer-column a {
+  font-size: 0.82rem;
+  color: #555555;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  }
+
+.footer-column a:hover {
+  color: #ff7a1a;
+  }
+
+.footer-bottom {
+  border-top: 1px solid rgba(0, 0, 0, 0.04);
+  padding-top: 10px;
+  font-size: 0.78rem;
+  color: #777777;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
+  }
+
+.footer-bottom-right {
+  display: flex;
+  gap: 16px;
+  }
+
+.footer-bottom-right a {
+  color: #777777;
+  text-decoration: none;
+  font-size: 0.78rem;
+  }
+
+.footer-bottom-right a:hover {
+  color: #ff7a1a;
+  }
+
+@media (max-width: 768px) {
+  .footer-container {
+    padding: 24px 18px 14px 18px;
+  }
+
+  .footer-main {
     flex-direction: column;
-    align-items: center;
   }
-  
-  .social-icon {
-    width: 7px;
-    height: 7px;
-    margin-bottom: 3px;
-    transition: transform 0.3s;
-  }
-  
-  .social-icon:hover {
-    transform: scale(1.1);
-  }
-  
+
   .footer-bottom {
-    border-top: 1px solid #ffa726; /* Naranja suave */
-    padding-top: 9px;
-    font-size: 8px;
-    color: #ffa726;
-    
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
   }
+}
 
   

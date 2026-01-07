@@ -83,8 +83,8 @@ export default {
         this.errors.direccion = 'La dirección debe tener entre 10 y 200 caracteres.';
       }
       
-      if (!this.contraseña.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/)) {
-        this.errors.contraseña = 'La contraseña debe tener al menos 6 caracteres, incluir una letra, un número y un carácter especial.';
+      if (!this.contraseña.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.,\-_:])[A-Za-z\d@$!%*?&.,\-_:]{6,}$/)) {
+        this.errors.contraseña = 'La contraseña debe tener al menos 6 caracteres, incluir una letra, un número y un carácter especial (@$!%*?&.,-_:).';
       }
     },
     clearError(field) {

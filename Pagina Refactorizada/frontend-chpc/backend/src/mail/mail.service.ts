@@ -189,6 +189,10 @@ export class MailService {
       resetUrl: string;
     },
   ): Promise<boolean> {
+    this.logger.log(`Preparando email de recuperación para: ${email}`);
+    this.logger.log(`Template: ./password-reset`);
+    this.logger.log(`Contexto: nombre=${resetData.nombre}, resetUrl=${resetData.resetUrl}`);
+    
     return this.sendMail({
       to: email,
       subject: '🔐 Recuperación de Contraseña - CHPC',
@@ -197,6 +201,29 @@ export class MailService {
         nombre: resetData.nombre,
         resetUrl: resetData.resetUrl,
         expiracion: '1 hora',
+      },
+    });
+  }
+
+  /**
+   * Envía notificación de cambio de contraseña exitoso
+   */
+  async sendPasswordChangedEmail(
+    email: string,
+    userData: {
+      nombre: string;
+    },
+  ): Promise<boolean> {
+    return this.sendMail({
+      to: email,
+      subject: '✅ Contraseña Actualizada - CHPC',
+      template: './password-changed',
+      context: {
+        nombre: userData.nombre,
+        fecha: new Date().toLocaleString('es-ES', {
+          dateStyle: 'long',
+          timeStyle: 'short',
+        }),
       },
     });
   }

@@ -16,7 +16,7 @@
 }
 
 .section-title {
-  font-size: 0.7rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: #2c3e50;
   margin-bottom: 6px;
@@ -70,12 +70,12 @@
 }
 
 .categoria-icon {
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   margin-bottom: 4px;
 }
 
 .categoria-card h3 {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: #2c3e50;
   margin: 2px 0 1px 0;
@@ -84,7 +84,7 @@
 
 .categoria-stats,
 .categoria-productos {
-  font-size: 0.6rem;
+  font-size: 0.72rem;
   color: #6c757d;
   margin: 1px 0 0 0;
 }
@@ -99,7 +99,7 @@
 }
 
 .categoria-vendidos-title {
-  font-size: 0.72rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: #2c3e50;
   margin-bottom: 9px;
@@ -120,7 +120,8 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 1px 7px rgba(0, 0, 0, 0.08);
   position: relative;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .producto-vendido-card:hover {
@@ -135,35 +136,49 @@
   background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
   padding: 3px 6px;
   border-radius: 10px;
-  font-size: 0.42rem;
+  font-size: 0.52rem;
   font-weight: 600;
   color: #333;
   box-shadow: 0 2px 5px rgba(255, 215, 0, 0.3);
+  z-index: 1;
+}
+
+.producto-vendido-imagen {
+  width: 100%;
+  height: 95px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 7px;
 }
 
 .producto-vendido-card img {
   width: 100%;
-  height: 95px;
+  height: 100%;
   object-fit: cover;
-  border-radius: 4px;
-  margin-bottom: 7px;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.producto-vendido-card:hover img {
+.producto-vendido-card:hover .producto-vendido-imagen img {
   transform: scale(1.12);
 }
 
+.producto-vendido-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .producto-vendido-info h4 {
-  font-size: 0.54rem;
+  font-size: 0.68rem;
   font-weight: 600;
   color: #2c3e50;
   margin: 5px 0;
   min-height: 24px;
+  line-height: 1.2;
 }
 
 .producto-marca {
-  font-size: 0.44rem;
+  font-size: 0.56rem;
   color: #667eea;
   font-weight: 500;
   margin: 2px 0;
@@ -174,16 +189,57 @@
 }
 
 .precio-actual {
-  font-size: 0.63rem;
+  font-size: 0.78rem;
   font-weight: 700;
   color: #28a745;
 }
 
 .producto-ventas {
-  font-size: 0.41rem;
+  font-size: 0.52rem;
   color: #6c757d;
   margin-top: 5px;
   font-style: italic;
+}
+
+/* Botón agregar al carrito para productos vendidos */
+.btn-agregar-carrito-vendidos {
+  background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 0.62rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-top: 8px;
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.btn-agregar-carrito-vendidos:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+  background: linear-gradient(135deg, #229954 0%, #1e8449 100%);
+}
+
+.btn-agregar-carrito-vendidos:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-agregar-carrito-vendidos:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.btn-agregar-carrito-vendidos i {
+  font-size: 0.68rem;
 }
 
 /* Responsive para categorías y productos vendidos */

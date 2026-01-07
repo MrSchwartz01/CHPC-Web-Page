@@ -7,11 +7,16 @@ import {
   UseGuards,
   Request,
   Get,
+  Query,
+  Ip,
+  Headers,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { Request as ExpressRequest } from 'express';
@@ -91,5 +96,43 @@ export class AuthController {
         rol: req.user.rol,
       },
     };
+  }
+
+  /**
+   * Solicitar recuperación de contraseña
+   * POST /auth/forgot-password
+   */
+  @Post('forgot-password')
+  @HttpCode(HttpStatus.OK)
+  async forgotPassword(
+    @Body() forgotPasswordDto: ForgotPasswordDto,
+    @Ip() ip: string,
+    @Headers('user-agent') userAgent: string,
+  ) {
+    return await this.authService.requestPasswordReset(
+      forgotPasswordDto,
+      ip,
+      userAgent,
+    );
+  }
+
+  /**
+   * Verificar token de recuperación
+   * GET /auth/verify-reset-token?token=xxx
+   */
+  @Get('verify-reset-token')
+  @HttpCode(HttpStatus.OK)
+  async verifyResetToken(@Query('token') token: string) {
+    return await this.authService.verifyResetToken(token);
+  }
+
+  /**
+   * Restablecer contraseña con token
+   * POST /auth/reset-password
+   */
+  @Post('reset-password')
+  @HttpCode(HttpStatus.OK)
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto) {
+    return await this.authService.resetPassword(resetPasswordDto);
   }
 }

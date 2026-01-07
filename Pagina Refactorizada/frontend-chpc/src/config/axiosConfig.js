@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from './api';
+import inactivityService from '@/services/inactivityService';
 
 let isRefreshing = false;
 let failedQueue = [];
@@ -61,6 +62,9 @@ axios.interceptors.response.use(
         // Guardar los nuevos tokens
         localStorage.setItem('access_token', access_token);
         localStorage.setItem('refresh_token', newRefreshToken);
+
+        // Reiniciar el timer de inactividad después de refrescar el token
+        inactivityService.resetTimer();
 
         // Actualizar el header de la petición original
         originalRequest.headers['Authorization'] = 'Bearer ' + access_token;

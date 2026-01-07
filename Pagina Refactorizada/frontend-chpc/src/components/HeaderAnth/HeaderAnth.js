@@ -20,6 +20,7 @@ export default {
         isVisible: false, // Control de visibilidad para animación
         showProductsMenu: false, // Control del menú desplegable de productos
         showMarcasMenu: false, // Control del menú desplegable de marcas
+        marcasMenuTimeout: null, // Timeout para el menú de marcas
         cantidadCarrito: 0, // Cantidad de productos en el carrito
         sugerencias: [],
         mostrandoSugerencias: false,
@@ -144,20 +145,58 @@ export default {
       goToMarcas() {
         this.$router.push("/marcas");
       },
+      mostrarMenuMarcas() {
+        if (this.marcasMenuTimeout) {
+          clearTimeout(this.marcasMenuTimeout);
+          this.marcasMenuTimeout = null;
+        }
+        this.showMarcasMenu = true;
+      },
+      ocultarMenuMarcas() {
+        this.marcasMenuTimeout = setTimeout(() => {
+          this.showMarcasMenu = false;
+        }, 200);
+      },
       async cargarMarcas() {
         try {
+          console.log('Cargando marcas desde API...');
           const response = await axios.get(`${API_BASE_URL}/tienda/productos`);
+          console.log('Respuesta de API:', response.data);
+          
           const productos = Array.isArray(response.data) ? response.data : [];
+          console.log('Total de productos:', productos.length);
+          
+          // Debug: Verificar si los productos tienen el campo marca
+          const ejemploProducto = productos[0];
+          if (ejemploProducto) {
+            console.log('Ejemplo de producto:', ejemploProducto);
+            console.log('Marca del primer producto:', ejemploProducto.marca);
+          }
+          
           // Extraer marcas únicas
           const marcasSet = new Set();
           productos.forEach(producto => {
-            if (producto.marca && producto.marca.trim()) {
-              marcasSet.add(producto.marca.trim());
+            if (producto.marca) {
+              const marcaTrimmed = producto.marca.trim();
+              if (marcaTrimmed) {
+                marcasSet.add(marcaTrimmed);
+              }
             }
           });
-          this.marcasDisponibles = Array.from(marcasSet).sort();
+          
+          const marcasArray = Array.from(marcasSet).sort();
+          console.log('Marcas extraídas:', marcasArray);
+          console.log('Total de marcas únicas:', marcasArray.length);
+          
+          // Actualizar el array de marcas
+          this.marcasDisponibles = marcasArray;
+          
+          // Forzar actualización de Vue
+          this.$forceUpdate();
+          
         } catch (error) {
           console.error('Error al cargar marcas:', error);
+          console.error('Detalles del error:', error.response || error.message);
           this.marcasDisponibles = [];
         }
       },

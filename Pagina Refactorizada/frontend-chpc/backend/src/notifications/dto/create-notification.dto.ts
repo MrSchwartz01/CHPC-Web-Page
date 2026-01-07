@@ -5,6 +5,7 @@ export enum NotificationType {
   PEDIDO_ACTUALIZADO = 'PEDIDO_ACTUALIZADO',
   PEDIDO_CANCELADO = 'PEDIDO_CANCELADO',
   PEDIDO_COMPLETADO = 'PEDIDO_COMPLETADO',
+  NUEVO_USUARIO = 'NUEVO_USUARIO',
 }
 
 export class CreateNotificationDto {

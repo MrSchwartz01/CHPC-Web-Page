@@ -12,50 +12,49 @@
 
     <!-- Contenido principal -->
     <div class="home-container">
-          <!-- Carrusel de Banners -->
-    <div>
-      <CarouselBanner :banners="banners" />
-    </div>
-      <h1>Bienvenidos a Nuestra Tienda </h1>
-      <p>Explora nuestros productos y encuentra lo que necesitas.</p>
 
-      <!-- Sección de Productos Más Vendidos -->
-      <section class="productos-vendidos-section">
-        <h2 class="section-title">Productos Más Vendidos</h2>
-        
-        <div v-for="categoria in categoriasMasVisitadas" :key="'vendidos-' + categoria.id" class="categoria-vendidos">
-          <h3 class="categoria-vendidos-title">
-            {{ categoria.icon }} {{ categoria.nombre }}
-          </h3>
-          
-          <div class="productos-vendidos-grid">
-            <div
-              v-for="producto in getProductosPorCategoria(categoria.nombre)"
-              :key="producto.id"
-              class="producto-vendido-card"
-              @click="verDetalle(producto.id)"
-            >
-              <div class="vendido-badge">
-                <span>⭐ Top {{ producto.ranking }}</span>
-              </div>
-              
-              <img
-                :src="producto.imagen_url || 'ruta-imagen-default.png'"
-                :alt="producto.nombre_producto"
-              />
-              
-              <div class="producto-vendido-info">
-                <h4>{{ producto.nombre_producto }}</h4>
-                <p class="producto-marca">{{ producto.marca || 'Sin marca' }}</p>
-                
-                <div v-if="isAuthenticated" class="producto-precio">
-                  <span class="precio-actual">${{ producto.precio }}</span>
-                  <p style="font-size: 0.7em; color: #999; margin: 2px 0 0 0;">incluido IVA</p>
-                </div>
-                
-                <p class="producto-ventas">{{ producto.ventas }} vendidos</p>
-              </div>
+      <!-- Sección de Banner y Video -->
+      <section class="hero-banner-section">
+        <div class="banner-video-wrapper">
+          <!-- Carrusel de Banners -->
+          <div class="banner-container">
+            <CarouselBanner :banners="banners" />
+          </div>
+
+          <!-- Contenedor de Video Destacado -->
+          <div class="video-featured-container">
+            <h3 class="video-title">🎥 Video Destacado</h3>
+            <div class="video-wrapper">
+              <!-- Puedes cambiar este iframe por el video que desees -->
+              <iframe
+                :src="videoDestacado"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                title="Video destacado del producto"
+              ></iframe>
             </div>
+            <div class="video-info">
+              <h4>{{ videoTitulo }}</h4>
+              <p>{{ videoDescripcion }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Categorías más visitadas -->
+      <section class="categorias-section">
+        <h2 class="section-title">Categorías más visitadas</h2>
+        <div class="categorias-grid">
+          <div
+            v-for="categoria in categoriasMasVisitadas"
+            :key="categoria.id"
+            class="categoria-card"
+            @click="filtrarPorCategoria(categoria.nombre)"
+          >
+            <div class="categoria-icon">{{ categoria.icon }}</div>
+            <h3>{{ categoria.nombre }}</h3>
+            <p class="categoria-stats">{{ categoria.visitas }} visitas</p>
           </div>
         </div>
       </section>
@@ -95,58 +94,55 @@
     v-for="producto in productosMostrados"
     :key="producto.id"
     class="product-card"
-    :class="{ 'producto-promocion': producto.tienePromocion }"
+    @click="verDetalle(producto.id)"
   >
     <!-- Badge de promoción -->
     <div v-if="producto.tienePromocion" class="promo-badge">
-      -{{ producto.promocion.porcentaje }}% OFF
+      -{{ producto.promocion.porcentaje }}%
     </div>
 
-    <!-- Imagen del producto -->
-    <img
-      :src="producto.imagen_url || 'ruta-imagen-default.png'"
-      alt="Imagen del Producto"
-    />
+    <!-- Contenedor de imagen -->
+    <div class="product-image-wrapper">
+      <img
+        :src="producto.imagen_url || 'ruta-imagen-default.png'"
+        :alt="producto.nombre_producto"
+      />
+    </div>
 
-    <!-- Nombre y descripción del producto -->
-    <h3>{{ producto.nombre_producto }}</h3>
-    <p>{{ producto.descripcion }}</p>
-
-    <!-- Precio del producto (solo para usuarios autenticados) -->
-    <div v-if="isAuthenticated" class="precio-container">
-      <div v-if="producto.tienePromocion" class="precio-promocion">
-        <p class="precio-original">${{ producto.promocion.precioOriginal }}</p>
-        <p class="precio-descuento">
-          <strong>${{ producto.promocion.precioConDescuento }}</strong>
-        </p>
-        <p style="font-size: 0.75em; color: #999; margin: 2px 0 0 0;">incluido IVA</p>
+    <!-- Información del producto -->
+    <div class="product-info">
+      <h3 class="product-title">{{ producto.nombre_producto }}</h3>
+      
+      <!-- Precio -->
+      <div v-if="isAuthenticated" class="product-price">
+        <div v-if="producto.tienePromocion">
+          <span class="price-original">${{ producto.promocion.precioOriginal }}</span>
+          <span class="price-current">${{ producto.promocion.precioConDescuento }}</span>
+        </div>
+        <div v-else>
+          <span class="price-current">${{ producto.precio }}</span>
+        </div>
       </div>
-      <p v-else>
-        <strong>Precio:</strong> ${{ producto.precio }}
-        <span style="font-size: 0.75em; color: #999; margin-left: 8px;">incluido IVA</span>
-      </p>
-    </div>
+      <div v-else class="product-price">
+        <span class="price-login">Inicia sesión para ver el precio</span>
+      </div>
 
-    <!-- Mostrar cantidad en stock -->
-    <p>
-      <strong>Stock disponible:</strong> {{ producto.stock }} unidades
-    </p>
-
-    <!-- Botones de acción -->
-    <div class="product-actions">
+      <!-- Botón agregar al carrito -->
       <button 
-        v-if="isAuthenticated" 
+        v-if="isAuthenticated"
         @click.stop="agregarAlCarrito(producto)" 
-        class="btn-agregar-carrito"
+        class="btn-add-cart"
         :disabled="producto.stock <= 0"
       >
-        <i class="fas fa-shopping-cart"></i>
+        <span v-if="producto.stock > 0">AGREGAR AL CARRITO</span>
+        <span v-else>SIN STOCK</span>
       </button>
-      <button v-if="isAuthenticated" @click="verDetalle(producto.id)">
-        Ver Detalles
-      </button>
-      <button v-else @click="redirigirLogin">
-        Inicia Sesión para Ver Precios
+      <button 
+        v-else
+        @click.stop="redirigirLogin"
+        class="btn-add-cart"
+      >
+        INICIAR SESIÓN
       </button>
     </div>
   </div>

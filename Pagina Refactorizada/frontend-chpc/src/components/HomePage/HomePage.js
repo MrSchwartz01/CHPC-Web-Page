@@ -24,6 +24,11 @@ export default {
       limiteProductos: 10,
       selectedPriceRange: "", // '', 'low', 'mid', 'high'
       
+      // Video destacado - PERSONALIZA ESTOS DATOS
+      videoDestacado: "https://www.youtube.com/embed/eEUEQ4me2kI?si=6-kWnW9V4YykXU_8&autoplay=1&mute=1&loop=1&playlist=eEUEQ4me2kI", // Video con autoplay
+      videoTitulo: "Laptop Gaming de Última Generación",
+      videoDescripcion: "Conoce las características y rendimiento de nuestro producto estrella",
+      
       // Datos de categorías más visitadas (placeholder)
       categoriasMasVisitadas: [
         { id: 1, nombre: 'Laptops', icon: '💻', visitas: 1250, productos: 45 },
@@ -65,6 +70,13 @@ export default {
             : producto.imagen_url || "ruta-imagen-default.png",
       }));
       
+      console.log('Total de productos cargados:', this.productos.length);
+      console.log('Ejemplo de producto:', this.productos[0]);
+      
+      // Debug: Ver categorías únicas
+      const categoriasUnicas = [...new Set(this.productos.map(p => p.categoria).filter(Boolean))];
+      console.log('Categorías únicas encontradas:', categoriasUnicas);
+      
       // Cargar Promociones Activas
       const promocionesResponse = await axios.get(`${API_BASE_URL}/promociones/activas`);
       this.promociones = promocionesResponse.data;
@@ -82,6 +94,17 @@ export default {
     if (search) {
       this.buscarProductos(search);
     }
+  },
+  computed: {
+    productosDestacados() {
+      if (!this.productos || this.productos.length === 0) return [];
+
+      const destacados = this.productos.filter((p) => p.destacado);
+      const base = destacados.length > 0 ? destacados : this.productos;
+
+      // Tomamos los primeros 8 para la grilla de destacados
+      return base.slice(0, 8);
+    },
   },
   methods: {
     aplicarPromocionesAProductos() {
@@ -229,29 +252,41 @@ export default {
       localStorage.setItem('carrito', JSON.stringify(carrito));
     },
     filtrarPorCategoria(nombreCategoria) {
-      const marcas = this.categoriaMapping[nombreCategoria];
-      if (!marcas) return;
+      // Convertir el nombre de categoría a slug (minúsculas sin espacios)
+      const categoriaSlug = nombreCategoria.toLowerCase().replace(/\s+/g, '-');
       
-      this.productosMostrados = this.productos.filter(producto => 
-        marcas.some(marca => producto.marca?.toLowerCase().includes(marca.toLowerCase()))
-      );
-      
-      window.scrollTo({ top: 600, behavior: 'smooth' });
+      // Navegar a la página de productos por categoría
+      this.$router.push({ 
+        name: 'ProductosPorCategoria', 
+        params: { categoria: categoriaSlug } 
+      });
     },
     getProductosPorCategoria(nombreCategoria) {
-      const marcas = this.categoriaMapping[nombreCategoria];
-      if (!marcas) return [];
-      
-      let productosFiltrados = this.productos.filter(producto => 
-        marcas.some(marca => producto.marca?.toLowerCase().includes(marca.toLowerCase()))
+      // Intentar encontrar productos cuya categoría coincida (insensible a mayúsculas)
+      let productosFiltrados = this.productos.filter((producto) =>
+        producto.categoria?.toLowerCase() === nombreCategoria.toLowerCase()
       );
-      
+
+      // Si no hay coincidencia exacta, probar coincidencia parcial en la categoría
+      if (productosFiltrados.length === 0) {
+        productosFiltrados = this.productos.filter((producto) =>
+          producto.categoria?.toLowerCase().includes(nombreCategoria.toLowerCase())
+        );
+      }
+
+      // Si aún así no hay productos para esa categoría, usamos un fallback
+      if (productosFiltrados.length === 0) {
+        productosFiltrados = this.productos.slice(0, 6);
+      }
+
+      // Agregar ventas "simuladas" y ranking para mostrar como más vendidos
       productosFiltrados = productosFiltrados.map((producto, index) => ({
         ...producto,
         ventas: Math.floor(Math.random() * 500) + 100,
         ranking: index + 1,
       }));
-      
+
+      // Ordenar por ventas y tomar los top 3 para la tarjeta
       return productosFiltrados
         .sort((a, b) => b.ventas - a.ventas)
         .slice(0, 3);

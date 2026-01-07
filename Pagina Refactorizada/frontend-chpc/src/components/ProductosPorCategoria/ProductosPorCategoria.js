@@ -30,9 +30,19 @@ export default {
         accesorios: "Accesorios",
         redes: "Redes",
         componentes: "Componentes",
-        perifericos: "Perifericos",
+        perifericos: "Periféricos",
         almacenamiento: "Almacenamiento",
         audio: "Audio",
+        // Soporte para categorías con guiones
+        'periféricos': "Periféricos",
+      },
+      // Control de secciones de filtros abiertas/cerradas
+      sectionsOpen: {
+        category: true,
+        subcategory: true,
+        brand: true,
+        storage: false,
+        bluetooth: false,
       },
     };
   },
@@ -70,26 +80,53 @@ export default {
     },
     async cargarProductos(categoria) {
       try {
-        // Capitalizar la primera letra de la categoría para que coincida con la base de datos
-        const categoriaCapitalizada = this.categoriasInfo[categoria];
+        console.log('🔍 [DEBUG] Categoría slug recibida:', categoria);
+        console.log('🔍 [DEBUG] categoriasInfo disponibles:', Object.keys(this.categoriasInfo));
         
-        const response = await axios.get(
-          `${API_BASE_URL}/tienda/productos?categoria=${categoriaCapitalizada}`
-        );
+        // Obtener el nombre de categoría formateado del mapping
+        const categoriaFormateada = this.categoriasInfo[categoria] || 
+          categoria.charAt(0).toUpperCase() + categoria.slice(1);
+        
+        console.log('📦 [DEBUG] Categoría formateada para buscar:', categoriaFormateada);
+        
+        const url = `${API_BASE_URL}/tienda/productos?categoria=${categoriaFormateada}`;
+        console.log('🌐 [DEBUG] URL de petición:', url);
+        
+        const response = await axios.get(url);
+        
+        console.log('✅ [DEBUG] Respuesta del servidor:', {
+          status: response.status,
+          totalProductos: response.data.length,
+          primerProducto: response.data[0]
+        });
         
         this.productos = response.data.map(producto => ({
           ...producto,
-          imagen_url: producto.imagen_url || "/Productos/placeholder-product.png"
+          imagen_url: producto.productImages?.length > 0
+            ? producto.productImages.find(img => img.es_principal)?.ruta_imagen || producto.productImages[0].ruta_imagen
+            : producto.imagen_url || "/Productos/placeholder-product.png"
         }));
         
-        console.log(`Productos cargados para ${categoriaCapitalizada}:`, this.productos.length);
+        console.log(`✅ Productos cargados para ${categoriaFormateada}:`, this.productos.length);
+        
+        if (this.productos.length === 0) {
+          console.warn('⚠️ No se encontraron productos para esta categoría');
+          // Intentar cargar TODOS los productos para ver qué categorías existen
+          const todosResponse = await axios.get(`${API_BASE_URL}/tienda/productos`);
+          const categoriasExistentes = [...new Set(todosResponse.data.map(p => p.categoria))];
+          console.log('📋 Categorías disponibles en la BD:', categoriasExistentes);
+        }
       } catch (error) {
-        console.error("Error al cargar productos:", error);
+        console.error("❌ Error al cargar productos:", error);
+        console.error("❌ Detalles del error:", error.response?.data || error.message);
         this.productos = [];
       }
     },
     filtrarPorMarca(marca) {
       this.marcaSeleccionada = marca;
+    },
+    toggleSection(section) {
+      this.sectionsOpen[section] = !this.sectionsOpen[section];
     },
     verDetalle(id) {
       this.$router.push({ name: "ProductoDetalle", params: { id } });

@@ -52,7 +52,7 @@ export default {
   },
   async mounted() {
     this.verificarAutenticacion();
-    if (this.userId) {
+    if (this.isAuthenticated) {
       await this.cargarDatosUsuario();
     }
   },
@@ -72,12 +72,12 @@ export default {
     async cargarDatosUsuario() {
       try {
         const token = localStorage.getItem('access_token');
-        const response = await axios.get(`${API_BASE_URL}/users/${this.userId}`, {
+        const response = await axios.get(`${API_BASE_URL}/usuarios/perfil`, {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
-        
+
         const usuario = response.data;
         this.formData = {
           nombre: usuario.nombre || '',
@@ -113,14 +113,24 @@ export default {
         this.mensaje = '';
         
         const token = localStorage.getItem('access_token');
+
+        // Solo enviar los campos que el backend soporta para /usuarios/perfil
+        const payload = {};
+        if (this.formData.telefono && this.formData.telefono.trim() !== '') {
+          payload.telefono = this.formData.telefono.trim();
+        }
+        if (this.formData.direccion && this.formData.direccion.trim() !== '') {
+          payload.direccion = this.formData.direccion.trim();
+        }
+
         await axios.patch(
-          `${API_BASE_URL}/users/${this.userId}`,
-          this.formData,
+          `${API_BASE_URL}/usuarios/perfil`,
+          payload,
           {
             headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          }
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         
         this.modoEdicion = false;
@@ -147,22 +157,26 @@ export default {
         return;
       }
       
+      if (!this.passwordData.nueva.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&.,\-_:])[A-Za-z\d@$!%*?&.,\-_:]{6,}$/)) {
+        this.mostrarMensajePassword('❌ La contraseña debe incluir al menos una letra, un número y un carácter especial (@$!%*?&.,-_:)', 'error');
+        return;
+      }
+      
       try {
         this.guardando = true;
         this.mensajePassword = '';
         
         const token = localStorage.getItem('access_token');
         await axios.patch(
-          `${API_BASE_URL}/users/${this.userId}/password`,
+          `${API_BASE_URL}/usuarios/cambiar-password`,
           {
-            currentPassword: this.passwordData.actual,
-            newPassword: this.passwordData.nueva
+            nuevaPassword: this.passwordData.nueva,
           },
           {
             headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          }
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         
         this.mostrarMensajePassword('✅ Contraseña cambiada correctamente', 'success');
@@ -187,12 +201,12 @@ export default {
       try {
         this.cargandoPedidos = true;
         const token = localStorage.getItem('access_token');
-        const response = await axios.get(`${API_BASE_URL}/orders/user/${this.userId}`, {
+        const response = await axios.get(`${API_BASE_URL}/ordenes`, {
           headers: {
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
-        
+
         this.pedidos = response.data;
       } catch (error) {
         console.error('Error al cargar pedidos:', error);

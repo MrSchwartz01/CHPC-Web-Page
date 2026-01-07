@@ -51,6 +51,7 @@ model User {
   orders            Order[]
   serviceOrders     ServiceOrder[]
   permisosTemporales PermisoTemporal[]
+  passwordResetTokens PasswordResetToken[]
 
   @@map("usuarios")
 }
@@ -270,4 +271,23 @@ model Notification {
   @@map("notificaciones")
   @@index([orderId])
   @@index([createdAt])
+}
+
+model PasswordResetToken {
+  id                Int      @id @default(autoincrement())
+  token             String   @unique
+  usuario_id        Int
+  usado             Boolean  @default(false)
+  fecha_creacion    DateTime @default(now())
+  fecha_expiracion  DateTime
+  ip_address        String?  // IP desde donde se solicitó
+  user_agent        String?  // Navegador/dispositivo
+  
+  usuario           User     @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
+  
+  @@map("password_reset_tokens")
+  @@index([token])
+  @@index([usuario_id])
+  @@index([usado])
+  @@index([fecha_expiracion])
 }
