@@ -25,6 +25,9 @@
 
     <!-- Filtros -->
     <div class="filtros">
+      <button @click="irAInicio" class="btn-volver-inicio">
+        ← Volver al Inicio
+      </button>
       <div class="filtro-grupo">
         <label>Filtrar por estado:</label>
         <select v-model="filtroEstado" class="filtro-select">
@@ -218,6 +221,9 @@ export default {
     },
   },
   methods: {
+    irAInicio() {
+      this.$router.push('/home');
+    },
     async cargarPedidos() {
       this.cargando = true;
       this.error = null;
@@ -419,6 +425,28 @@ export default {
 .filtro-select:focus {
   border-color: #667eea;
   outline: none;
+}
+
+.btn-volver-inicio {
+  padding: 8px 20px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+  align-self: flex-end;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.btn-volver-inicio:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
 }
 
 .btn-refrescar {

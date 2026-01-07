@@ -149,22 +149,12 @@
               ></textarea>
             </div>
 
-            <div class="form-group">
-              <label>Método de Pago *</label>
-              <select v-model="datosEnvio.paymentMethod" required>
-                <option value="CARD">Tarjeta de Crédito/Débito</option>
-                <option value="TRANSFER">Transferencia Bancaria</option>
-                <option value="CASH">Efectivo (Contra Entrega)</option>
-              </select>
-            </div>
-
-            <div class="form-group">
-              <label>Observaciones</label>
-              <textarea 
-                v-model="datosEnvio.observaciones" 
-                rows="2"
-                placeholder="Instrucciones especiales, horarios de entrega, etc."
-              ></textarea>
+            <div class="info-box">
+              <div class="info-icon">📞</div>
+              <div class="info-content">
+                <h4>Atención Personalizada</h4>
+                <p>Tu pedido será procesado por uno de nuestros vendedores, quien se pondrá en contacto contigo para coordinar el pago y la entrega.</p>
+              </div>
             </div>
 
             <div class="checkout-resumen">
@@ -187,11 +177,14 @@
             </div>
 
             <div class="checkout-actions">
+              <button type="button" @click="irAInicio" class="btn-volver-inicio">
+                ← Volver al Inicio
+              </button>
               <button type="button" @click="cancelarCheckout" class="btn-cancelar">
                 Cancelar
               </button>
               <button type="submit" class="btn-confirmar" :disabled="procesandoPago">
-                {{ procesandoPago ? 'Procesando...' : 'Confirmar Compra' }}
+                {{ procesandoPago ? 'Enviando Pedido...' : 'Enviar Pedido' }}
               </button>
             </div>
           </form>

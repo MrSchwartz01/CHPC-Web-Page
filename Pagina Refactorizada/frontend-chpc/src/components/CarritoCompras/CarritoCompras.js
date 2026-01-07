@@ -22,9 +22,7 @@ export default {
         nombre_cliente: '',
         email_cliente: '',
         telefono: '',
-        direccion_envio: '',
-        paymentMethod: 'CARD',
-        observaciones: ''
+        direccion_envio: ''
       }
     };
   },
@@ -149,12 +147,12 @@ export default {
         // Crear orden
         const orderData = {
           items,
-          paymentMethod: this.datosEnvio.paymentMethod,
+          paymentMethod: 'CASH', // Efectivo - será coordinado por el vendedor
           nombre_cliente: this.datosEnvio.nombre_cliente,
           email_cliente: this.datosEnvio.email_cliente,
           telefono: this.datosEnvio.telefono || '',
           direccion_envio: this.datosEnvio.direccion_envio,
-          observaciones: this.datosEnvio.observaciones || '',
+          observaciones: 'Pedido pendiente de coordinación con vendedor' // Nota automática
         };
 
         const response = await axios.post(
@@ -167,15 +165,19 @@ export default {
 
         // Éxito
         const mensajeExito = `
-¡Pedido creado exitosamente!
+¡Pedido enviado exitosamente!
 
 📦 Código de Pedido: ${response.data.codigo}
 💰 Total: $${response.data.total.toFixed(2)}
 
-✅ Se ha notificado a nuestros administradores y vendedores.
+👤 Un vendedor se pondrá en contacto contigo pronto para:
+   • Coordinar el método de pago
+   • Confirmar la dirección de entrega
+   • Responder tus preguntas
+
 📧 Recibirás un email de confirmación en breve.
 
-Gracias por tu compra!
+¡Gracias por tu preferencia!
         `;
         
         alert(mensajeExito);
