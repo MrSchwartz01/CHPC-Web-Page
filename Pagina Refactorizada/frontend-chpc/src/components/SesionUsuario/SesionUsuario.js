@@ -41,6 +41,7 @@ export default {
         localStorage.setItem('refresh_token', response.data.refresh_token);
         localStorage.setItem('user_rol', response.data.usuario.rol);
         localStorage.setItem('user_id', response.data.usuario.id);
+        localStorage.setItem('usuario', JSON.stringify(response.data.usuario));
         
         // Reiniciar el monitor de inactividad después del login exitoso
         inactivityService.resetTimer();

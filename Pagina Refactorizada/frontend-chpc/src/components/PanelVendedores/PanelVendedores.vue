@@ -228,9 +228,9 @@ export default {
       this.cargando = true;
       this.error = null;
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('access_token');
         const response = await axios.get(
-          `${process.env.VUE_APP_API_URL || 'http://localhost:3000'}/ordenes/panel/todas`,
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/ordenes/panel/todas`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -245,9 +245,9 @@ export default {
     },
     async asignarPedido(pedidoId) {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('access_token');
         await axios.post(
-          `${process.env.VUE_APP_API_URL || 'http://localhost:3000'}/ordenes/${pedidoId}/asignar`,
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/ordenes/${pedidoId}/asignar`,
           {
             vendedor_nombre: this.usuarioNombre,
           },
@@ -267,9 +267,9 @@ export default {
         return;
       }
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('access_token');
         await axios.delete(
-          `${process.env.VUE_APP_API_URL || 'http://localhost:3000'}/ordenes/${pedidoId}/desasignar`,
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/ordenes/${pedidoId}/desasignar`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -283,9 +283,9 @@ export default {
     },
     async cambiarEstado(pedidoId, nuevoEstado) {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('access_token');
         await axios.patch(
-          `${process.env.VUE_APP_API_URL || 'http://localhost:3000'}/ordenes/${pedidoId}/estado-gestion`,
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/ordenes/${pedidoId}/estado-gestion`,
           {
             estado_gestion: nuevoEstado,
           },
@@ -318,15 +318,44 @@ export default {
         minute: '2-digit',
       });
     },
-    cargarDatosUsuario() {
-      const usuario = JSON.parse(localStorage.getItem('usuario') || '{}');
-      this.usuarioId = usuario.id;
-      this.usuarioNombre = `${usuario.nombre || ''} ${usuario.apellido || ''}`.trim();
-      this.esAdmin = usuario.rol === 'administrador';
+    async cargarDatosUsuario() {
+      // Primero intentar cargar desde localStorage
+      const usuarioGuardado = localStorage.getItem('usuario');
+      if (usuarioGuardado) {
+        const usuario = JSON.parse(usuarioGuardado);
+        this.usuarioId = usuario.id;
+        this.usuarioNombre = `${usuario.nombre || ''} ${usuario.apellido || ''}`.trim();
+        this.esAdmin = usuario.rol === 'administrador';
+        return;
+      }
+
+      // Si no está en localStorage, cargar desde la API
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await axios.get(
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/usuarios/perfil`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        
+        const usuario = response.data;
+        this.usuarioId = usuario.id;
+        this.usuarioNombre = `${usuario.nombre || ''} ${usuario.apellido || ''}`.trim();
+        this.esAdmin = usuario.rol === 'administrador';
+        
+        // Guardar en localStorage para próximas veces
+        localStorage.setItem('usuario', JSON.stringify(usuario));
+        localStorage.setItem('user_id', usuario.id);
+        localStorage.setItem('user_rol', usuario.rol);
+      } catch (error) {
+        console.error('Error al cargar datos del usuario:', error);
+        this.error = 'No se pudieron cargar los datos del usuario';
+      }
     },
   },
-  mounted() {
-    this.cargarDatosUsuario();
+  async mounted() {
+    await this.cargarDatosUsuario();
     this.cargarPedidos();
     // Refrescar cada 30 segundos
     this.intervalo = setInterval(() => {
