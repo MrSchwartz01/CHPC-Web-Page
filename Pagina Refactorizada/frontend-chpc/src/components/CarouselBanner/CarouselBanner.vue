@@ -80,7 +80,7 @@ export default {
       if (this.banners && this.banners.length > 0) {
         this.intervalId = setInterval(() => {
           this.nextBanner();
-        }, 8000); // Cambiar cada 8 segundos
+        }, 5000); // Cambiar cada 5 segundos
       }
     },
     stopCarousel() {
