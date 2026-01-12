@@ -57,6 +57,18 @@ export default {
       intervalId: null,
     };
   },
+  watch: {
+    banners: {
+      handler(newBanners) {
+        if (newBanners && newBanners.length > 0) {
+          this.stopCarousel();
+          this.activeBanner = 0;
+          this.startCarousel();
+        }
+      },
+      immediate: false,
+    },
+  },
   mounted() {
     this.startCarousel();
   },
@@ -68,7 +80,7 @@ export default {
       if (this.banners && this.banners.length > 0) {
         this.intervalId = setInterval(() => {
           this.nextBanner();
-        }, 3000); // Cambiar cada 3 segundos
+        }, 8000); // Cambiar cada 8 segundos
       }
     },
     stopCarousel() {
