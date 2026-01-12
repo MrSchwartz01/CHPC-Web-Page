@@ -41,7 +41,8 @@
       <div class="footer-column">
       <h4>Empresa</h4>
       <ul>
-        <li><a href="/sobre-nosotros">Sobre Nosotros</a></li>
+        <li><a href="/mision-vision">Sobre Nosotros</a></li>
+        <li><a href="/mision-vision">Misión y Visión</a></li>
         <li><a href="/encuentranos">Encuéntranos</a></li>
         <li><a href="/marcas">Marcas</a></li>
         <li><a href="/blog">Blog</a></li>

@@ -143,7 +143,7 @@
             <li><a href="/servicio-tecnico">Servicio Técnico</a></li>
             <li><a href="/redes-sociales">Contáctanos</a></li>
             <li><a href="/encuentranos">Encuéntranos</a></li>
-            <li><a href="/sobre-nosotros">Sobre Nosotros</a></li>
+            <li><a href="/mision-vision">Misión y Visión</a></li>
           </ul>
         </nav>
       </header>

@@ -23,6 +23,7 @@ import PerfilUsuario from '../components/PerfilUsuario/PerfilUsuario.vue';
 import OlvidePassword from '../components/OlvidePassword.vue';
 import RestablecerPassword from '../components/RestablecerPassword.vue';
 import EncuentranosPage from '../components/EncuentranosPage/EncuentranosPage.vue';
+import MisionVision from '../components/MisionVision/MisionVision.vue';
 
 
 const routes = [
@@ -137,6 +138,11 @@ const routes = [
     path: "/promociones",
     name: "Promociones",
     component: Promociones,
+  },
+  {
+    path: "/mision-vision",
+    name: "MisionVision",
+    component: MisionVision,
   },
   {
     path: '/perfil',
