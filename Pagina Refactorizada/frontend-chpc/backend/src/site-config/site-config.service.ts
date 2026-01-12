@@ -39,9 +39,9 @@ export class SiteConfigService {
   async getLogo() {
     try {
       const config = await this.findByKey('logo_url');
-      return config.valor;
+      return { valor: config.valor }; // Retornar objeto con propiedad 'valor'
     } catch (error) {
-      return null; // Si no existe, retornar null
+      return { valor: null }; // Si no existe, retornar objeto con valor null
     }
   }
 }

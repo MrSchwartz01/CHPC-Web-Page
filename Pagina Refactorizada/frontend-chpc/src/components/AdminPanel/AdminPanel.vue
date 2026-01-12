@@ -787,7 +787,7 @@ export default {
     // ========== PROMOCIONES ==========
     async loadPromociones() {
       try {
-        const response = await axios.get('${API_BASE_URL}/promociones');
+        const response = await axios.get(`${API_BASE_URL}/promociones`);
         this.promociones = response.data;
       } catch (error) {
         console.error('Error al cargar promociones:', error);
@@ -796,7 +796,7 @@ export default {
 
     async loadProductos() {
       try {
-        const response = await axios.get('${API_BASE_URL}/productos');
+        const response = await axios.get(`${API_BASE_URL}/productos`);
         this.productos = response.data;
       } catch (error) {
         console.error('Error al cargar productos:', error);
@@ -814,7 +814,7 @@ export default {
           this.showPromotionMessage('Promoción actualizada exitosamente', 'success');
         } else {
           await axios.post(
-            '${API_BASE_URL}/promociones',
+            `${API_BASE_URL}/promociones`,
             this.promotionForm,
             this.getAuthHeaders()
           );
@@ -885,8 +885,8 @@ export default {
     // ========== BANNERS ==========
     async loadBanners() {
       try {
-        const response = await axios.get('${API_BASE_URL}/banners');
-        this.banners = response.data;
+        const response = await axios.get(`${API_BASE_URL}/tienda/banners`);
+        this.banners = response.data.data || response.data;
       } catch (error) {
         console.error('Error al cargar banners:', error);
       }
@@ -896,14 +896,14 @@ export default {
       try {
         if (this.editingBanner) {
           await axios.patch(
-            `${API_BASE_URL}/banners/${this.editingBanner.id}`,
+            `${API_BASE_URL}/tienda/banners/${this.editingBanner.id}`,
             this.bannerForm,
             this.getAuthHeaders()
           );
           this.showBannerMessage('Banner actualizado exitosamente', 'success');
         } else {
           await axios.post(
-            '${API_BASE_URL}/banners',
+            `${API_BASE_URL}/tienda/banners`,
             this.bannerForm,
             this.getAuthHeaders()
           );
@@ -932,7 +932,7 @@ export default {
 
       try {
         await axios.delete(
-          `${API_BASE_URL}/banners/${id}`,
+          `${API_BASE_URL}/tienda/banners/${id}`,
           this.getAuthHeaders()
         );
         this.showBannerMessage('Banner eliminado exitosamente', 'success');
@@ -967,8 +967,8 @@ export default {
     // ========== LOGO ==========
     async loadLogo() {
       try {
-        const response = await axios.get('${API_BASE_URL}/configuracion/logo_url');
-        this.currentLogo = response.data;
+        const response = await axios.get(`${API_BASE_URL}/configuracion/logo_url`);
+        this.currentLogo = response.data.valor || response.data;
       } catch (error) {
         console.log('No hay logo configurado');
       }
@@ -977,7 +977,7 @@ export default {
     async submitLogo() {
       try {
         await axios.post(
-          '${API_BASE_URL}/configuracion',
+          `${API_BASE_URL}/configuracion`,
           {
             clave: 'logo_url',
             valor: this.logoForm.logo_url,

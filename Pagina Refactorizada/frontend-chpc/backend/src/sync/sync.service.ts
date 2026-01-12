@@ -70,8 +70,10 @@ export class ErpSyncService {
         }
 
         // 4. Actualizar la marca de agua con la fecha más reciente encontrada
-        const maxDate = updates.reduce((max, p) => 
-          p.FECHA_MODIFICACION > max ? p.FECHA_MODIFICACION : max, lastSyncDate);
+        const maxDate = updates.reduce(
+          (max, p) => (p.FECHA_MODIFICACION > max ? p.FECHA_MODIFICACION : max),
+          lastSyncDate,
+        );
 
         await tx.syncLog.upsert({
           where: { entityName: ENTITY_NAME },

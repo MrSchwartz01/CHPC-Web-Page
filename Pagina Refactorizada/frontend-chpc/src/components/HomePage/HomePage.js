@@ -25,7 +25,11 @@ export default {
       selectedPriceRange: "", // '', 'low', 'mid', 'high'
       
       // Video destacado - PERSONALIZA ESTOS DATOS
-      videoDestacado: "https://www.youtube.com/embed/eEUEQ4me2kI?si=6-kWnW9V4YykXU_8&autoplay=1&mute=1&loop=1&playlist=eEUEQ4me2kI", // Video con autoplay
+      videoDestacado: "https://www.youtube.com/embed/r-DF3-FS_6k?si=DW930ua3fe_K9GjD_&&autoplay=1&&mute=1", // Video con autoplay
+      // n autoplay
+
+
+      
       videoTitulo: "Laptop Gaming de Última Generación",
       videoDescripcion: "Conoce las características y rendimiento de nuestro producto estrella",
       
@@ -54,11 +58,19 @@ export default {
     this.isAuthenticated = !!localStorage.getItem("access_token");
 
     try {
-      // Cargar Banners desde la carpeta pública
-      this.banners = [
-        { id: 1, titulo: "Banner 1", imagen_url: "/Banners/banner1.webp" },
-        { id: 2, titulo: "Banner 2", imagen_url: "/Banners/banner2.avif" },
-      ];
+      // Cargar Banners desde la API
+      try {
+        const bannersResponse = await axios.get(`${API_BASE_URL}/tienda/banners`);
+        this.banners = bannersResponse.data.data || bannersResponse.data || [];
+        console.log('Banners cargados:', this.banners.length);
+      } catch (bannerError) {
+        console.error('Error al cargar banners:', bannerError);
+        // Fallback a banners estáticos si falla la API
+        this.banners = [
+          { id: 1, titulo: "Banner 1", imagen_url: "/Banners/banner1.webp" },
+          { id: 2, titulo: "Banner 2", imagen_url: "/Banners/banner2.avif" },
+        ];
+      }
 
       // Cargar Productos
       const productosResponse = await axios.get(`${API_BASE_URL}/tienda/productos`);

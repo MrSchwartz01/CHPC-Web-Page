@@ -68,7 +68,7 @@ export default {
       if (this.banners && this.banners.length > 0) {
         this.intervalId = setInterval(() => {
           this.nextBanner();
-        }, 6000);
+        }, 3000); // Cambiar cada 3 segundos
       }
     },
     stopCarousel() {
