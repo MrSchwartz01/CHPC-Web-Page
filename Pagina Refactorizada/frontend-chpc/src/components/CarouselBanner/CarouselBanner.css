@@ -1,17 +1,17 @@
 .carousel {
     position: relative;
     width: 100%; /* Ancho completo del contenedor */
-    max-width: 1200px; /* Ancho máximo */
-    height: 450px; /* Altura fija para mejor presentación */
-    margin: 20px auto;
+    height: 100%; /* Altura 100% para ajustarse al contenedor padre */
+    min-height: 400px; /* Altura mínima */
+    margin: 0; /* Sin márgenes */
     overflow: hidden;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 0; /* Sin bordes redondeados */
+    box-shadow: none; /* Sin sombra */
+    background: transparent;
   }
   
   .carousel:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
+    box-shadow: none; /* Mantener sin sombra en hover */
   }
   
   .carousel-item {
@@ -34,9 +34,9 @@
   .banner-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Mostrar imagen completa sin recortar */
+    object-fit: cover; /* Cubrir todo el espacio sin distorsionar */
     object-position: center; /* Centrar la imagen */
-    background-color: #f5f5f5; /* Fondo gris claro para espacios vacíos */
+    background-color: transparent; /* Fondo transparente */
     opacity: 0;
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   }
@@ -95,6 +95,15 @@
   .carousel-indicators .active {
     background-color: #fff;
   }
+
+  .carousel-banner {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+  }
+
     /* Estilos para banners clickeables */
   .carousel-item.clickable {
     cursor: pointer;

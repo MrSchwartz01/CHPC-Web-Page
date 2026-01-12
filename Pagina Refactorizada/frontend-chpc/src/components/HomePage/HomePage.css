@@ -142,23 +142,25 @@ body {
 
   .banner-video-wrapper {
     display: grid;
-    grid-template-columns: 1.5fr 1fr;
+    grid-template-columns: 1.725fr 1fr; /* Banner aumentado 15%: 1.5 * 1.15 = 1.725 */
     gap: 24px;
-    align-items: start;
+    align-items: stretch; /* Alinear ambos elementos a la misma altura */
   }
 
   .banner-container {
-    border-radius: 16px;
+    border-radius: 0; /* Eliminar bordes redondeados */
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: none; /* Eliminar sombra para hacer invisible la caja */
+    background: transparent;
+    height: 100%; /* Ocupar toda la altura disponible */
   }
 
   /* Contenedor de video destacado */
   .video-featured-container {
-    background: white;
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    background: transparent; /* Fondo transparente */
+    border-radius: 0; /* Sin bordes redondeados */
+    padding: 0;
+    box-shadow: none; /* Sin sombra */
     display: flex;
     flex-direction: column;
     height: 100%;
