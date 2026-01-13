@@ -5,10 +5,8 @@ import Home from '../components/HomePage/HomePage.vue';
 import ProductoDetalle from '../components/ProductoDetalle/ProductoDetalle.vue';
 import ListaMarcas from '../components/ListaMarcas/ListaMarcas.vue';
 import CarouselBanner from '../components/CarouselBanner/CarouselBanner.vue';
-import Dashboard from '../components/Dashboard/DashboardMain.vue';
-import AdminPanel from '../components/AdminPanel/AdminPanel.vue';
-import NotificationsPanel from '../components/NotificationsPanel/NotificationsPanel.vue';
-import PanelVendedores from '../components/PanelVendedores/PanelVendedores.vue';
+// Dashboard, AdminPanel y NotificationsPanel usan lazy loading para optimizar carga inicial
+// PanelVendedores usa lazy loading para optimizar carga inicial
 
 import RedesSociales from '../components/RedesSociales/RedesSociales.vue';
 import ServicioTecnico from '../components/ServicioTecnico/ServicioTecnico.vue';
@@ -174,7 +172,7 @@ const routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    component: Dashboard,
+    component: () => import(/* webpackChunkName: "admin-dashboard" */ '../components/Dashboard/DashboardMain.vue'),
     beforeEnter: (to, from, next) => {
       const isAuthenticated = !!localStorage.getItem('access_token');
       const userRol = localStorage.getItem('user_rol');
@@ -196,7 +194,7 @@ const routes = [
   {
     path: '/admin/panel',
     name: 'AdminPanel',
-    component: AdminPanel,
+    component: () => import(/* webpackChunkName: "admin-panel" */ '../components/AdminPanel/AdminPanel.vue'),
     beforeEnter: (to, from, next) => {
       const token = localStorage.getItem('access_token');
       const role = localStorage.getItem('user_rol');
@@ -210,7 +208,7 @@ const routes = [
   {
     path: '/admin/notifications',
     name: 'NotificationsPanel',
-    component: NotificationsPanel,
+    component: () => import(/* webpackChunkName: "notifications-panel" */ '../components/NotificationsPanel/NotificationsPanel.vue'),
     beforeEnter: (to, from, next) => {
       const token = localStorage.getItem('access_token');
       const role = localStorage.getItem('user_rol');
@@ -224,7 +222,7 @@ const routes = [
   {
     path: '/panel-vendedores',
     name: 'PanelVendedores',
-    component: PanelVendedores,
+    component: () => import(/* webpackChunkName: "panel-vendedores" */ '../components/PanelVendedores/PanelVendedores.vue'),
     beforeEnter: (to, from, next) => {
       const token = localStorage.getItem('access_token');
       const role = localStorage.getItem('user_rol');

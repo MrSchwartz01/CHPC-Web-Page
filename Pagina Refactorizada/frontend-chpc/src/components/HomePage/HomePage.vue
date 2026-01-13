@@ -52,7 +52,7 @@
             class="categoria-card"
             @click="filtrarPorCategoria(categoria.nombre)"
           >
-            <div class="categoria-icon">{{ categoria.icon }}</div>
+            <div class="categoria-icon" v-html="categoria.icon"></div>
             <h3>{{ categoria.nombre }}</h3>
             <p class="categoria-stats">{{ categoria.visitas }} visitas</p>
           </div>

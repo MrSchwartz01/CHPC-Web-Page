@@ -16,9 +16,9 @@
 }
 
 .section-title {
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: #2c3e50;
+  font-size: 28px;
+  font-weight: 400;
+  color: #162c42;
   margin-bottom: 6px;
   text-align: center;
 }
@@ -36,7 +36,6 @@
   padding: 8px 4px;
   cursor: pointer;
   transition: all 0.2s ease-out;
-  border: 1px solid #e3e6ef;
   position: relative;
   overflow: hidden;
   text-align: center;
@@ -60,7 +59,7 @@
 }
 
 .categoria-card:hover::before {
-  transform: scaleX(1);
+  transform: scaleX(1.5);
 }
 
 .categoria-card:hover {
@@ -70,8 +69,22 @@
 }
 
 .categoria-icon {
-  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-bottom: 4px;
+}
+
+.categoria-icon svg {
+  width: 2rem;
+  height: 2rem;
+  stroke: #667eea;
+  transition: stroke 0.3s ease, transform 0.3s ease;
+}
+
+.categoria-card:hover .categoria-icon svg {
+  stroke: #5568d3;
+  transform: scale(1.1);
 }
 
 .categoria-card h3 {

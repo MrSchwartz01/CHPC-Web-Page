@@ -20,9 +20,21 @@
               @blur="cerrarSugerencias"
               aria-label="Buscar productos"
             />
-            <button @click="buscarProductos" aria-label="Buscar">
-              <span class="search-icon">🔍</span>
-            </button>
+            <button @click="buscarProductos" aria-label="Buscar" class="btn-buscar">
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    class="search-icon" 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    stroke-width="2" 
+    stroke-linecap="round" 
+    stroke-linejoin="round"
+  >
+    <circle cx="11" cy="11" r="8"></circle>
+    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+  </svg>
+</button>
 
             <!-- Dropdown de sugerencias -->
             <div
@@ -49,7 +61,7 @@
           <!-- Acciones de usuario -->
           <div class="user-actions">
             <button class="carrito-button" @click="goToCarrito" title="Carrito de compras">
-              🛒
+              <svg xmlns="http://www.w3.org/2000/svg" class="carrito-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
               <span v-if="cantidadCarrito > 0" class="carrito-badge">{{ cantidadCarrito }}</span>
             </button>
             <template v-if="!isAuthenticated">
@@ -70,7 +82,7 @@
                 @click="goToPanelVendedores"
                 title="Panel de Pedidos"
               >
-                📊 Pedidos
+                Pedidos
               </button>
               <button 
                 v-if="isAdmin || isVendedor" 
@@ -78,7 +90,7 @@
                 @click="goToAdminPanel"
                 title="Panel de Administración"
               >
-                ⚙️ Panel Admin
+                Panel Admin
               </button>
               <button class="action-button" @click="cerrarSesion">Cerrar Sesión</button>
             </template>

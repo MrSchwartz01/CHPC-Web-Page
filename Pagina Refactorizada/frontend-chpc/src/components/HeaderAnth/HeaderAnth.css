@@ -48,6 +48,7 @@
   box-shadow: 0 0 0 2px rgba(255, 167, 38, 0.25);
 }
 
+
 .search-bar button {
   background: linear-gradient(90deg, #ffa726, #fb8c00);
   color: white;
@@ -63,8 +64,15 @@
 }
 
 .search-bar button:hover {
-  transform: scale(1.03);
+  transform: scale(1.15);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.search-bar button .search-icon {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+   /* Convierte el icono a blanco */
 }
 
 /* Sugerencias de autocompletado */
@@ -114,27 +122,41 @@
   }
   
   .carrito-button {
-    background-color: #3498db;
+    background: linear-gradient(135deg, #FF8000 0%, #FF6000 100%);
     color: white;
     border: none;
     padding: 7px 10px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 18px;
     position: relative;
     transition: background-color 0.3s ease, transform 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .carrito-button .carrito-icon {
+    width: 20px;
+    height: 20px;
+    stroke: white;
+    transition: transform 0.3s ease;
   }
   
   .carrito-button:hover {
-    background-color: #2980b9;
+    background-color: #fb8c00;
     transform: scale(1.05);
+  }
+
+  .carrito-button:hover .carrito-icon {
+    transform: scale(1.1);
   }
   
   .carrito-badge {
     position: absolute;
     top: -4px;
     right: -4px;
-    background-color: #e74c3c;
+    background-color: #ffa726;
     color: white;
     border-radius: 50%;
     width: 14px;
@@ -176,7 +198,7 @@
   }
 
   .pedidos-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #FF6000 0%, #fb8c00 100%);
     font-weight: 600;
     display: flex;
     align-items: center;
@@ -184,8 +206,8 @@
   }
 
   .pedidos-button:hover {
-    background: linear-gradient(135deg, #5568d3 0%, #6a3f8e 100%);
-    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #FF6000 0%, #fb8c00 100%);
+    box-shadow: 0 4px 12px rgba(255, 128, 0, 0.4);
     transform: translateY(-2px);
   }
 

@@ -10,7 +10,7 @@
     <div class="categorias-container">
       <!-- Sección de productos más vendidos -->
       <div class="top-products-section">
-        <h2>🏆 Productos Más Vendidos</h2>
+        <h2>Productos Más Vendidos</h2>
         <div class="top-products-grid">
           <div
             v-for="producto in topProductos"

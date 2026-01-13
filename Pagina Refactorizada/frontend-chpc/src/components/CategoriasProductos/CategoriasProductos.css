@@ -6,7 +6,7 @@
 
 /* Sección de productos más vendidos */
 .top-products-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ffa726 0%, #fb8c00 100%);
   padding: 40px;
   border-radius: 12px;
   margin-bottom: 50px;
@@ -16,15 +16,15 @@
 .top-products-section h2 {
   color: white;
   text-align: center;
-  font-size: 32px;
-  margin-bottom: 30px;
-  font-weight: 700;
+  font-size: 30px;
+  margin-bottom: 28px;
+  font-weight: 600;
 }
 
 .top-products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 28px;
   max-width: 1200px;
   margin: 0 auto;
 }
