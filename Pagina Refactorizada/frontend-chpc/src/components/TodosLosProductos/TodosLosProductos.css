@@ -123,6 +123,49 @@
   color: #333;
 }
 
+/* Estilos para categorías con iconos */
+.categoria-checkbox {
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.categoria-checkbox:hover {
+  background-color: #f5f5f5;
+}
+
+.categoria-label-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.categoria-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.categoria-icon {
+  width: 18px;
+  height: 18px;
+  stroke: #667eea;
+  stroke-width: 2;
+}
+
+.categoria-nombre {
+  flex: 1;
+  font-size: 0.9rem;
+}
+
+.categoria-checkbox input[type="checkbox"]:checked ~ .categoria-label-content .categoria-icon {
+  stroke: #5568d3;
+}
+
 .precio-inputs {
   display: flex;
   align-items: center;

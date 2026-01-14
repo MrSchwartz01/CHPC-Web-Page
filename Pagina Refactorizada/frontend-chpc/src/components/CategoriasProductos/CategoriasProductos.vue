@@ -43,7 +43,7 @@
             class="categoria-card"
             @click="irACategoria(categoria.slug)"
           >
-            <div class="categoria-icon">{{ categoria.icono }}</div>
+            <div class="categoria-icon" v-html="categoria.icono"></div>
             <h3>{{ categoria.nombre }}</h3>
             <p>{{ categoria.cantidad }} productos</p>
           </div>

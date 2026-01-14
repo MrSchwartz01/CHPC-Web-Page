@@ -39,6 +39,7 @@
               <p>{{ videoDescripcion }}</p>
             </div>
           </div>
+        
         </div>
       </section>
 

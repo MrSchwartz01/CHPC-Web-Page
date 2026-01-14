@@ -58,16 +58,19 @@
 
           <!-- Filtro por Subcategoría -->
           <div class="filtro-seccion">
-            <h3>Subcategoría</h3>
+            <h3>Categoría</h3>
             <div class="filtro-opciones">
-              <label v-for="subcategoria in subcategoriasDisponibles" :key="subcategoria" class="checkbox-label">
+              <label v-for="subcategoria in subcategoriasDisponibles" :key="subcategoria" class="checkbox-label categoria-checkbox">
                 <input
                   type="checkbox"
                   :value="subcategoria"
                   v-model="filtros.subcategorias"
                   @change="aplicarFiltros"
                 />
-                <span>{{ subcategoria }}</span>
+                <span class="categoria-label-content">
+                  <span v-html="obtenerIconoCategoria(subcategoria)" class="categoria-icon-wrapper"></span>
+                  <span class="categoria-nombre">{{ subcategoria }}</span>
+                </span>
               </label>
             </div>
           </div>

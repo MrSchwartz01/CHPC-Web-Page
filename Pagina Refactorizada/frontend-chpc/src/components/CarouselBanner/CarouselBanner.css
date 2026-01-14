@@ -1,14 +1,13 @@
 .carousel {
-    position: relative;
-    width: 100%; /* Ancho completo del contenedor */
-    height: 100%; /* Altura 100% para ajustarse al contenedor padre */
-    min-height: 400px; /* Altura mínima */
-    margin: 0; /* Sin márgenes */
-    overflow: hidden;
-    border-radius: 0; /* Sin bordes redondeados */
-    box-shadow: none; /* Sin sombra */
-    background: transparent;
-  }
+  position: relative;
+  width: 100%;
+  /* Eliminamos height: 100% y min-height fija para que sea fluido */
+  height: auto; 
+  aspect-ratio: 16 / 6; /* Define la proporción de tus banners (ej. 16:6 o 21:9) */
+  margin: 0;
+  overflow: hidden;
+  background: #f0f0f0; /* Color de fondo mientras carga */
+}
   
   .carousel:hover {
     box-shadow: none; /* Mantener sin sombra en hover */
@@ -34,9 +33,9 @@
   .banner-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Cubrir todo el espacio sin distorsionar */
+    object-fit: contain; /* Cubrir todo el espacio sin distorsionar */
     object-position: center; /* Centrar la imagen */
-    background-color: transparent; /* Fondo transparente */
+    background-color: #f0f0f0; /* Fondo transparente */
     opacity: 0;
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
   }
