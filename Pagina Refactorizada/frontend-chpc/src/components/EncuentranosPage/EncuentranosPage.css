@@ -12,7 +12,7 @@
   padding: 40px 20px;
   background: linear-gradient(135deg, #f28729 0%, #db7a13 100%);
   border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(52, 152, 219, 0.25);
+  box-shadow: 0 8px 24px rgba(186, 120, 45, 0.25);
   position: relative;
   overflow: hidden;
 }
@@ -85,7 +85,7 @@
 }
 
 .info-card h3 {
-  color: #2c3e50;
+  color: #644e39;
   font-size: 18px;
   font-weight: 700;
   margin: 0 0 10px 0;

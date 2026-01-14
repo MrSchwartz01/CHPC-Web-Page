@@ -44,7 +44,7 @@
 
 .search-bar input:focus {
   background-color: #ffffff;
-  border-color: #ffa726;
+  border-color: #FF6000 ;
   box-shadow: 0 0 0 2px rgba(255, 167, 38, 0.25);
 }
 

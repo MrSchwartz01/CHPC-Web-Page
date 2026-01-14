@@ -1,0 +1,103 @@
+/* Heredamos el estilo base del cuerpo para mantener consistencia */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', Arial, sans-serif;
+  color: #333333;
+  background-color: #f5f7fa;
+}
+
+.garantias-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Hero Section: Estilo llamativo similar al header de servicios */
+.hero-section {
+  background: linear-gradient(135deg, #FF6000 30%, #FF8000 70%);
+  color: #ffffff;
+  padding: 60px 20px;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.hero-title {
+  font-size: 42px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.9;
+  color: #333333;
+}
+
+/* Contenedor de las tarjetas de garantía */
+.content-container {
+  max-width: 1100px;
+  margin: 0 auto 60px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Estilo de Tarjeta (Basado en .service-container y .service-card) */
+.section-card {
+  background-color: #ffffff;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 5px solid #FF6000; /* Acento naranja como en los botones de encuesta */
+}
+
+.section-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 28px;
+  color: #34495e;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* Decoración para los títulos (Icon-wrapper vacío en tu HTML) */
+.icon-wrapper::before {
+  content: '🛡️'; /* Icono de escudo para garantías */
+  font-size: 30px;
+}
+
+.section-content p {
+  font-size: 16px;
+  color: #7f8c8d; /* Mismo color que .description en ServicioTecnico */
+  line-height: 1.8;
+  text-align: justify;
+  margin: 0;
+}
+
+.fabricante-section {
+  border-left-color: #FF6000; 
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 32px;
+  }
+  
+  .section-card {
+    padding: 25px;
+  }
+}

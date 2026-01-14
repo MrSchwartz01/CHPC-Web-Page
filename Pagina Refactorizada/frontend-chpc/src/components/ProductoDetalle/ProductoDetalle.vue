@@ -130,6 +130,32 @@
 
     <br>
     <br>
+
+    <!-- Productos Relacionados -->
+    <div v-if="producto && productosRelacionados && productosRelacionados.length > 0" class="productos-relacionados-container">
+      <div class="productos-relacionados-section">
+        <h3 class="titulo-relacionados">Productos Relacionados</h3>
+        <div class="productos-relacionados-grid">
+          <div 
+            v-for="productoRel in productosRelacionados" 
+            :key="productoRel.id"
+            class="producto-relacionado-card"
+            @click="verProducto(productoRel.id)"
+          >
+            <img 
+              :src="productoRel.imagen_url || '/Productos/placeholder-product.png'" 
+              :alt="productoRel.nombre_producto"
+              class="producto-relacionado-img"
+            />
+            <div class="producto-relacionado-info">
+              <h4 class="producto-relacionado-nombre">{{ productoRel.nombre_producto }}</h4>
+              <p class="producto-relacionado-precio">USD ${{ formatPrice(productoRel.precio) }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <br>
     <br>
   

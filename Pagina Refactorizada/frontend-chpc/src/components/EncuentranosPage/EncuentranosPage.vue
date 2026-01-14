@@ -9,8 +9,8 @@
 
     <div class="encuentranos-container">
       <div class="encuentranos-header">
-        <h1>📍 Encuéntranos</h1>
-        <p class="subtitle">Visítanos en nuestra ubicación</p>
+        <h1>Encuéntranos</h1>
+        <p class="subtitle">Visítanos en nuestra dirección</p>
       </div>
 
       <div class="content-wrapper">

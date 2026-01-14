@@ -15,6 +15,7 @@ export default {
     return {
       producto: null,
       imagenes: [],
+      productosRelacionados: [],
       errorMessage: "",
       isLoading: true,
       isAuthenticated: false,
@@ -72,12 +73,44 @@ export default {
         if (this.$store) {
           this.$store.dispatch('registrarProductoVisto', this.producto);
         }
+
+        // Cargar productos relacionados de la misma categoría
+        await this.cargarProductosRelacionados();
       } catch (error) {
         console.error('Error al cargar producto:', error);
         this.errorMessage =
           error.response?.data?.message || "Hubo un problema al cargar el producto.";
       } finally {
         this.isLoading = false;
+      }
+    },
+    async cargarProductosRelacionados() {
+      if (!this.producto || !this.producto.categoria) {
+        console.log('No se puede cargar productos relacionados: producto o categoría no disponible');
+        return;
+      }
+
+      try {
+        console.log('Cargando productos relacionados de categoría:', this.producto.categoria);
+        
+        const response = await axios.get(`${API_BASE_URL}/tienda/productos`, {
+          params: {
+            categoria: this.producto.categoria,
+          }
+        });
+        
+        console.log('Productos obtenidos:', response.data.length);
+        
+        // Filtrar el producto actual y limitar a 3
+        this.productosRelacionados = response.data
+          .filter(p => p.id !== this.producto.id)
+          .slice(0, 3);
+          
+        console.log('Productos relacionados filtrados:', this.productosRelacionados.length);
+          
+      } catch (error) {
+        console.error('Error al cargar productos relacionados:', error);
+        this.productosRelacionados = [];
       }
     },
     recargarProducto() {
@@ -140,6 +173,12 @@ export default {
     cerrarZoom() {
       this.zoomActivo = false;
       document.body.style.overflow = ''; // Restaurar scroll
+    },
+    verProducto(productoId) {
+      this.$router.push({
+        name: 'ProductoDetalle',
+        params: { id: productoId }
+      });
     },
   },
   async created() {

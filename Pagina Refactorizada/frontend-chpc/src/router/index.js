@@ -22,6 +22,7 @@ import OlvidePassword from '../components/OlvidePassword.vue';
 import RestablecerPassword from '../components/RestablecerPassword.vue';
 import EncuentranosPage from '../components/EncuentranosPage/EncuentranosPage.vue';
 import MisionVision from '../components/MisionVision/MisionVision.vue';
+import Garantias from '../components/Garantias/Garantias.vue';
 
 
 const routes = [
@@ -190,6 +191,11 @@ const routes = [
     path: '/encuentranos',
     name: 'EncuentranosPage',
     component: EncuentranosPage
+  },
+  {
+    path: '/garantias',
+    name: 'Garantias',
+    component: Garantias
   },
   {
     path: '/admin/panel',
