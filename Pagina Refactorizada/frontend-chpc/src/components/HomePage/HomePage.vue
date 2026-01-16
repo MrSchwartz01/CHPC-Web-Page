@@ -7,9 +7,6 @@
       @buscar="buscarProductos"
       @cerrar-sesion="cerrarSesion"
     />
-
-
-
     <!-- Contenido principal -->
     <div class="home-container">
 
@@ -20,10 +17,8 @@
           <div class="banner-container">
             <CarouselBanner :banners="banners" />
           </div>
-
           <!-- Contenedor de Video Destacado -->
           <div class="video-featured-container">
-            <h3 class="video-title">🎥 Video Destacado</h3>
             <div class="video-wrapper">
               <!-- Puedes cambiar este iframe por el video que desees -->
               <iframe
@@ -35,14 +30,11 @@
               ></iframe>
             </div>
             <div class="video-info">
-              <h4>{{ videoTitulo }}</h4>
-              <p>{{ videoDescripcion }}</p>
             </div>
           </div>
         
         </div>
       </section>
-
       <!-- Categorías más visitadas -->
       <section class="categorias-section">
         <h2 class="section-title">Categorías más visitadas</h2>
@@ -59,7 +51,6 @@
           </div>
         </div>
       </section>
-
       <!-- Filtros de precio -->
       <div class="price-filters">
         <span>Filtrar por precio:</span>
@@ -88,7 +79,6 @@
           Desde $400
         </button>
       </div>
-
     <!-- Lista de Productos -->
 <div class="product-grid">
   <div
@@ -101,7 +91,6 @@
     <div v-if="producto.tienePromocion" class="promo-badge">
       -{{ producto.promocion.porcentaje }}%
     </div>
-
     <!-- Contenedor de imagen -->
     <div class="product-image-wrapper">
       <img
@@ -109,11 +98,9 @@
         :alt="producto.nombre_producto"
       />
     </div>
-
     <!-- Información del producto -->
     <div class="product-info">
       <h3 class="product-title">{{ producto.nombre_producto }}</h3>
-      
       <!-- Precio -->
       <div v-if="isAuthenticated" class="product-price">
         <div v-if="producto.tienePromocion">
@@ -127,7 +114,6 @@
       <div v-else class="product-price">
         <span class="price-login">Inicia sesión para ver el precio</span>
       </div>
-
       <!-- Botón agregar al carrito -->
       <button 
         v-if="isAuthenticated"
@@ -148,8 +134,6 @@
     </div>
   </div>
 </div>
-
-
       <!-- Botón para cargar más productos -->
       <button
         v-if="productosMostrados.length < productos.length && searchQuery.trim() === ''"
@@ -158,21 +142,16 @@
       >
         Cargar más productos
       </button>
-
       <!-- Mensaje de No Resultados -->
       <div v-if="productosMostrados.length === 0 && searchQuery.trim() !== ''">
         <p>No se encontraron productos que coincidan con "{{ searchQuery }}".</p>
       </div>
-
       <!-- Historial de productos vistos recientemente -->
       <HistorialProductosVistos />
     </div>
-
     <!-- Pie de página -->
     <FooterAnth />
-
     <!-- Mapa de ubicación -->
-   
   </div>
 </template>
 

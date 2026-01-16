@@ -145,14 +145,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   flex-shrink: 0;
 }
 
 .categoria-icon {
-  width: 18px;
-  height: 18px;
+  width: 32px;
+  height: 32px;
   stroke: #667eea;
   stroke-width: 2;
 }

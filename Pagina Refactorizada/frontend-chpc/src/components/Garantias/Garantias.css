@@ -74,7 +74,7 @@ body {
 }
 
 /* Decoración para los títulos (Icon-wrapper vacío en tu HTML) */
-.icon-wrapper::before {
+.garantias-cphc-page .icon-wrapper::before {
   content: '🛡️'; /* Icono de escudo para garantías */
   font-size: 30px;
 }

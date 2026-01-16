@@ -17,7 +17,6 @@
         <div class="info-section">
           <div class="info-card">
             <div class="icon-wrapper">
-              <span class="icon">🏢</span>
             </div>
             <h3>Dirección</h3>
             <p>{{ direccion }}</p>

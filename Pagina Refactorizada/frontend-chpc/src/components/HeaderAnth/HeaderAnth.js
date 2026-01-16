@@ -20,7 +20,6 @@ export default {
         isVisible: false, // Control de visibilidad para animación
         showProductsMenu: false, // Control del menú desplegable de productos
         showMarcasMenu: false, // Control del menú desplegable de marcas
-        marcasMenuTimeout: null, // Timeout para el menú de marcas
         cantidadCarrito: 0, // Cantidad de productos en el carrito
         sugerencias: [],
         mostrandoSugerencias: false,
@@ -144,18 +143,6 @@ export default {
       },
       goToMarcas() {
         this.$router.push("/marcas");
-      },
-      mostrarMenuMarcas() {
-        if (this.marcasMenuTimeout) {
-          clearTimeout(this.marcasMenuTimeout);
-          this.marcasMenuTimeout = null;
-        }
-        this.showMarcasMenu = true;
-      },
-      ocultarMenuMarcas() {
-        this.marcasMenuTimeout = setTimeout(() => {
-          this.showMarcasMenu = false;
-        }, 200);
       },
       async cargarMarcas() {
         try {

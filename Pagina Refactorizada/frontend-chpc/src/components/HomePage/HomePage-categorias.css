@@ -76,14 +76,14 @@
 }
 
 .categoria-icon svg {
-  width: 2rem;
-  height: 2rem;
-  stroke: #667eea;
+  width: 3.2rem;
+  height: 3.2rem;
+  stroke: #e67e22;
   transition: stroke 0.3s ease, transform 0.3s ease;
 }
 
 .categoria-card:hover .categoria-icon svg {
-  stroke: #5568d3;
+  stroke: #d35400;
   transform: scale(1.1);
 }
 

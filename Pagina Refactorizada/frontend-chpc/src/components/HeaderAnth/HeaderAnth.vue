@@ -127,17 +127,13 @@
             <li><a href="/promociones">Promociones</a></li>
             <li 
               class="dropdown-menu"
-              @mouseenter="mostrarMenuMarcas"
-              @mouseleave="ocultarMenuMarcas"
+              @mouseenter="showMarcasMenu = true"
+              @mouseleave="showMarcasMenu = false"
+              @dblclick="goToMarcas"
             >
-              <a href="#" @click.prevent="goToMarcas">Marcas</a>
+              <a href="#" @click.prevent>Marcas</a>
               <transition name="dropdown-fade">
-                <ul 
-                  v-if="showMarcasMenu" 
-                  class="dropdown-content"
-                  @mouseenter="mostrarMenuMarcas"
-                  @mouseleave="ocultarMenuMarcas"
-                >
+                <ul v-if="showMarcasMenu" class="dropdown-content">
                   <li class="ver-todos-item"><a href="/marcas"><strong>🏪 Ver Todas las Marcas</strong></a></li>
                   <li class="divider"></li>
                   <li v-if="marcasDisponibles.length === 0" style="padding: 10px 20px; color: #999; font-size: 14px;">
@@ -145,7 +141,6 @@
                   </li>
                   <li v-for="marca in marcasDisponibles" :key="marca" class="marca-item">
                     <a :href="`/productos/marca/${marca}`">
-                      <span class="marca-icon">🏷️</span>
                       <span class="marca-nombre">{{ marca }}</span>
                     </a>
                   </li>

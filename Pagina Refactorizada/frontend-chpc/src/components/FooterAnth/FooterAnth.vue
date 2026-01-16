@@ -45,8 +45,6 @@
         <li><a href="/mision-vision">Misión y Visión</a></li>
         <li><a href="/encuentranos">Encuéntranos</a></li>
         <li><a href="/marcas">Marcas</a></li>
-        <li><a href="/blog">Blog</a></li>
-        <li><a href="/empleo">Empleo</a></li>
       </ul>
       </div>
     </div>
