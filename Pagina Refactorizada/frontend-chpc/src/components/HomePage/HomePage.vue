@@ -26,7 +26,7 @@
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen
-                title="Video destacado del producto"
+                title="Video destacado"
               ></iframe>
             </div>
             <div class="video-info">
