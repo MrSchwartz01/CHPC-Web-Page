@@ -23,6 +23,7 @@ body {
 }
 
 .hero-title {
+  color:#ffffff;
   font-size: 42px;
   margin-bottom: 15px;
   font-weight: bold;
@@ -36,7 +37,7 @@ body {
   margin: 0 auto;
   line-height: 1.6;
   opacity: 0.9;
-  color: #333333;
+  color: #000000;
 }
 
 /* Contenedor de las tarjetas de garantía */
@@ -66,7 +67,7 @@ body {
 
 .section-title {
   font-size: 28px;
-  color: #34495e;
+  color: #000000;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
