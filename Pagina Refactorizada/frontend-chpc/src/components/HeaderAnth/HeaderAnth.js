@@ -27,6 +27,7 @@ export default {
         _sugerenciasTimeout: null,
         isAdmin: false,
         isVendedor: false,
+        isTecnico: false,
         marcasDisponibles: [],
       };
     },
@@ -141,6 +142,9 @@ export default {
       goToPanelVendedores() {
         this.$router.push("/panel-vendedores");
       },
+      goToPanelTecnicos() {
+        this.$router.push("/panel-tecnicos");
+      },
       goToMarcas() {
         this.$router.push("/marcas");
       },
@@ -191,6 +195,7 @@ export default {
         const role = localStorage.getItem('user_rol');
         this.isAdmin = role === 'administrador';
         this.isVendedor = role === 'vendedor';
+        this.isTecnico = role === 'tecnico';
       },
       actualizarCantidadCarrito() {
         const carrito = localStorage.getItem("carrito");

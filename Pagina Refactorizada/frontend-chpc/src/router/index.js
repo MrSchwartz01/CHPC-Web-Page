@@ -238,6 +238,20 @@ const routes = [
         next('/login');
       }
     }
+  },
+  {
+    path: '/panel-tecnicos',
+    name: 'PanelTecnicos',
+    component: () => import(/* webpackChunkName: "panel-tecnicos" */ '../components/PanelTecnicos/PanelTecnicos.vue'),
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem('access_token');
+      const role = localStorage.getItem('user_rol');
+      if (token && (role === 'administrador' || role === 'tecnico')) {
+        next();
+      } else {
+        next('/login');
+      }
+    }
   }
 
 

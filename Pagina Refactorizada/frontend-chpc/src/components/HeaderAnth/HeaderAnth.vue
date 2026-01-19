@@ -85,6 +85,14 @@
                 Pedidos
               </button>
               <button 
+                v-if="isAdmin || isTecnico" 
+                class="action-button tecnicos-button" 
+                @click="goToPanelTecnicos"
+                title="Panel de Técnicos"
+              >
+                Técnicos
+              </button>
+              <button 
                 v-if="isAdmin || isVendedor" 
                 class="action-button admin-button" 
                 @click="goToAdminPanel"
