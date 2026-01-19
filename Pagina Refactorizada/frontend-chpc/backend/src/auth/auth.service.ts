@@ -95,7 +95,9 @@ export class AuthService {
       throw new UnauthorizedException('Credenciales inválidas');
     }
 
-    // Verificar si el usuario está bloqueado
+    // SISTEMA DE BLOQUEO DESACTIVADO
+    // Si deseas reactivarlo, descomenta las siguientes líneas:
+    /*
     const isBlocked = await this.usersService.isUserBlocked(user.id);
     if (isBlocked && user.bloqueado_hasta) {
       const minutosRestantes = Math.ceil(
@@ -105,6 +107,7 @@ export class AuthService {
         `Usuario bloqueado temporalmente. Intente nuevamente en ${minutosRestantes} minutos`,
       );
     }
+    */
 
     // Verificar contraseña
     const isPasswordValid = await bcrypt.compare(
@@ -113,7 +116,9 @@ export class AuthService {
     );
 
     if (!isPasswordValid) {
-      // Incrementar intentos fallidos
+      // SISTEMA DE BLOQUEO DESACTIVADO - No incrementa intentos fallidos
+      // Si deseas reactivarlo, descomenta las siguientes líneas:
+      /*
       await this.usersService.incrementFailedAttempts(user.id);
 
       const attemptsLeft = 5 - (user.intentos_fallidos + 1);
@@ -126,9 +131,13 @@ export class AuthService {
           'Cuenta bloqueada por 15 minutos debido a múltiples intentos fallidos',
         );
       }
+      */
+      
+      // Simplemente retorna error de credenciales inválidas
+      throw new UnauthorizedException('Credenciales inválidas');
     }
 
-    // Resetear intentos fallidos
+    // Resetear intentos fallidos en caso de login exitoso
     await this.usersService.resetFailedAttempts(user.id);
 
     // Actualizar último acceso
@@ -432,10 +441,14 @@ export class AuthService {
     // Hashear nueva contraseña
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // Actualizar contraseña del usuario
+    // Actualizar contraseña del usuario Y limpiar bloqueo
     await this.prisma.user.update({
       where: { id: validToken.usuario_id },
-      data: { password: hashedPassword },
+      data: { 
+        password: hashedPassword,
+        intentos_fallidos: 0,
+        bloqueado_hasta: null,
+      },
     });
 
     // Marcar token como usado

@@ -154,6 +154,7 @@
             <li><a href="/mision-vision">Misión y Visión</a></li>
           </ul>
         </nav>
+
       </header>
     </transition>
   </template>

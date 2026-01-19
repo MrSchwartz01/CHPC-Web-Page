@@ -1,0 +1,49 @@
+.panel-tecnicos {
+  padding: 2rem;
+  background-color: #f4f7f6;
+  min-height: 100vh;
+}
+
+.ordenes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.orden-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  border-top: 4px solid #ddd;
+}
+
+/* Colores por estado */
+.orden-card.en_espera { border-top-color: #f1c40f; }
+.orden-card.en_revision { border-top-color: #3498db; }
+.orden-card.entregado { border-top-color: #2ecc71; }
+.orden-card.baja { border-top-color: #e74c3c; }
+
+.info-equipo {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 8px;
+  margin: 10px 0;
+  font-size: 0.9rem;
+}
+
+.falla {
+  color: #c0392b;
+  font-style: italic;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.badge-en_espera { background: #fff3cd; color: #856404; }
+.badge-en_revision { background: #d1ecf1; color: #0c5460; }
