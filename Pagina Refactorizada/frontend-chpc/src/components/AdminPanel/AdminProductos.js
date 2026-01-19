@@ -39,6 +39,7 @@ export default {
         sku: '',
         especificaciones: '',
         garantia: '',
+        imagen_url: '/placeholder.jpg', // Imagen por defecto
         destacado: false,
         activo: true,
       };

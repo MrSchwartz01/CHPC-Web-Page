@@ -30,18 +30,54 @@
   <!-- Detalles del producto -->
   <div
     v-if="producto && !isLoading && !errorMessage && isAuthenticated"
-    class="producto-contenedor"
+    class="producto-detalles"
   >
     <div class="detalle-contenedor">
       <!-- Imagen del producto (Izquierda) -->
       <div class="imagen-producto-wrapper">
-        <img
-          :src="imagenPrincipal"
-          :alt="producto.nombre_producto"
-          class="imagen-producto-principal"
-          @click="abrirZoom"
-          style="cursor: zoom-in;"
-        />
+        <!-- Carousel de imágenes -->
+        <div class="carousel-container">
+          <img
+            :src="imagenPrincipal"
+            :alt="producto.nombre_producto"
+            class="imagen-producto-principal"
+            @click="abrirZoom"
+            style="cursor: zoom-in;"
+          />
+          
+          <!-- Botones de navegación (solo si hay más de 1 imagen) -->
+          <div v-if="imagenes.length > 1" class="carousel-controls">
+            <button @click="imagenAnterior" class="carousel-btn prev-btn" aria-label="Imagen anterior">
+              &#8249;
+            </button>
+            <button @click="siguienteImagen" class="carousel-btn next-btn" aria-label="Siguiente imagen">
+              &#8250;
+            </button>
+          </div>
+
+          <!-- Indicadores de posición -->
+          <div v-if="imagenes.length > 1" class="carousel-indicators">
+            <span 
+              v-for="(img, index) in imagenes" 
+              :key="index"
+              :class="['indicator', { active: index === currentImageIndex }]"
+              @click="seleccionarImagen(index)"
+            ></span>
+          </div>
+        </div>
+
+        <!-- Miniaturas de imágenes -->
+        <div v-if="imagenes.length > 1" class="imagenes-thumbnails">
+          <div 
+            v-for="(img, index) in imagenes" 
+            :key="index"
+            :class="['thumbnail', { active: index === currentImageIndex }]"
+            @click="seleccionarImagen(index)"
+          >
+            <img :src="img.ruta_imagen" :alt="`Vista ${index + 1}`" />
+          </div>
+        </div>
+
         <p class="zoom-hint">Clic para ampliar</p>
       </div>
 

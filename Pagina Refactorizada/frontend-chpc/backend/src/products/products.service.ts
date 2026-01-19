@@ -32,8 +32,14 @@ export class ProductsService {
   }
 
   async create(createProductDto: CreateProductDto): Promise<Product> {
+    // Si no se proporciona imagen_url, usar una por defecto
+    const data = {
+      ...createProductDto,
+      imagen_url: createProductDto.imagen_url || '/Productos/placeholder-product.png'
+    };
+    
     return this.prisma.product.create({
-      data: createProductDto,
+      data,
     });
   }
 

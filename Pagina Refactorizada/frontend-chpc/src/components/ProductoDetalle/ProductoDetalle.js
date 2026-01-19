@@ -21,16 +21,15 @@ export default {
       isAuthenticated: false,
       searchQuery: "",
       zoomActivo: false,
+      currentImageIndex: 0,
+      carouselInterval: null,
     };
   },
   computed: {
     imagenPrincipal() {
       if (this.imagenes && this.imagenes.length > 0) {
-        // Buscar imagen marcada como principal
-        const principal = this.imagenes.find(img => img.es_principal);
-        if (principal) return principal.ruta_imagen;
-        // Si no hay principal, usar la primera
-        return this.imagenes[0].ruta_imagen;
+        // Usar el índice actual del carousel
+        return this.imagenes[this.currentImageIndex].ruta_imagen;
       }
       return '/Productos/placeholder-product.png';
     },
@@ -174,6 +173,34 @@ export default {
       this.zoomActivo = false;
       document.body.style.overflow = ''; // Restaurar scroll
     },
+    // Métodos del carousel
+    siguienteImagen() {
+      if (this.imagenes.length > 1) {
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.imagenes.length;
+      }
+    },
+    imagenAnterior() {
+      if (this.imagenes.length > 1) {
+        this.currentImageIndex = (this.currentImageIndex - 1 + this.imagenes.length) % this.imagenes.length;
+      }
+    },
+    seleccionarImagen(index) {
+      this.currentImageIndex = index;
+      this.detenerAutoplay();
+    },
+    iniciarAutoplay() {
+      if (this.imagenes.length > 1) {
+        this.carouselInterval = setInterval(() => {
+          this.siguienteImagen();
+        }, 4000); // Cambiar cada 4 segundos
+      }
+    },
+    detenerAutoplay() {
+      if (this.carouselInterval) {
+        clearInterval(this.carouselInterval);
+        this.carouselInterval = null;
+      }
+    },
     verProducto(productoId) {
       this.$router.push({
         name: 'ProductoDetalle',
@@ -183,19 +210,40 @@ export default {
   },
   async created() {
     this.isAuthenticated = !!localStorage.getItem("access_token");
-    await this.cargarProducto();
+    // El watch de $route.params.id se encargará de cargar el producto
+    // con immediate: true
   },
   mounted() {
     // Scroll hacia arriba al cargar el componente
     window.scrollTo(0, 0);
+    // El watch y el método cargarProducto se encargan del autoplay
+  },
+  beforeUnmount() {
+    // Limpiar el intervalo cuando se destruya el componente
+    this.detenerAutoplay();
   },
   watch: {
     '$route.params.id': {
-      immediate: false,
+      immediate: true,
       handler() {
         // Scroll hacia arriba cuando cambia el producto
         window.scrollTo(0, 0);
+        this.currentImageIndex = 0;
+        this.imagenes = [];
+        this.productosRelacionados = [];
+        this.detenerAutoplay();
         this.cargarProducto();
+      }
+    },
+    imagenes: {
+      handler(newImagenes) {
+        // Reiniciar autoplay cuando se carguen las imágenes
+        if (newImagenes && newImagenes.length > 0) {
+          this.detenerAutoplay();
+          this.iniciarAutoplay();
+        } else {
+          this.detenerAutoplay();
+        }
       }
     }
   }

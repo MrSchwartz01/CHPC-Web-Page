@@ -12,6 +12,7 @@ export default {
       isAuthenticated: false,
       isModalVisible: false,
       modalImage: "",
+      modalType: "image", // 'image' o 'video'
       isSurveyVisible: false,
       surveySubmitted: false,
       survey: {
@@ -28,11 +29,19 @@ export default {
     showImageModal(imageUrl) {
       console.log("Image URL:", imageUrl);
       this.modalImage = imageUrl;
+      this.modalType = "image";
+      this.isModalVisible = true;
+    },
+    showVideoModal(videoUrl) {
+      console.log("Video URL:", videoUrl);
+      this.modalImage = videoUrl;
+      this.modalType = "video";
       this.isModalVisible = true;
     },
     hideImageModal() {
       this.isModalVisible = false;
       this.modalImage = "";
+      this.modalType = "image";
     },
     showSurvey() {
       this.isSurveyVisible = true;

@@ -16,7 +16,8 @@ export class CreateProductDto {
   stock: number;
 
   @IsString()
-  imagen_url: string;
+  @IsOptional()
+  imagen_url?: string;
 
   @IsString()
   @IsOptional()

@@ -1,104 +1,90 @@
-/* Heredamos el estilo base del cuerpo para mantener consistencia */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Roboto', Arial, sans-serif;
-  color: #333333;
-  background-color: #f5f7fa;
+/* Garantias.css - Estilo Minimalista Editorial */
+
+.garantias-cphc-page {
+  background-color: #ffffff;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
 }
 
-.garantias-page {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-/* Hero Section: Estilo llamativo similar al header de servicios */
+/* Hero Section: Limpio y con aire */
 .hero-section {
-  background: linear-gradient(135deg, #FF6000 30%, #FF8000 70%);
-  color: #ffffff;
-  padding: 60px 20px;
+  background-color: #fdfdfd; /* Casi blanco */
+  padding: 100px 20px 60px 20px;
   text-align: center;
-  margin-bottom: 40px;
+  border-bottom: 1px solid #f0f0f0;
 }
 
 .hero-title {
-  color:#ffffff;
-  font-size: 42px;
+  color: #1a1a1a !important;
+  font-size: 52px !important;
+  font-weight: 800;
+  letter-spacing: -1.5px;
+  text-transform: none !important; /* Quitamos mayúsculas forzadas */
   margin-bottom: 15px;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
 }
 
 .hero-subtitle {
-  font-size: 18px;
-  max-width: 800px;
+  font-size: 20px;
+  color: #666 !important;
+  max-width: 650px;
   margin: 0 auto;
   line-height: 1.6;
-  opacity: 0.9;
-  color: #000000;
+  opacity: 1;
 }
 
-/* Contenedor de las tarjetas de garantía */
+/* Contenedor de lectura optimizada */
 .content-container {
-  max-width: 1100px;
-  margin: 0 auto 60px auto;
-  padding: 0 20px;
+  max-width: 850px; /* Ancho de lectura ideal */
+  margin: 0 auto;
+  padding: 60px 20px;
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 0; /* Quitamos el gap para usar bordes divisores */
 }
 
-/* Estilo de Tarjeta (Basado en .service-container y .service-card) */
+/* Secciones Informativas (Sin bordes ni sombras) */
 .section-card {
-  background-color: #ffffff;
-  border-radius: 15px;
-  padding: 40px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-left: 5px solid #FF6000; /* Acento naranja como en los botones de encuesta */
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  padding: 50px 0 !important;
+  box-shadow: none !important; /* Eliminamos sombras */
+  transition: none;
+  border-left: none !important; /* Eliminamos el borde naranja grueso */
+  border-bottom: 1px solid #eee; /* Divisor sutil entre temas */
+}
+
+.section-card:last-child {
+  border-bottom: none;
 }
 
 .section-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  transform: none !important; /* Sin movimiento al pasar el mouse */
 }
 
 .section-title {
   font-size: 28px;
-  color: #000000;
-  margin-bottom: 20px;
+  color: #FF8000; /* Color corporativo solo en títulos */
+  margin-bottom: 25px;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 15px;
-}
-
-/* Decoración para los títulos (Icon-wrapper vacío en tu HTML) */
-.garantias-cphc-page .icon-wrapper::before {
-  content: '🛡️'; /* Icono de escudo para garantías */
-  font-size: 30px;
 }
 
 .section-content p {
-  font-size: 16px;
-  color: #7f8c8d; /* Mismo color que .description en ServicioTecnico */
+  font-size: 18px;
+  color: #444;
   line-height: 1.8;
-  text-align: justify;
-  margin: 0;
+  text-align: left; /* Lectura formal */
+  margin-bottom: 15px;
 }
 
-.fabricante-section {
-  border-left-color: #FF6000; 
+/* Ocultar elementos innecesarios */
+.icon-wrapper {
+  display: none;
 }
 
-/* Responsividad */
 @media (max-width: 768px) {
   .hero-title {
-    font-size: 32px;
-  }
-  
-  .section-card {
-    padding: 25px;
+    font-size: 36px !important;
   }
 }

@@ -25,8 +25,7 @@ export default {
       selectedPriceRange: "", // '', 'low', 'mid', 'high'
       
       // Video destacado - PERSONALIZA ESTOS DATOS
-      videoDestacado: "https://www.youtube.com/embed/r-DF3-FS_6k?si=DW930ua3fe_K9GjD_&&autoplay=1&&mute=1", // Video con autoplay
-      // n autoplay
+      videoDestacado: "https://www.youtube.com/embed/r-DF3-FS_6k?si=DW930ua3fe_K9GjD&autoplay=1&mute=1&loop=1&playlist=r-DF3-FS_6k", // Video con autoplay y loop
 
 
       

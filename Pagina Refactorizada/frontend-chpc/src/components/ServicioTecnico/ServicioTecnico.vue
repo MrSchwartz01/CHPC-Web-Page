@@ -6,27 +6,43 @@
       />
   
       <div class="service-container">
-        <h1 class="main-title">Servicio Técnico Especializados</h1>
+        <h1 class="main-title">Servicio Técnico Especializado</h1>
         <p class="description">
           Descubre los servicios que ofrecemos para garantizar el funcionamiento óptimo de tus equipos.
         </p>
   
         <div class="services-grid">
-          <div class="service-card" @click="showImageModal(require('@/images/serviciotecnico/reparacion.jpg'))">
-            <img src="@/images/serviciotecnico/reparacion.jpg" alt="Reparación de laptops" class="service-image" />
+          <!-- Ejemplo con VIDEO LOCAL -->
+          <div class="service-card" @click="showVideoModal('/Videos/video prueba ensamblaje.mp4')">
+            <video class="service-image" autoplay muted loop playsinline>
+              <source src="/Videos/video prueba ensamblaje.mp4" type="video/mp4">
+              Tu navegador no soporta el elemento de video.
+            </video>
+            <h3>Ensamblaje</h3>
+            <p>Montaje, instalación y configuración de equipos segun tus necesidades para proteger tu inversión.</p>
+          </div>
+
+          <!-- Ejemplo con VIDEO -->
+          <div class="service-card" @click="showImageModal('https://fundacioncarlosslim.org/wp-content/uploads/2020/06/curso-reparacion-laptops-1.jpg')">
+            <img src="https://fundacioncarlosslim.org/wp-content/uploads/2020/06/curso-reparacion-laptops-1.jpg" class="service-image" alt="Reparación de laptops"/>
             <h3>Reparación de laptops</h3>
             <p>Solución de problemas de hardware y software para equipos de todas las marcas.</p>
           </div>
+
+          <!-- Ejemplo con IMAGEN -->
           <div class="service-card" @click="showImageModal('https://mediaserver.goepson.com/ImConvServlet/imconv/dd177c7dba57e75ff8038d0cbce730e8f7cf55f1/1200Wx1200H?use=banner&hybrisId=B2C&assetDescr=EcoTank-L3250-690x460-6')">
             <img src="https://mediaserver.goepson.com/ImConvServlet/imconv/dd177c7dba57e75ff8038d0cbce730e8f7cf55f1/1200Wx1200H?use=banner&hybrisId=B2C&assetDescr=EcoTank-L3250-690x460-6" alt="Mantenimiento de impresoras" class="service-image" />
             <h3>Mantenimiento de impresoras</h3>
             <p>Servicios de limpieza y reparación para impresoras láser y de inyección de tinta.</p>
           </div>
-          <div class="service-card" @click="showImageModal('https://cdn.shopify.com/s/files/1/0573/7909/4617/files/65.jpg?v=1736381744')">
-            <img src="https://cdn.shopify.com/s/files/1/0573/7909/4617/files/65.jpg?v=1736381744" alt="Reemplazo de pantallas" class="service-image" />
+
+          <!-- Ejemplo con VIDEO -->
+          <div class="service-card" @click="showVideoModal('https://ekipos.com/inventarios-img/201202-120233_eee.jpg')">
+            <img src="https://ekipos.com/inventarios-img/201202-120233_eee.jpg" alt="cambio" class="service-image"/>
             <h3>Reemplazo de pantallas</h3>
             <p>Cambio de pantallas y bisagras dañadas en laptops y equipos All-in-One.</p>
           </div>
+
           <div class="service-card" @click="showImageModal('https://geekflare.com/es/wp-content/uploads/sites/24/2020/05/best-pc-optimizers.jpg')">
             <img src="https://geekflare.com/es/wp-content/uploads/sites/24/2020/05/best-pc-optimizers.jpg" alt="Optimización de PC" class="service-image" />
             <h3>Optimización de PC</h3>
@@ -37,16 +53,16 @@
             <h3>Recuperación de datos</h3>
             <p>Recuperamos información perdida de discos duros, SSDs y dispositivos externos.</p>
           </div>
-          <div class="service-card" @click="showImageModal('https://www.educativo.net/xframework/files/entities/articulos/303/img.jpg')">
-            <img src="https://www.educativo.net/xframework/files/entities/articulos/303/img.jpg" alt="Ensamblaje" class="service-image" />
-            <h3>Ensamblaje</h3>
-            <p>Montaje, instalación y configuración de equipos segun tus necesidades para proteger tu inversión.</p>
-          </div>
         </div>
-  
+
         <div v-if="isModalVisible" class="modal-overlay" @click="hideImageModal">
           <div class="modal-content" @click.stop>
-            <img :src="modalImage" alt="Imagen ampliada" class="modal-image" />
+            <!-- Mostrar imagen o video según el tipo -->
+            <img v-if="modalType === 'image'" :src="modalImage" alt="Imagen ampliada" class="modal-image" />
+            <video v-else-if="modalType === 'video'" class="modal-image" controls autoplay loop>
+              <source :src="modalImage" type="video/mp4">
+              Tu navegador no soporta el elemento de video.
+            </video>
             <button class="close-button" @click="hideImageModal">&times;</button>
           </div>
         </div>
@@ -91,7 +107,7 @@
 
             <!-- Pregunta 2: Tiempo de respuesta -->
             <div class="survey-question">
-              <label class="question-label">¿Qué te pareció el tiempo de respuesta y atención?</label>
+              <label class="question-label">¿Esta satisfecho con la atención recibida?</label>
               <div class="radio-group">
                 <label class="radio-option">
                   <input type="radio" v-model="survey.response" value="excelente" />
