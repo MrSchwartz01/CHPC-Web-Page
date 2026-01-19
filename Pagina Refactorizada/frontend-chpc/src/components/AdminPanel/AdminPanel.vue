@@ -796,7 +796,7 @@ export default {
 
     async loadProductos() {
       try {
-        const response = await axios.get(`${API_BASE_URL}/productos`);
+        const response = await axios.get(`${API_BASE_URL}/tienda/productos`);
         this.productos = response.data;
       } catch (error) {
         console.error('Error al cargar productos:', error);
