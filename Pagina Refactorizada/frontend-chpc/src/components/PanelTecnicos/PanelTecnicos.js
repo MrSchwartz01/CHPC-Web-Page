@@ -13,10 +13,24 @@ export default {
       usuarioNombre: '',
       esAdmin: false,
       intervalo: null,
+      // Nuevas propiedades para el formulario
+      mostrarFormulario: false,
+      nuevaOrden: {
+        cliente_nombre: '',
+        cliente_telefono: '',
+        equipo_modelo: '',
+        falla_reportada: '',
+        estado: 'EN_ESPERA'
+      },
     };
   },
   computed: {
     ordenesFiltradas() {
+      // Asegurarse de que ordenes sea un array antes de filtrar
+      if (!Array.isArray(this.ordenes)) {
+        return [];
+      }
+      
       let resultado = [...this.ordenes];
 
       // Filtrar por estado
@@ -34,6 +48,16 @@ export default {
       return resultado;
     },
     estadisticas() {
+      // Asegurarse de que ordenes sea un array antes de filtrar
+      if (!Array.isArray(this.ordenes)) {
+        return {
+          enEspera: 0,
+          enRevision: 0,
+          reparados: 0,
+          misEquipos: 0,
+        };
+      }
+      
       return {
         enEspera: this.ordenes.filter(o => o.estado === 'EN_ESPERA').length,
         enRevision: this.ordenes.filter(o => o.estado === 'EN_REVISION').length,
@@ -57,14 +81,55 @@ export default {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-        this.ordenes = response.data;
+        // Asegurarse de que siempre sea un array
+        this.ordenes = Array.isArray(response.data) ? response.data : [];
       } catch (err) {
         console.error('Error al cargar órdenes de servicio:', err);
         this.error = err.response?.data?.message || 'Error al cargar las órdenes de servicio';
+        // En caso de error, asegurarse de que ordenes sea un array vacío
+        this.ordenes = [];
       } finally {
         this.cargando = false;
       }
     },
+    
+    // Nuevo método para crear órdenes
+    async crearOrden() {
+      try {
+        const token = localStorage.getItem('access_token');
+        const response = await axios.post(
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/service-orders`,
+          this.nuevaOrden,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        
+        // Mostrar mensaje de éxito
+        alert(`Orden creada con éxito. Número de orden: ${response.data.id}`);
+        
+        // Resetear el formulario y ocultarlo
+        this.mostrarFormulario = false;
+        this.nuevaOrden = {
+          cliente_nombre: '',
+          cliente_telefono: '',
+          equipo_modelo: '',
+          falla_reportada: '',
+          estado: 'EN_ESPERA'
+        };
+        
+        // Recargar la lista de órdenes
+        await this.cargarOrdenes();
+        
+        // Mostrar toast si está disponible
+        this.$toast?.success('Orden creada exitosamente');
+        
+      } catch (error) {
+        console.error('Error al crear la orden:', error);
+        alert(error.response?.data?.message || "Error al crear la orden");
+      }
+    },
+    
     async asignarOrden(ordenId) {
       try {
         const token = localStorage.getItem('access_token');
