@@ -175,4 +175,4 @@
 </template>
 
 <script src="./PanelTecnicos.js"></script>
-<style src="./PanelTecnicos.css" scoped></style>
+<style src="./PanelTecnicos.css"></style>
