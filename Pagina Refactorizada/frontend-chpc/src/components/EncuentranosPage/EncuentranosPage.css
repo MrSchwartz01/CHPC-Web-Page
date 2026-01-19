@@ -1,212 +1,114 @@
-.encuentranos-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 40px 20px;
-  min-height: calc(100vh - 200px);
+/* EncuentranosPage.css */
+
+/* Fondo degradado general */
+.encuentranos-layout {
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecef 100%);
+  min-height: 100vh;
 }
 
-/* Header */
-.encuentranos-header {
+/* Hero Section (Estilo Misión/Visión) */
+.hero-section {
+  background: linear-gradient(135deg, #FF6000 0%, #ff8000 100%);
+  color: white;
+  padding: 60px 20px;
   text-align: center;
-  margin-bottom: 50px;
-  padding: 40px 20px;
-  background: linear-gradient(135deg, #f28729 0%, #db7a13 100%);
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(186, 120, 45, 0.25);
-  position: relative;
-  overflow: hidden;
+  margin-bottom: 40px;
 }
 
-.encuentranos-header::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -20%;
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
-  border-radius: 50%;
-}
-
-.encuentranos-header h1 {
-  color: #ffffff;
-  font-size: 42px;
-  font-weight: 700;
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
   margin-bottom: 10px;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-  z-index: 1;
+  color: white !important;
 }
 
-.subtitle {
-  color: #ecf0f1;
-  font-size: 18px;
-  font-weight: 400;
-  margin: 0;
-  position: relative;
-  z-index: 1;
+.hero-subtitle {
+  font-size: 1.2rem;
+  color: #1a1a1a;
 }
 
-/* Content Layout */
+/* Contenedor que respeta tu alineación original */
+.encuentranos-container-original {
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  padding: 0 20px;
+}
+
 .content-wrapper {
-  display: grid;
-  grid-template-columns: 350px 1fr;
-  gap: 30px;
-  align-items: start;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
 }
 
-/* Info Section */
+/* Columna de tarjetas (Original) */
 .info-section {
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-.info-card {
+.info-card-item {
   background: white;
   padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  border-left: 5px solid #FF6000; /* Acento de Misión/Visión */
 }
 
-.info-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+.card-title {
+  color: #FF6000;
+  margin-bottom: 10px;
+  font-size: 1.3rem;
 }
 
-.icon-wrapper {
-  margin-bottom: 15px;
-}
-
-.icon {
-  font-size: 36px;
-  display: inline-block;
-}
-
-.info-card h3 {
-  color: #644e39;
-  font-size: 18px;
-  font-weight: 700;
-  margin: 0 0 10px 0;
-}
-
-.info-card p {
-  color: #7f8c8d;
-  font-size: 15px;
-  line-height: 1.6;
-  margin: 0;
-  white-space: pre-line;
-}
-
-/* Map Section */
+/* Columna del Mapa (Original) */
 .map-section {
-  position: sticky;
-  top: 20px;
+  flex: 1.5;
 }
 
-.map-card {
+.map-card-container {
   background: white;
   padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
-.map-card h2 {
+.section-title-map {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
   color: #2c3e50;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 0 20px 0;
 }
 
-.map-container {
+.map-frame {
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid #eee;
   margin-bottom: 20px;
 }
 
-.map-container iframe {
+.btn-directions {
   display: block;
-  width: 100%;
-}
-
-.directions-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 100%;
-  padding: 14px 24px;
-  background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+  text-align: center;
+  background-color: #FF6000;
   color: white;
   text-decoration: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: background 0.3s;
 }
 
-.directions-btn:hover {
-  background: linear-gradient(135deg, #2980b9 0%, #21618c 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+.btn-directions:hover {
+  background-color: #333;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
+/* Responsividad para móviles */
+@media (max-width: 992px) {
   .content-wrapper {
-    grid-template-columns: 1fr;
+    flex-direction: column;
   }
-
-  .map-section {
-    position: static;
-  }
-
-  .info-section {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-}
-
-@media (max-width: 768px) {
-  .encuentranos-container {
-    padding: 30px 15px;
-  }
-
-  .encuentranos-header h1 {
-    font-size: 32px;
-  }
-
-  .subtitle {
-    font-size: 16px;
-  }
-
-  .info-section {
-    grid-template-columns: 1fr;
-  }
-
-  .map-card {
-    padding: 20px;
-  }
-
-  .map-container iframe {
-    height: 350px;
-  }
-}
-
-@media (max-width: 480px) {
-  .encuentranos-header h1 {
-    font-size: 28px;
-  }
-
-  .info-card {
-    padding: 20px;
-  }
-
-  .map-card h2 {
-    font-size: 20px;
+  .info-section, .map-section {
+    width: 100%;
   }
 }

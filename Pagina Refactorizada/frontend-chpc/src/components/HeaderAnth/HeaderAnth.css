@@ -166,7 +166,7 @@
     position: absolute;
     top: -4px;
     right: -4px;
-    background-color: #ffa726;
+    background-color: #FF6600;
     color: white;
     border-radius: 50%;
     width: 14px;
@@ -185,7 +185,7 @@
   .pedidos-button:hover,
   .perfil-button:hover,
   .action-button:hover {
-    background: #e67300 !important; /* Un tono un poco más oscuro al pasar el mouse */
+    background: #FF6600 !important; /* Un tono un poco más oscuro al pasar el mouse */
     transform: scale(1.05);
     box-shadow: 0 4px 12px rgba(255, 128, 0, 0.3);
   }

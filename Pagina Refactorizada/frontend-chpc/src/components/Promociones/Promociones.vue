@@ -40,11 +40,12 @@
         style="cursor: pointer;"
       >
         <div class="promo-badge">{{ promo.porcentaje_descuento }}% OFF</div>
-        <img 
-          :src="obtenerImagenProducto(promo.producto)" 
-          :alt="promo.producto.nombre_producto" 
-          class="promo-img" 
-        />
+        <img
+            :src="obtenerImagenProducto(promo.producto)" 
+            :alt="promo.producto.nombre_producto" 
+            class="promo-img"
+            @error="manejarErrorImagen"
+          />
         <div class="promo-info">
           <h3>{{ promo.producto.nombre_producto }}</h3>
           <p class="promo-descripcion">{{ promo.producto.descripcion || 'Oferta especial por tiempo limitado' }}</p>
@@ -111,7 +112,14 @@ export default {
       
       try {
         const response = await axios.get(`${API_BASE_URL}/promociones/activas`);
-        this.promocionesActivas = response.data;
+        // Procesar las promociones para asignar la imagen correcta
+        this.promocionesActivas = response.data.map(promo => ({
+          ...promo,
+          producto: {
+            ...promo.producto,
+            imagen_url: this.procesarImagenProducto(promo.producto)
+          }
+        }));
         console.log('Promociones cargadas:', this.promocionesActivas);
       } catch (error) {
         console.error('Error al cargar promociones:', error);
@@ -119,6 +127,15 @@ export default {
       } finally {
         this.isLoading = false;
       }
+    },
+    
+    procesarImagenProducto(producto) {
+      // Prioridad: productImages con es_principal, primera imagen, imagen_url, placeholder
+      if (producto.productImages && producto.productImages.length > 0) {
+        const imagenPrincipal = producto.productImages.find(img => img.es_principal);
+        return imagenPrincipal ? imagenPrincipal.ruta_imagen : producto.productImages[0].ruta_imagen;
+      }
+      return producto.imagen_url || '/Productos/placeholder-product.png';
     },
     
     verDetalleProducto(productoId) {
@@ -130,6 +147,10 @@ export default {
     
     obtenerImagenProducto(producto) {
       return producto.imagen_url || '/Productos/placeholder-product.png';
+    },
+    
+    manejarErrorImagen(event) {
+      event.target.src = '/Productos/placeholder-product.png';
     },
     
     formatPrice(price) {

@@ -9,13 +9,13 @@
 /* Hero Section: Limpio y con aire */
 .hero-section {
   background-color: #fdfdfd; /* Casi blanco */
-  padding: 100px 20px 60px 20px;
+  padding: 50px 20px 50px 20px;
   text-align: center;
   border-bottom: 1px solid #f0f0f0;
 }
 
 .hero-title {
-  color: #1a1a1a !important;
+  color: #ffffff !important;
   font-size: 52px !important;
   font-weight: 800;
   letter-spacing: -1.5px;
@@ -25,7 +25,7 @@
 
 .hero-subtitle {
   font-size: 20px;
-  color: #666 !important;
+  color: #242424 !important;
   max-width: 650px;
   margin: 0 auto;
   line-height: 1.6;
@@ -63,7 +63,7 @@
 
 .section-title {
   font-size: 28px;
-  color: #FF8000; /* Color corporativo solo en títulos */
+  color: #FF6000; /* Color corporativo solo en títulos */
   margin-bottom: 25px;
   font-weight: 700;
   display: flex;
@@ -72,7 +72,7 @@
 
 .section-content p {
   font-size: 18px;
-  color: #444;
+  color: #2f2f2f;
   line-height: 1.8;
   text-align: left; /* Lectura formal */
   margin-bottom: 15px;

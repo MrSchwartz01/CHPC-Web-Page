@@ -74,7 +74,7 @@
                 @click="goToPerfil"
                 title="Mi Perfil"
               >
-                👤 Mi Perfil
+                Mi Perfil
               </button>
               <button 
                 v-if="isAdmin || isVendedor" 

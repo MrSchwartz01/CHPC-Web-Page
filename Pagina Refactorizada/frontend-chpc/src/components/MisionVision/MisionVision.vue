@@ -11,7 +11,7 @@
     <!-- Hero Section -->
     <section class="hero-section">
       <div class="hero-content">
-        <h1 class="hero-title">Nuestra Misión y Visión</h1>
+        <h1 class="hero-title">Misión y Visión</h1>
         <p class="hero-subtitle">
           Comprometidos con la excelencia en tecnología y servicio al cliente
         </p>

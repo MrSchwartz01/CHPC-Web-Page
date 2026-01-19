@@ -100,6 +100,17 @@ export class PromotionsService {
             precio: true,
             imagen_url: true,
             descripcion: true,
+            productImages: {
+              select: {
+                id: true,
+                ruta_imagen: true,
+                es_principal: true,
+                orden: true,
+              },
+              orderBy: {
+                orden: 'asc',
+              },
+            },
           },
         },
       },

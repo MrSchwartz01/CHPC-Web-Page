@@ -10,9 +10,6 @@
     <section class="hero-section">
       <div class="hero-content">
         <h1 class="hero-title">Políticas de Garantía</h1>
-        <p class="hero-subtitle">
-          Información detallada sobre el respaldo y la protección de sus adquisiciones tecnológicas.
-        </p>
       </div>
     </section>
 
@@ -51,6 +48,29 @@ export default {
     HeaderAnth,
     FooterAnth,
   },
-  // ... resto de tu data y métodos se mantienen igual
-}
+  data() {
+    return {
+      isAuthenticated: false,
+      searchQuery: '',
+    };
+  },
+  created() {
+    this.isAuthenticated = !!localStorage.getItem("access_token");
+  },
+  methods: {
+    buscarProductos(query) {
+      this.searchQuery = query;
+      if (query.trim() !== "") {
+        this.$router.push({ name: "HomePage", query: { search: query } });
+      }
+    },
+    cerrarSesion() {
+      localStorage.removeItem("access_token");
+      this.isAuthenticated = false;
+      this.$router.replace("/login");
+    },
+  },
+};
 </script>
+
+<style src="./Garantias.css"></style>

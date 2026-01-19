@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="encuentranos-layout">
     <HeaderAnth
       :searchQuery="searchQuery"
       :isAuthenticated="isAuthenticated"
@@ -7,67 +7,47 @@
       @cerrar-sesion="cerrarSesion"
     />
 
-    <div class="encuentranos-container">
-      <div class="encuentranos-header">
-        <h1>Encuéntranos</h1>
-        <p class="subtitle">Visítanos en nuestra dirección</p>
+    <section class="hero-section">
+      <div class="hero-content">
+        <h1 class="hero-title">Encuéntranos</h1>
+        <p class="hero-subtitle">Visítanos en nuestro local </p>
       </div>
+    </section>
 
+    <div class="encuentranos-container-original">
       <div class="content-wrapper">
         <div class="info-section">
-          <div class="info-card">
-            <div class="icon-wrapper">
-            </div>
-            <h3>Dirección</h3>
+          <div class="info-card-item">
+            <h3 class="card-title">Dirección</h3>
             <p>{{ direccion }}</p>
           </div>
 
-          <div class="info-card">
-            <div class="icon-wrapper">
-              <span class="icon">⏰</span>
-            </div>
-            <h3>Horario de Atención</h3>
+          <div class="info-card-item">
+            <h3 class="card-title">Horario de Atención</h3>
             <p>{{ horario }}</p>
           </div>
 
-          <div class="info-card">
-            <div class="icon-wrapper">
-              <span class="icon">📞</span>
-            </div>
-            <h3>Teléfono</h3>
-            <p>{{ telefono }}</p>
-          </div>
-
-          <div class="info-card">
-            <div class="icon-wrapper">
-              <span class="icon">✉️</span>
-            </div>
-            <h3>Email</h3>
-            <p>{{ email }}</p>
+          <div class="info-card-item">
+            <h3 class="card-title">Contacto</h3>
+            <p>{{ telefono }}<br>{{ email }}</p>
           </div>
         </div>
 
         <div class="map-section">
-          <div class="map-card">
-            <h2>Cómo llegar</h2>
-            <div class="map-container">
+          <div class="map-card-container">
+            <h2 class="section-title-map">Cómo llegar</h2>
+            <div class="map-frame">
               <iframe
                 :src="googleMapsEmbedUrl"
                 width="100%"
-                height="450"
+                height="400"
                 style="border:0;"
                 allowfullscreen=""
                 loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>
-            <a 
-              :href="googleMapsLink" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              class="directions-btn"
-            >
-              🧭 Ver Direcciones en Google Maps
+            <a :href="googleMapsLink" target="_blank" class="btn-directions">
+              🧭 Ver en Google Maps
             </a>
           </div>
         </div>
