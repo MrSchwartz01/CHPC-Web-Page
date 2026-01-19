@@ -1,50 +1,54 @@
-import axios from 'axios';
+import { createRouter, createWebHistory } from 'vue-router';
+import PanelTecnicosPage from '@/components/PanelTecnicos/PanelTecnicosPage.vue';
+import PanelVendedores from '@/components/PanelVendedores/PanelVendedores.vue';
 
-export default {
-  name: 'PanelTecnicosPage',
-  data() {
-    return {
-      ordenes: [],
-      filtroEstado: '',
-      cargando: false,
-    };
+const routes = [
+  // ... tus otras rutas (Home, Login, etc.)
+  
+  {
+    path: '/panel-tecnicos',
+    name: 'PanelTecnicos',
+    component: PanelTecnicosPage,
+    meta: { requiresAuth: true, role: 'tecnico' } // Solo técnicos
   },
-  computed: {
-    ordenesFiltradas() {
-      return this.filtroEstado 
-        ? this.ordenes.filter(o => o.estado === this.filtroEstado)
-        : this.ordenes;
-    },
-    estadisticas() {
-      return {
-        espera: this.ordenes.filter(o => o.estado === 'EN_ESPERA').length,
-        revision: this.ordenes.filter(o => o.estado === 'EN_REVISION').length,
-        entregado: this.ordenes.filter(o => o.estado === 'ENTREGADO').length,
-      };
-    }
-  },
-  methods: {
-    async cargarOrdenes() {
-      this.cargando = true;
-      try {
-        const res = await axios.get('http://localhost:5000/api/tecnico/ordenes');
-        this.ordenes = res.data;
-      } catch (e) {
-        console.error("Error cargando taller", e);
-      } finally {
-        this.cargando = false;
-      }
-    },
-    async cambiarEstado(id, nuevoEstado) {
-      try {
-        await axios.patch(`http://localhost:5000/api/tecnico/ordenes/${id}`, { estado: nuevoEstado });
-        this.cargarOrdenes();
-      } catch (e) {
-        alert("Error al actualizar estado");
-      }
-    }
-  },
-  mounted() {
-    this.cargarOrdenes();
+  {
+    path: '/panel-vendedores',
+    name: 'PanelVendedores',
+    component: PanelVendedores,
+    meta: { requiresAuth: true, role: 'vendedor' } // Solo vendedores
   }
-}
+];
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes
+});
+
+// GUARDIA DE NAVEGACIÓN (El "Portero" de tu app)
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!localStorage.getItem('access_token');
+  const userRole = localStorage.getItem('user_rol');
+
+  // 1. Verificar si la ruta requiere autenticación
+  if (to.meta.requiresAuth) {
+    if (!isAuthenticated) {
+      // Si no está logueado, al login
+      return next('/login');
+    }
+
+    // 2. Verificar el rol (El administrador tiene pase libre a todo)
+    if (userRole === 'administrador') {
+      return next();
+    }
+
+    if (to.meta.role && to.meta.role !== userRole) {
+      // Si el rol no coincide (ej: un vendedor intentando entrar a taller)
+      alert('No tienes permisos para acceder a esta sección');
+      return next('/home');
+    }
+  }
+
+  next(); // Si todo está bien, adelante
+});
+
+export default router;
