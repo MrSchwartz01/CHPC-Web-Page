@@ -120,7 +120,7 @@
             @click="asignarOrden(orden.id)"
             class="btn btn-primary"
           >
-            Tomar Orden
+            🔧 Tomar Orden
           </button>
 
           <!-- Botón para desasignar -->
@@ -129,39 +129,9 @@
             @click="desasignarOrden(orden.id)"
             class="btn btn-secondary"
           >
-            Liberar Orden
+            🔓 Liberar Orden
           </button>
-<!-- Formulario de orden de servicio-->
-        <div class="acciones-principales">
-  <button @click="mostrarFormulario = true" class="btn-nueva-orden">
-    Nueva Orden de Servicio
-  </button>
-</div>
 
-<div v-if="mostrarFormulario" class="modal-overlay">
-  <div class="modal-content">
-    <h2>Nueva Orden de Servicio</h2>
-    <form @submit.prevent="crearOrden">
-      <div class="form-grid">
-        <section>
-          <h3>Datos del Cliente</h3>
-          <input v-model="nuevaOrden.cliente_nombre" placeholder="Nombre completo" required>
-          <input v-model="nuevaOrden.cliente_telefono" placeholder="Teléfono" required>
-        </section>
-        
-        <section>
-          <h3>Datos del Equipo</h3>
-          <input v-model="nuevaOrden.equipo_modelo" placeholder="Modelo (Ej: MacBook Air 2020)" required>
-          <textarea v-model="nuevaOrden.falla_reportada" placeholder="Descripción de la falla" required></textarea>
-        </section>
-      </div>
-      <div class="modal-buttons">
-        <button type="button" @click="mostrarFormulario = false">Cancelar</button>
-        <button type="submit" class="btn-guardar">Generar Orden</button>
-      </div>
-    </form>
-  </div>
-</div>
           <!-- Cambiar estado (solo si está asignado al técnico o es admin) -->
           <div v-if="orden.tecnico_id && (esAdmin || orden.tecnico_id === usuarioId)" class="estado-acciones">
             <button
@@ -169,28 +139,28 @@
               @click="cambiarEstado(orden.id, 'EN_REVISION')"
               class="btn btn-info"
             >
-              Iniciar Revisión
+              ▶️ Iniciar Revisión
             </button>
             <button
               v-if="orden.estado === 'EN_REVISION'"
               @click="cambiarEstado(orden.id, 'REPARADO')"
               class="btn btn-success"
             >
-              Marcar como Reparado
+              ✅ Marcar como Reparado
             </button>
             <button
               v-if="orden.estado === 'REPARADO'"
               @click="cambiarEstado(orden.id, 'ENTREGADO')"
               class="btn btn-complete"
             >
-              Marcar como Entregado
+              📦 Marcar como Entregado
             </button>
             <button
               v-if="['EN_ESPERA', 'EN_REVISION'].includes(orden.estado)"
               @click="cambiarEstado(orden.id, 'SIN_REPARACION')"
               class="btn btn-danger"
             >
-              Sin Reparación
+              ❌ Sin Reparación
             </button>
           </div>
         </div>
@@ -199,7 +169,7 @@
 
     <!-- Mensaje si no hay órdenes -->
     <div v-if="!cargando && !error && ordenesFiltradas.length === 0" class="mensaje-vacio">
-      <p>No hay órdenes de servicio con los filtros seleccionados</p>
+      <p>📋 No hay órdenes de servicio con los filtros seleccionados</p>
     </div>
   </div>
 </template>

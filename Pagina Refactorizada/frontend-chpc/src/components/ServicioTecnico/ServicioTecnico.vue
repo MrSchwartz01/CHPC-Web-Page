@@ -10,28 +10,7 @@
         <p class="description">
           Descubre los servicios que ofrecemos para garantizar el funcionamiento óptimo de tus equipos.
         </p>
-        
-        <section class="consulta-orden">
-          <h2>¿Tienes un equipo con nosotros?</h2>
-          <p class="description">Consulta el estado de tu equipo aquí</p>
-  <div class="search-box">
-    <input v-model="codigoBusqueda" placeholder="Ingresa tu número de orden (Ej: 1025)">
-    <button @click="consultarEstado">Consultar</button>
-  </div>
-
-  <div v-if="ordenEncontrada" class="resultado-tracking">
-    <div class="tracking-status">
-      <p><strong>Equipo:</strong> {{ ordenEncontrada.equipo_modelo }}</p>
-      <p><strong>Estado:</strong> <span :class="ordenEncontrada.estado">{{ ordenEncontrada.estado }}</span></p>
-    </div>
-    <div class="progress-bar">
-      <div :class="['step', { active: true }]">Recibido</div>
-      <div :class="['step', { active: ['EN_REVISION', 'REPARADO', 'ENTREGADO'].includes(ordenEncontrada.estado) }]">En Taller</div>
-      <div :class="['step', { active: ['REPARADO', 'ENTREGADO'].includes(ordenEncontrada.estado) }]">Listo</div>
-    </div>
-  </div>
-</section>
-
+  
         <div class="services-grid">
           <!-- Ejemplo con VIDEO LOCAL -->
           <div class="service-card" @click="showVideoModal('/Videos/video prueba ensamblaje.mp4')">

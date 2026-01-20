@@ -1,10 +1,10 @@
 /* Contenedor Principal - Consistencia con Vendedores */
 .panel-tecnicos {
-  background-color: #3a88d6; /* Gris azulado muy claro */
+  background-color: #f8fafc; /* Gris azulado muy claro */
   min-height: 100vh;
   padding: 2rem;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  color: #141b27;
+  color: #1e293b;
 }
 
 /* Encabezado */
@@ -44,7 +44,7 @@
 .stat-value {
   font-size: 2rem;
   font-weight: 700;
-  color: #1e40af;
+  color: #3498db;
   display: block;
   margin-top: 0.5rem;
 }
@@ -54,7 +54,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #ffffff;
+  background: white;
   padding: 1.25rem;
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -178,43 +178,3 @@
 .badge-en_espera { background: #fef3c7; color: #92400e; }
 .badge-en_revision { background: #dbeafe; color: #1e40af; }
 .badge-reparado { background: #d1fae5; color: #065f46; }
-
-.modal-overlay {
-  position: fixed;
-  top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  padding: 2rem;
-  border-radius: 15px;
-  width: 90%; max-width: 600px;
-}
-
-.btn-nueva-orden {
-  background: #3498db;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.form-grid input, .form-grid textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-}
