@@ -12,10 +12,10 @@ async function createAdmin() {
 
     const admin = await prisma.user.create({
       data: {
-        nombre: 'Admin',
+        nombre: 'Sistema',
         apellido: 'Sistema',
-        username: 'admin',
-        email: 'admin@chpc.com',
+        username: 'admin1',
+        email: 'admin1@chpc.com',
         password: hashedPassword,
         telefono: '1234567890',
         direccion: 'Oficina Central',
@@ -24,7 +24,7 @@ async function createAdmin() {
     });
 
     console.log('✅ Usuario administrador creado exitosamente:');
-    console.log('   Username: admin');
+    console.log('   Username: admin1');
     console.log('   Password: admin123');
     console.log('   Rol: administrador');
     console.log(`   ID: ${admin.id}\n`);
@@ -33,7 +33,7 @@ async function createAdmin() {
 
   } catch (error) {
     if (error.code === 'P2002') {
-      console.log('⚠️  El usuario "admin" ya existe en la base de datos');
+      console.log('⚠️  El usuario "admin1" ya existe en la base de datos');
       console.log('   Username: admin');
       console.log('   Password: admin123 (si no has cambiado la contraseña)\n');
     } else {
