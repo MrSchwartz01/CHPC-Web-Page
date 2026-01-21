@@ -9,6 +9,7 @@ import { BannersModule } from './banners/banners.module';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { ServiceOrdersModule } from './service-orders/service-orders.module';
+import { WorkOrdersModule } from './work-orders/work-orders.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { PromotionsModule } from './promotions/promotions.module';
 import { SiteConfigModule } from './site-config/site-config.module';
@@ -33,6 +34,7 @@ import { MailModule } from './mail/mail.module';
     ProductsModule,
     OrdersModule,
     ServiceOrdersModule,
+    WorkOrdersModule,
     AnalyticsModule,
     PromotionsModule,
     SiteConfigModule,
