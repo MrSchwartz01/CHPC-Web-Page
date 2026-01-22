@@ -52,15 +52,15 @@ export default {
       try {
         const token = localStorage.getItem('access_token');
         const response = await axios.get(
-          `${process.env.VUE_APP_API_URL || 'http://192.168.2.117:5000/api'}/work-orders`,
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/service-orders`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
         this.ordenes = response.data;
       } catch (err) {
-        console.error('Error al cargar órdenes de trabajo:', err);
-        this.error = err.response?.data?.message || 'Error al cargar las órdenes de trabajo';
+        console.error('Error al cargar órdenes de servicio:', err);
+        this.error = err.response?.data?.message || 'Error al cargar las órdenes de servicio';
       } finally {
         this.cargando = false;
       }
@@ -69,7 +69,7 @@ export default {
       try {
         const token = localStorage.getItem('access_token');
         await axios.post(
-          `${process.env.VUE_APP_API_URL || 'http://192.168.2.117:5000/api'}/work-orders/${ordenId}/asignar`,
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/service-orders/${ordenId}/asignar`,
           {
             tecnico_nombre: this.usuarioNombre,
           },
@@ -91,7 +91,7 @@ export default {
       try {
         const token = localStorage.getItem('access_token');
         await axios.delete(
-          `${process.env.VUE_APP_API_URL || 'http://192.168.2.117:5000/api'}/work-orders/${ordenId}/desasignar`,
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/service-orders/${ordenId}/desasignar`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -107,7 +107,7 @@ export default {
       try {
         const token = localStorage.getItem('access_token');
         await axios.patch(
-            `${process.env.VUE_APP_API_URL || 'http://192.168.2.117:5000/api'}/work-orders/${ordenId}/estado`,
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/service-orders/${ordenId}/estado`,
           {
             estado: nuevoEstado,
           },
@@ -156,7 +156,7 @@ export default {
       try {
         const token = localStorage.getItem('access_token');
         const response = await axios.get(
-          `${process.env.VUE_APP_API_URL || 'http://192.168.2.117:5000/api'}/usuarios/perfil`,
+          `${process.env.VUE_APP_API_URL || 'http://localhost:5000/api'}/usuarios/perfil`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

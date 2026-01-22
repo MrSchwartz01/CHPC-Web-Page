@@ -77,7 +77,6 @@ model User {
 
   orders            Order[]
   serviceOrders     ServiceOrder[]
-  workOrders        WorkOrder[]
   permisosTemporales PermisoTemporal[]
   passwordResetTokens PasswordResetToken[]
 
@@ -185,15 +184,6 @@ enum ServiceOrderStatus {
   CANCELADO
 }
 
-enum WorkOrderStatus {
-  EN_ESPERA
-  EN_REVISION
-  REPARADO
-  ENTREGADO
-  SIN_REPARACION
-  CANCELADO
-}
-
 model ServiceOrder {
   id                  Int                @id @default(autoincrement())
   userId              Int
@@ -209,37 +199,6 @@ model ServiceOrder {
   product             Product?           @relation(fields: [productId], references: [id])
 
   @@map("ordenes_servicio")
-}
-
-model WorkOrder {
-  id                   Int              @id @default(autoincrement())
-  trackingId           String           @unique // Ejemplo: WO-7241
-  cliente_nombre       String
-  cliente_telefono     String
-  cliente_email        String?
-  marca_equipo         String           // Ej: Asus, Dell
-  modelo_equipo        String           // Ej: Vivobook 15
-  numero_serie         String?
-  descripcion_problema String           @db.Text
-  notas_tecnicas       String?          @db.Text  // Solo para el técnico
-  estado               WorkOrderStatus  @default(EN_ESPERA)
-  costo_estimado       Float?           @default(0)
-  costo_final          Float?
-  tecnico_id           Int?
-  tecnico_nombre       String?
-  fecha_creacion       DateTime         @default(now())
-  fecha_actualizacion  DateTime         @updatedAt
-  fecha_entrega        DateTime?
-
-  // Relación opcional con usuario registrado
-  userId               Int?
-  user                 User?            @relation(fields: [userId], references: [id], onDelete: SetNull)
-
-  @@map("ordenes_trabajo")
-  @@index([trackingId])
-  @@index([estado])
-  @@index([tecnico_id])
-  @@index([fecha_creacion])
 }
 
 model SyncLog {
