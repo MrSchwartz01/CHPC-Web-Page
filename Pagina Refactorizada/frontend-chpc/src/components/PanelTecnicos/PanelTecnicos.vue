@@ -28,6 +28,9 @@
       <button @click="irAInicio" class="btn-volver-inicio">
         ← Volver al Inicio
       </button>
+      <button @click="irACrearOrden" class="btn-crear-orden">
+        ➕ Crear Nueva Orden
+      </button>
       <div class="filtro-grupo">
         <label>Filtrar por estado:</label>
         <select v-model="filtroEstado" class="filtro-select">

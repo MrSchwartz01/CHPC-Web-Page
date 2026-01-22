@@ -252,6 +252,20 @@ const routes = [
         next('/login');
       }
     }
+  },
+  {
+    path: '/crear-work-order',
+    name: 'CrearWorkOrder',
+    component: () => import(/* webpackChunkName: "crear-work-order" */ '../components/CrearWorkOrder/CrearWorkOrder.vue'),
+    beforeEnter: (to, from, next) => {
+      const token = localStorage.getItem('access_token');
+      const role = localStorage.getItem('user_rol');
+      if (token && (role === 'administrador' || role === 'tecnico')) {
+        next();
+      } else {
+        next('/login');
+      }
+    }
   }
 
 
