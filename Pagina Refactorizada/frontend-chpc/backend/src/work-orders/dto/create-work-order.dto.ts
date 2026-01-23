@@ -4,6 +4,7 @@ import {
   IsEmail,
   IsNumber,
   IsEnum,
+  Min,
 } from 'class-validator';
 import { WorkOrderStatus } from '@prisma/client';
 
@@ -41,6 +42,7 @@ export class CreateWorkOrderDto {
 
   @IsOptional()
   @IsNumber()
+  @Min(0)
   costo_estimado?: number;
 
   @IsOptional()

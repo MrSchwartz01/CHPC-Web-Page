@@ -33,9 +33,15 @@ export class WorkOrdersController {
    */
   @Post()
   @Roles(Role.ADMIN, Role.TECNICO, Role.CLIENTE)
-  create(@Body() createWorkOrderDto: CreateWorkOrderDto, @Request() req: any) {
-    const userId = (req.user?.userId || req.user?.id) as number;
-    return this.workOrdersService.create(createWorkOrderDto, userId);
+  async create(@Body() createWorkOrderDto: CreateWorkOrderDto, @Request() req: any) {
+    try {
+      const userId = (req.user?.userId || req.user?.id) as number;
+      const result = await this.workOrdersService.create(createWorkOrderDto, userId);
+      return result;
+    } catch (error) {
+      console.error('Error en WorkOrdersController.create:', error);
+      throw error;
+    }
   }
   /**
    * Obtener todas las órdenes de trabajo con filtros

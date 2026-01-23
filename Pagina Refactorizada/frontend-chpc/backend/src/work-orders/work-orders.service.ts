@@ -37,26 +37,53 @@ export class WorkOrdersService {
    * Crear una nueva orden de trabajo
    */
   async create(createWorkOrderDto: CreateWorkOrderDto, userId?: number) {
-    const trackingId = await this.generateTrackingId();
+    try {
+      // Validar que se proporcionen los campos obligatorios
+      if (!createWorkOrderDto.cliente_nombre?.trim()) {
+        throw new BadRequestException('El nombre del cliente es requerido');
+      }
+      if (!createWorkOrderDto.cliente_telefono?.trim()) {
+        throw new BadRequestException('El teléfono del cliente es requerido');
+      }
+      if (!createWorkOrderDto.marca_equipo?.trim()) {
+        throw new BadRequestException('La marca del equipo es requerida');
+      }
+      if (!createWorkOrderDto.modelo_equipo?.trim()) {
+        throw new BadRequestException('El modelo del equipo es requerido');
+      }
+      if (!createWorkOrderDto.descripcion_problema?.trim()) {
+        throw new BadRequestException('La descripción del problema es requerida');
+      }
 
-    return this.prisma.workOrder.create({
-      data: {
-        trackingId,
-        ...createWorkOrderDto,
-        userId: createWorkOrderDto.userId || userId,
-      },
-      include: {
-        user: {
-          select: {
-            id: true,
-            nombre: true,
-            apellido: true,
-            email: true,
-            telefono: true,
+      const trackingId = await this.generateTrackingId();
+
+      const workOrder = await this.prisma.workOrder.create({
+        data: {
+          trackingId,
+          ...createWorkOrderDto,
+          userId: createWorkOrderDto.userId || userId,
+          estado: createWorkOrderDto.estado || WorkOrderStatus.EN_ESPERA,
+          costo_estimado: createWorkOrderDto.costo_estimado || 0,
+        },
+        include: {
+          user: {
+            select: {
+              id: true,
+              nombre: true,
+              apellido: true,
+              email: true,
+              telefono: true,
+            },
           },
         },
-      },
-    });
+      });
+
+      console.log('Work order creada exitosamente:', workOrder);
+      return workOrder;
+    } catch (error) {
+      console.error('Error en WorkOrdersService.create:', error);
+      throw error;
+    }
   }
 
   /**

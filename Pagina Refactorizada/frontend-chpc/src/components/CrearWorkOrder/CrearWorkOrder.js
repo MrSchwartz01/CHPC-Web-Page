@@ -44,7 +44,7 @@ export default {
           throw new Error('El costo estimado no puede ser negativo');
         }
 
-        // Preparar datos para enviar
+        // Preparar datos para enviar (corregir mapeo de campos)
         const datos = {
           cliente_nombre: this.formulario.cliente_nombre.trim(),
           cliente_telefono: this.formulario.cliente_telefono.trim(),
@@ -54,16 +54,18 @@ export default {
           numero_serie: this.formulario.numero_serie.trim() || null,
           descripcion_problema: this.formulario.descripcion_problema.trim(),
           costo_estimado: parseFloat(this.formulario.costo_estimado) || 0,
+          estado: 'EN_ESPERA' // Estado inicial por defecto
         };
 
         // Obtener token de autenticación
         const token = localStorage.getItem('access_token');
         if (!token) {
+          this.$router.push('/login');
           throw new Error('No hay sesión activa. Por favor inicie sesión.');
         }
 
-        // Obtener URL base de la API
-        const apiUrl = process.env.VUE_APP_API_URL || 'http://localhost:5000/api';
+        // Obtener URL base de la API (usar la misma configuración que el panel)
+        const apiUrl = process.env.VUE_APP_API_URL || 'http://192.168.2.117:5000/api';
         const endpoint = `${apiUrl}/work-orders`;
 
         console.log('Enviando orden de trabajo a:', endpoint);
@@ -84,6 +86,17 @@ export default {
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           console.error('Error del servidor:', errorData);
+          
+          // Manejar errores específicos
+          if (response.status === 401) {
+            this.$router.push('/login');
+            throw new Error('Su sesión ha expirado. Por favor inicie sesión nuevamente.');
+          }
+          
+          if (response.status === 403) {
+            throw new Error('No tiene permisos para crear órdenes de trabajo.');
+          }
+          
           throw new Error(
             errorData.message || errorData.error || `Error del servidor: ${response.status}`
           );
@@ -93,8 +106,8 @@ export default {
         console.log('Orden creada exitosamente:', ordenCreada);
 
         // Mostrar mensaje de éxito
-        this.trackingIdCreado = ordenCreada.trackingId;
-        this.mensajeExito = `La orden ha sido creada y está en estado "En Espera" para ser asignada a un técnico.`;
+        this.trackingIdCreado = ordenCreada.trackingId || `WO-${ordenCreada.id}`;
+        this.mensajeExito = `La orden ha sido creada exitosamente y está en estado "En Espera" para ser asignada a un técnico.`;
 
         // Limpiar formulario
         this.limpiarFormulario();
@@ -139,12 +152,22 @@ export default {
 
   mounted() {
     // Verificar que el usuario tenga permisos
+    const token = localStorage.getItem('access_token');
     const userRol = localStorage.getItem('user_rol');
+    
+    if (!token) {
+      this.error = 'Debe iniciar sesión para acceder a esta página';
+      setTimeout(() => {
+        this.$router.push('/login');
+      }, 2000);
+      return;
+    }
+    
     if (userRol !== 'administrador' && userRol !== 'tecnico') {
-      this.error = 'No tiene permisos para acceder a esta página';
+      this.error = 'No tiene permisos para crear órdenes de trabajo. Solo administradores y técnicos pueden acceder.';
       setTimeout(() => {
         this.$router.push('/home');
-      }, 2000);
+      }, 3000);
     }
   },
 };

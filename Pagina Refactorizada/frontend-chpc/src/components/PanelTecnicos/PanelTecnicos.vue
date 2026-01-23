@@ -79,7 +79,7 @@
           <div class="orden-info-principal">
             <h3>Orden #{{ orden.numero_orden || orden.id }}</h3>
             <span class="orden-fecha">
-              {{ formatearFecha(orden.fecha_ingreso || orden.createdAt) }}
+              {{ formatearFecha(orden.fecha_creacion || orden.fecha_ingreso || orden.createdAt) }}
             </span>
           </div>
           <div class="orden-badges">
@@ -104,9 +104,9 @@
           <h4>Información del Equipo</h4>
           <p><strong>Tipo:</strong> {{ orden.tipo_equipo || 'N/A' }}</p>
           <p><strong>Marca/Modelo:</strong> {{ orden.marca_equipo }} {{ orden.modelo_equipo }}</p>
-          <p v-if="orden.serie_equipo"><strong>Serie:</strong> {{ orden.serie_equipo }}</p>
-          <p class="falla"><strong>Falla Reportada:</strong> {{ orden.falla_reportada }}</p>
-          <p v-if="orden.diagnostico" class="diagnostico"><strong>Diagnóstico:</strong> {{ orden.diagnostico }}</p>
+          <p v-if="orden.numero_serie"><strong>Serie:</strong> {{ orden.numero_serie }}</p>
+          <p class="falla"><strong>Falla Reportada:</strong> {{ orden.descripcion_problema || orden.falla_reportada }}</p>
+          <p v-if="orden.notas_tecnicas || orden.diagnostico" class="diagnostico"><strong>Diagnóstico:</strong> {{ orden.notas_tecnicas || orden.diagnostico }}</p>
         </div>
 
         <!-- Observaciones -->
