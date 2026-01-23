@@ -115,22 +115,23 @@
               @mouseleave="showProductsMenu = false"
               @dblclick="goToCategorias"
             >
-                <a href="#" @click.prevent>Productos</a>
-                <transition name="dropdown-fade">
-                  <div v-if="showProductsMenu" class="dropdown-wrapper">
-                  <ul class="dropdown-content">
-                    <li class="divider"></li>
-                    <li><a href="/productos/categoria/laptops">Laptops</a></li>
-                    <li><a href="/productos/categoria/componentes">Componentes</a></li>
-                    <li><a href="/productos/categoria/perifericos">Periféricos</a></li>
-                    <li><a href="/productos/categoria/almacenamiento">Almacenamiento</a></li>
-                    <li><a href="/productos/categoria/redes">Redes</a></li>
-                    <li><a href="/productos/categoria/audio">Audio</a></li>
-                    <li><a href="/productos/categoria/redes">Equipos de Red</a></li>
-                  </ul>
-                  </div>  
-                </transition>
-              </li> 
+              <a href="#" @click.prevent>Productos</a>
+              <transition name="dropdown-fade">
+                <ul v-if="showProductsMenu" class="dropdown-content">
+                  <li class="ver-todos-item"><a href="/productos"><strong>🛍️ Ver Todos los Productos</strong></a></li>
+                  <li class="divider"></li>
+                  <li><a href="/productos/categoria/laptops">💻 Laptops</a></li>
+                  <li><a href="/productos/categoria/componentes">🔧 Componentes</a></li>
+                  <li><a href="/productos/categoria/perifericos">⌨️ Periféricos</a></li>
+                  <li><a href="/productos/categoria/almacenamiento">💾 Almacenamiento</a></li>
+                  <li><a href="/productos/categoria/redes">🌐 Redes</a></li>
+                  <li><a href="/productos/categoria/audio">🎧 Audio</a></li>
+                  <li><a href="/productos/categoria/tablets">Tablets</a></li>
+                  <li><a href="/productos/categoria/accesorios">Accesorios</a></li>
+                  <li><a href="/productos/categoria/redes">Equipos de Red</a></li>
+                </ul>
+              </transition>
+            </li>
             <li><a href="/promociones">Promociones</a></li>
             <li 
               class="dropdown-menu"
@@ -140,11 +141,10 @@
             >
               <a href="#" @click.prevent>Marcas</a>
               <transition name="dropdown-fade">
-                <div v-if="showMarcasMenu" class="dropdown-wrapper">
-                <ul class="dropdown-content">
-                  <li class="ver-todos-item"><a href="/marcas"><strong>Ver Todas las Marcas</strong></a></li>
+                <ul v-if="showMarcasMenu" class="dropdown-content">
+                  <li class="ver-todos-item"><a href="/marcas"><strong>🏪 Ver Todas las Marcas</strong></a></li>
                   <li class="divider"></li>
-                  <li v-if="marcasDisponibles.length === 0" style="padding: 4px 12px; color: #999; font-size: 12px;">
+                  <li v-if="marcasDisponibles.length === 0" style="padding: 10px 20px; color: #999; font-size: 14px;">
                     Cargando marcas...
                   </li>
                   <li v-for="marca in marcasDisponibles" :key="marca" class="marca-item">
@@ -153,7 +153,6 @@
                     </a>
                   </li>
                 </ul>
-                </div>
               </transition>
             </li>
             <li><a href="/servicio-tecnico">Servicio Técnico</a></li>

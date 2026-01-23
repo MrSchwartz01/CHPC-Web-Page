@@ -46,9 +46,6 @@ export default {
     irAInicio() {
       this.$router.push('/home');
     },
-    irACrearOrden() {
-      this.$router.push('/crear-work-order');
-    },
     async cargarOrdenes() {
       this.cargando = true;
       this.error = null;
